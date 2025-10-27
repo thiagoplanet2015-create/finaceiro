@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ações Judiciais – Análise de Negócio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --brand: #2563eb;
+      --brand-600: #1d4ed8;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --bg: #f3f6fb;
+      --border: #e5e7eb;
+      --success: #16a34a;
+      --danger: #e11d48;
+      --table-stripe: #fafbff;
+    }
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      padding: 1rem;
+    }
+    .table {
+      --bs-table-striped-bg: var(--table-stripe);
+      border-color: var(--border);
+    }
+    .table thead th {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 2;
+      border-bottom: 2px solid var(--border);
+      color: #475569;
+      font-weight: 700;
+    }
+    .text-danger {
+      color: var(--danger);
+    }
+    .is-invalid {
+      border-color: var(--danger) !important;
+      box-shadow: 0 0 0 0.25rem rgba(225, 29, 72, 0.25) !important;
+    }
+    tr:hover {
+      background-color: #e0e7ff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h4>Ações Judiciais – Análise de Negócio</h4>
+    <p><strong>Empresa:</strong> <span id="empresaSpan"></span> | <strong>Usuário:</strong> <span id="usuarioSpan"></span></p>
+
+    <div class="mb-3">
+      <h5>Itens lançados pelo cliente (clique para analisar)</h5>
+      <p><strong>Total dos Itens: R$ <span id="totalItens">0,00</span></strong></p>
+      <table class="table table-hover" id="tabelaItens">
+        <thead>
+          <tr>
+            <th>Empresa</th>
+            <th>Tipo Nota</th>
+            <th>Fornecedor</th>
+            <th>Nr Forn.</th>
+            <th>Nome local</th>
+            <th>Data NF</th>
+            <th>NFF/CI</th>
+            <th>Quantia</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <form id="formAnalise" class="row g-3 needs-validation" novalidate>
+      <h5>Campos para análise (preenchidos pelo analista)</h5>
+
+      <div class="col-md-6">
+        <label for="nff" class="form-label text-danger">Nº da NFF/C.I.</label>
+        <input type="text" id="nff" class="form-control" required />
+        <div class="invalid-feedback">Informe o Nº da NFF/C.I.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="quantiaNff" class="form-label text-danger">Quantia da NFF/C.I. (R$)</label>
+        <input type="number" step="0.01" id="quantiaNff" class="form-control" required />
+        <div class="invalid-feedback">Informe a quantia da NFF/C.I.</div>
+      </div>
+      <div class="col-md-6">
+        <label for="dataGl" class="form-label">Data GL</label>
+        <input type="date" id="dataGl" class="form-control" />
+      </div>
+      <div class="col-md-6">
+        <label for="dataTaxa" class="form-label">Data Taxa Pagto</label>
+        <input type="date" id="dataTaxa" class="form-control" />
+      </div>
+      <div class="col-md-6">
+        <label for="descricao" class="form-label">Descrição</label>
+        <textarea id="descricao" class="form-control" rows="2"></textarea>
+      </div>
+      <div class="col-md-6">
+        <label for="condicoes" class="form-label">Condições</label>
+        <textarea id="condicoes" class="form-control" rows="2"></textarea>
+      </div>
+      <div class="col-md-6">
+        <label for="chaveContabil" class="form-label">Chave Contábil</label>
+        <input type="text" id="chaveContabil" class="form-control" />
+      </div>
+      <div class="col-md-6">
+        <label for="metodoPagamento" class="form-label">Método de Pagamento</label>
+        <select id="metodoPagamento" class="form-select">
+          <option value="">Selecione</option>
+          <option>Eletrônico</option>
+          <option>Bordero</option>
+          <option>Cheque</option>
+          <option>Dinheiro</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="grupoPagamento" class="form-label">Grupo de Pagamento</label>
+        <input type="text" id="grupoPagamento" class="form-control" />
+      </div>
+      <div class="col-md-6">
+        <label for="pais" class="form-label">País</label>
+        <input type="text" id="pais" class="form-control" />
+      </div>
+
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Salvar Análise</button>
+      </div>
+    </form>
+  </div>
+
+<script>
+  // Contexto do login
+  const empresaCtx = sessionStorage.getItem('empresa') || 'Empresa A';
+  const usuarioCtx = sessionStorage.getItem('usuario') || 'usuario@exemplo.com';
+  document.getElementById('empresaSpan').textContent = empresaCtx;
+  document.getElementById('usuarioSpan').textContent = usuarioCtx;
+
+  // Dados carregados do sessionStorage
+  let itens = JSON.parse(sessionStorage.getItem('acoesJudiciaisItens') || '[]');
+
+  // Formatação moeda BRL
+  const brMoney = v => Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  const fmtDate = v => {
+    if (!v) return '';
+    const d = new Date(v);
+    return isNaN(d) ? '' : d.toLocaleDateString('pt-BR');
+  };
+
+  const tbody = document.querySelector('#tabelaItens tbody');
+  const totalItensSpan = document.getElementById('totalItens');
+
+  let selecionadoIndex = null;
+
+  function renderTabela() {
+    tbody.innerHTML = '';
+    let soma = 0;
+    itens.forEach((item, idx) => {
+      soma += Number(item.quantia) || 0;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${item.empresa || ''}</td>
+        <td>${item.tipoNota || ''}</td>
+        <td>${item.fornecedor || ''}</td>
+        <td>${item.nrFornecedor || ''}</td>
+        <td>${item.nomeLocalFornecedor || ''}</td>
+        <td>${fmtDate(item.dataEmissaoNF)}</td>
+        <td>${item.nrNFFCI || ''}</td>
+        <td>${brMoney(item.quantia)}</td>
+      `;
+      tr.style.cursor = 'pointer';
+      tr.onclick = () => selecionarItem(idx);
+      tbody.appendChild(tr);
+    });
+    totalItensSpan.textContent = brMoney(soma);
+  }
+
+  function selecionarItem(idx) {
+    selecionadoIndex = idx;
+    const item = itens[idx];
+    if (!item) return;
+
+    // Preenche os campos do formulário com dados do item e da análise (se existir)
+    document.getElementById('nff').value = item.nrNFFCI || '';
+    document.getElementById('quantiaNff').value = item.quantia || '';
+    document.getElementById('dataGl').value = item.analise?.dataGl || '';
+    document.getElementById('dataTaxa').value = item.analise?.dataTaxa || '';
+    document.getElementById('descricao').value = item.analise?.descricao || '';
+    document.getElementById('condicoes').value = item.analise?.condicoes || '';
+    document.getElementById('chaveContabil').value = item.analise?.chaveContabil || '';
+    document.getElementById('metodoPagamento').value = item.analise?.metodoPagamento || '';
+    document.getElementById('grupoPagamento').value = item.analise?.grupoPagamento || '';
+    document.getElementById('pais').value = item.analise?.pais || '';
+
+    // Remove marcação de erro ao preencher
+    ['nff', 'quantiaNff'].forEach(id => {
+      document.getElementById(id).classList.remove('is-invalid');
+    });
+  }
+
+  // Validação simples dos campos obrigatórios
+  function validarCampos() {
+    let valido = true;
+    ['nff', 'quantiaNff'].forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.classList.add('is-invalid');
+        valido = false;
+      } else {
+        el.classList.remove('is-invalid');
+      }
+    });
+    return valido;
+  }
+
+  document.getElementById('formAnalise').addEventListener('submit', e => {
+    e.preventDefault();
+
+    console.log('selecionadoIndex:', selecionadoIndex);
+    console.log('nff:', document.getElementById('nff').value);
+    console.log('quantiaNff:', document.getElementById('quantiaNff').value);
+
+    if (selecionadoIndex === null) {
+      alert('Selecione um item para analisar.');
+      return;
+    }
+    if (!validarCampos()) {
+      alert('Preencha os campos obrigatórios destacados em vermelho.');
+      return;
+    }
+
+    // Atualiza os dados do item com os campos do analista
+    itens[selecionadoIndex].analise = {
+      dataGl: document.getElementById('dataGl').value,
+      dataTaxa: document.getElementById('dataTaxa').value,
+      descricao: document.getElementById('descricao').value,
+      condicoes: document.getElementById('condicoes').value,
+      chaveContabil: document.getElementById('chaveContabil').value,
+      metodoPagamento: document.getElementById('metodoPagamento').value,
+      grupoPagamento: document.getElementById('grupoPagamento').value,
+      pais: document.getElementById('pais').value
+    };
+
+    // Atualiza campos obrigatórios no item principal
+    itens[selecionadoIndex].nrNFFCI = document.getElementById('nff').value.trim();
+    itens[selecionadoIndex].quantia = Number(document.getElementById('quantiaNff').value);
+
+    // Salva no sessionStorage
+    sessionStorage.setItem('acoesJudiciaisItens', JSON.stringify(itens));
+
+    // Redireciona para a próxima tela de demonstração
+    window.location.href = 'acoes-judiciais-analista-resultado.html';
+  });
+
+  // Inicializa
+  renderTabela();
+</script>
+</body>
+</html>

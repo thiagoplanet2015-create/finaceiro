@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Demonstração da Análise - Ações Judiciais</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    body {
+      padding: 1rem;
+      background: #f3f6fb;
+      color: #0f172a;
+    }
+    .card {
+      margin-bottom: 1rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(2, 6, 23, 0.05);
+      padding: 1rem;
+      background: white;
+    }
+    h4 {
+      margin-bottom: 0.5rem;
+    }
+    .field-label {
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Demonstração da Análise - Ações Judiciais</h2>
+    <div id="listaItens"></div>
+    <button id="btnVoltar" class="btn btn-secondary mt-3">Voltar para Análise</button>
+  </div>
+
+  <script>
+    const listaItensDiv = document.getElementById('listaItens');
+    const itens = JSON.parse(sessionStorage.getItem('acoesJudiciaisItens') || '[]');
+
+    if (itens.length === 0) {
+      listaItensDiv.innerHTML = '<p>Nenhum dado encontrado para demonstração.</p>';
+    } else {
+      itens.forEach((item, idx) => {
+        const analise = item.analise || {};
+        const card = document.createElement('div');
+        card.className = 'card';
+
+        card.innerHTML = `
+          <h4>Item ${idx + 1}</h4>
+          <p><span class="field-label">Empresa:</span> ${item.empresa || ''}</p>
+          <p><span class="field-label">Tipo Nota:</span> ${item.tipoNota || ''}</p>
+          <p><span class="field-label">Fornecedor:</span> ${item.fornecedor || ''}</p>
+          <p><span class="field-label">Nr Forn.:</span> ${item.nrFornecedor || ''}</p>
+          <p><span class="field-label">Nome local:</span> ${item.nomeLocalFornecedor || ''}</p>
+          <p><span class="field-label">Data NF:</span> ${item.dataEmissaoNF || ''}</p>
+          <p><span class="field-label">NFF/CI:</span> ${item.nrNFFCI || ''}</p>
+          <p><span class="field-label">Quantia:</span> R$ ${Number(item.quantia).toFixed(2)}</p>
+
+          <hr/>
+
+          <h5>Análise do Analista</h5>
+          <p><span class="field-label">Nº da NFF/C.I.:</span> ${analise.nffCi || ''}</p>
+          <p><span class="field-label">Quantia da NFF/C.I. (R$):</span> ${analise.quantiaNff || ''}</p>
+          <p><span class="field-label">Data GL:</span> ${analise.dataGl || ''}</p>
+          <p><span class="field-label">Data Taxa Pagto:</span> ${analise.dataTaxa || ''}</p>
+          <p><span class="field-label">Descrição:</span> ${analise.descricao || ''}</p>
+          <p><span class="field-label">Condições:</span> ${analise.condicoes || ''}</p>
+          <p><span class="field-label">Chave Contábil:</span> ${analise.chaveContabil || ''}</p>
+          <p><span class="field-label">Método de Pagamento:</span> ${analise.metodoPagamento || ''}</p>
+          <p><span class="field-label">Grupo de Pagamento:</span> ${analise.grupoPagamento || ''}</p>
+          <p><span class="field-label">País:</span> ${analise.pais || ''}</p>
+          <p><span class="field-label">Moeda de Pagto: </span> BRL</p>
+          <p><span class="field-label">Vincular Ação: </span> Ordem de Compra</p>
+          <p><span class="field-label">Data das Condições:</span> ?</p>
+        `;
+
+        listaItensDiv.appendChild(card);
+      });
+    }
+
+    document.getElementById('btnVoltar').addEventListener('click', () => {
+      window.history.back();
+    });
+  </script>
+</body>
+</html>

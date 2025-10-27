@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cadastro de Clientes</title>
+  <!-- Bootstrap 5 via CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f8fafc;
+    }
+
+    .container-box {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .06);
+    }
+
+    .status-ativo {
+      color: #16a34a;
+      font-weight: 600;
+    }
+
+    .status-inativo {
+      color: #b91c1c;
+      font-weight: 600;
+    }
+
+    .table thead th {
+      background: #f1f5f9;
+    }
+
+    .search-row {
+      gap: .5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-primary navbar-dark">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="#">Portal • Clientes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="nav" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Lista</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Relatórios</a></li>
+          <li class="nav-item"><a class="nav-link" href="#">Sair</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Conteúdo -->
+  <div class="container my-4">
+    <div class="p-3 p-md-4 container-box">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
+        <h3 class="m-0">Cadastro de Clientes</h3>
+        <small class="text-muted">Exemplo de tabela Bootstrap com 6 colunas</small>
+      </div>
+
+      <!-- Ações / Busca -->
+      <div class="row g-2 align-items-center mb-3 search-row">
+        <div class="col-sm-12 col-md-6">
+          <div class="input-group">
+            <span class="input-group-text" id="label-busca">Buscar</span>
+            <input id="busca" type="text" class="form-control" placeholder="Nome, email, cidade…" aria-label="Buscar"
+              aria-describedby="label-busca">
+            <button id="btn-buscar" class="btn btn-outline-primary">Pesquisar</button>
+          </div>
+        </div>
+        <div class="col-sm-12 col-md-auto ms-md-auto">
+          <button id="btn-adicionar" class="btn btn-primary">
+            + Adicionar Cliente
+          </button>
+        </div>
+      </div>
+
+      <!-- Tabela -->
+      <div class="table-responsive">
+        <table id="tabela-clientes" class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Email</th>
+              <th scope="col">Telefone</th>
+              <th scope="col">Cidade</th>
+              <th scope="col">Status</th>
+              <th scope="col">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1001</td>
+              <td>Ana Paula Souza</td>
+              <td>ana.souza@exemplo.com</td>
+              <td>(11) 91234-5678</td>
+              <td>São Paulo</td>
+              <td><span class="status-ativo">Ativo</span></td>
+              <td><a class="btn btn-sm btn-outline-secondary" href="endereco_cliente.html?id=1001">Detalhes</a></td>
+            </tr>
+            <tr>
+              <td>1002</td>
+              <td>Bruno Martins</td>
+              <td>bruno.martins@exemplo.com</td>
+              <td>(21) 99876-5432</td>
+              <td>Rio de Janeiro</td>
+              <td><span class="status-inativo">Inativo</span></td>
+              <td><a class="btn btn-sm btn-outline-secondary" href="endereco_cliente.html?id=1002">Detalhes</a></td>
+            </tr>
+            <tr>
+              <td>1003</td>
+              <td>Carla Fernandes</td>
+              <td>carla.fernandes@exemplo.com</td>
+              <td>(31) 98765-4321</td>
+              <td>Belo Horizonte</td>
+              <td><span class="status-ativo">Ativo</span></td>
+              <td><a class="btn btn-sm btn-outline-secondary" href="endereco_cliente.html?id=1003">Detalhes</a></td>
+            </tr>
+            <tr>
+              <td>1004</td>
+              <td>Diego Ribeiro</td>
+              <td>diego.ribeiro@exemplo.com</td>
+              <td>(41) 97654-3210</td>
+              <td>Curitiba</td>
+              <td><span class="status-ativo">Ativo</span></td>
+              <td><a class="btn btn-sm btn-outline-secondary" href="endereco_cliente.html?id=1004">Detalhes</a></td>
+            </tr>
+            <tr>
+              <td>1005</td>
+              <td>Elaine Costa</td>
+              <td>elaine.costa@exemplo.com</td>
+              <td>(51) 96543-2109</td>
+              <td>Porto Alegre</td>
+              <td><span class="status-inativo">Inativo</span></td>
+              <td><a class="btn btn-sm btn-outline-secondary" href="endereco_cliente.html?id=1005">Detalhes</a></td>
+            </tr>
+            <tr>
+              <td>1006</td>
+              <td>Felipe Nunes</td>
+              <td>felipe.nunes@exemplo.com</td>
+              <td>(71) 95432-1098</td>
+              <td>Salvador</td>
+              <td><span class="status-ativo">Ativo</span></td>
+              <td><a class="btn btn-sm btn-outline-secondary" href="endereco_cliente.html?id=1006">Detalhes</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Paginação (estática, só visual) -->
+      <div class="d-flex justify-content-between align-items-center mt-3">
+        <small class="text-muted">6 registros — página 1 de 1</small>
+        <nav aria-label="Paginação de clientes">
+          <ul class="pagination pagination-sm mb-0">
+            <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1">Anterior</a></li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item disabled"><a class="page-link" href="#">Próxima</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (opcional para componentes que colapsam) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Script opcional para busca simples no front -->
+  <script>
+    const inputBusca = document.getElementById('busca');
+    const btnBuscar = document.getElementById('btn-buscar');
+    const tabela = document.getElementById('tabela-clientes').querySelector('tbody');
+
+    function filtrar() {
+      const termo = inputBusca.value.trim().toLowerCase();
+      for (const tr of tabela.querySelectorAll('tr')) {
+        const texto = tr.innerText.toLowerCase();
+        tr.style.display = texto.includes(termo) ? '' : 'none';
+      }
+    }
+
+    btnBuscar.addEventListener('click', filtrar);
+    inputBusca.addEventListener('keyup', (e) => { if (e.key === 'Enter') filtrar(); });
+
+    document.getElementById('btn-adicionar').addEventListener('click', () => {
+      alert('Aqui abriria um modal para cadastrar um novo cliente (exemplo).');
+    });
+  </script>
+</body>
+
+</html>
