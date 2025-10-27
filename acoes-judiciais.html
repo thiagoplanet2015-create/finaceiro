@@ -3,292 +3,548 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ações Judiciais – Lançamento Cliente</title>
+  <title>Ações Judiciais - Financeiro</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
-    :root {
-      --brand: #2563eb;
-      --brand-600: #1d4ed8;
-      --ink: #0f172a;
-      --muted: #64748b;
-      --bg: #f3f6fb;
-      --border: #e5e7eb;
-      --success: #16a34a;
-      --danger: #e11d48;
-      --table-stripe: #fafbff;
-    }
-    body {
-      background: var(--bg);
-      color: var(--ink);
-      padding: 1rem;
-    }
-    .chip {
-      padding: .25rem .6rem;
-      border-radius: 999px;
-      font-size: .78rem;
-      font-weight: 600;
-      background: #eef2ff;
-      color: var(--brand);
-      border: 1px solid #e0e7ff;
-    }
-    .card {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(2, 6, 23, .05);
-    }
-    .form-label {
-      font-weight: 600;
-      color: #334155;
-    }
-    .form-control,
-    .form-select {
-      border-radius: 10px;
-      border: 1px solid var(--border);
-    }
-    .form-control:focus,
-    .form-select:focus {
-      border-color: var(--brand);
-      box-shadow: 0 0 0 .2rem rgba(37, 99, 235, .15);
-    }
-    .btn-primary {
-      background: var(--brand);
-      border-color: var(--brand);
-      border-radius: 10px;
-      font-weight: 600;
-    }
-    .btn-primary:hover {
-      background: var(--brand-600);
-      border-color: var(--brand-600);
-    }
-    .btn-outline-primary {
-      border-radius: 10px;
-      font-weight: 600;
-      color: var(--brand);
-      border-color: var(--brand);
-    }
-    .btn-outline-primary:hover {
-      background: var(--brand);
-      color: #fff;
-    }
-    .table {
-      --bs-table-striped-bg: var(--table-stripe);
-      border-color: var(--border);
-    }
-    .table thead th {
-      position: sticky;
-      top: 0;
-      background: #fff;
-      z-index: 2;
-      border-bottom: 2px solid var(--border);
-      color: #475569;
-      font-weight: 700;
-    }
-  </style>
+  :root{
+    --brand:#72bf44;
+    --brand-600:#5fa535;
+    --brand-light:#9fc612;
+    --ink:#0f172a;
+    --muted:#64748b;
+    --paper:#ffffff;
+    --bg:#f3f6fb;
+    --success:#72bf44;
+    --danger:#e11d48;
+    --border:#e5e7eb;
+    --table-stripe:#fafbff;
+  }
+
+  body{ background:var(--bg); color:var(--ink); }
+  h1,h2,h3,h4,h5 { color:var(--ink); letter-spacing:.2px; }
+
+  .topbar{
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-600) 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .topbar .fw-bold{ color: #fff; font-size: 1.2rem; }
+  .topbar .text-muted{ color: rgba(255,255,255,0.85) !important; }
+
+  .card{
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(2,6,23,.05);
+  }
+  .card-header{
+    background:linear-gradient(180deg,#f8fdf5, #e8f5e0);
+    border-bottom:1px solid var(--border);
+    border-top-left-radius:12px; border-top-right-radius:12px;
+  }
+  .card-header h5{ color: var(--brand-600); font-weight: 700; }
+
+  .form-label{ font-weight:600; color:#334155; }
+  .form-control,.form-select{
+    border-radius:10px; border:1px solid var(--border);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .form-control:focus,.form-select:focus{
+    border-color: var(--brand);
+    box-shadow: 0 0 0 .2rem rgba(114, 191, 68, .25);
+  }
+  .btn-primary{
+    background:var(--brand); border-color:var(--brand);
+    border-radius:10px; font-weight:600;
+  }
+  .btn-primary:hover{ 
+    background:var(--brand-600); 
+    border-color:var(--brand-600);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(114, 191, 68, 0.3);
+  }
+  .btn-outline-primary{
+    border-radius:10px; font-weight:600; color:var(--brand); border-color:var(--brand);
+  }
+  .btn-outline-primary:hover{ background:var(--brand); color:#fff; }
+  .btn-outline-secondary{ border-radius:10px; font-weight:600; }
+  .btn-outline-danger{ border-radius:8px; font-weight:600; }
+
+  .table{
+    --bs-table-striped-bg: var(--table-stripe);
+    border-color: var(--border);
+  }
+  .table thead th{
+    position:sticky; top:0; background:#e8f5e0; z-index:2;
+    border-bottom:2px solid var(--brand); color:var(--brand-600); font-weight:700;
+    font-size: 0.85rem;
+  }
+  .table>tbody>tr>td, .table>thead>tr>th{ vertical-align: middle; }
+  .table-sm td, .table-sm th{ padding:.55rem .6rem; font-size: 0.9rem; }
+
+  .totals-card{
+    border:1px dashed #d0ecc0; border-radius:10px; padding:.75rem 1rem;
+    background:#f8fdf5;
+  }
+  .totals-card .label{ color:var(--muted); font-weight: 600; }
+  .totals-card .value{ font-weight:700; font-size: 1.1rem; }
+  .totals-card .value.success{ color:var(--success); }
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h4>Ações Judiciais – Lançamento Cliente</h4>
-      <div class="d-flex gap-2 text-muted small">
-        <span class="chip">Empresa: <strong id="empresaSpan">-</strong></span>
-        <span class="chip">Usuário: <strong id="usuarioSpan">-</strong></span>
+  <nav class="topbar">
+    <div class="container py-2 d-flex align-items-center justify-content-between">
+      <div class="fw-bold">Portal Financeiro - Ações Judiciais</div>
+      <div class="text-muted small">
+        Empresa: <span id="empresaSpan">-</span> • Usuário: <span id="usuarioSpan">-</span>
       </div>
     </div>
+  </nav>
 
-    <div class="card p-4 mb-4">
-      <form id="formCliente" novalidate>
-        <h5 class="mb-3">Adicionar item de pagamento</h5>
+  <div class="container my-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h4 class="mb-0">Adicionar Item de Pagamento</h4>
+      <a href="dashboard.html" class="btn btn-outline-secondary btn-sm">← Voltar</a>
+    </div>
 
-        <div class="mb-3">
-          <label for="empresa" class="form-label">Empresa</label>
-          <select id="empresa" class="form-select" required>
-            <option value="">Selecione</option>
-            <option>Empresa AGT</option>
-            <option>Empresa B</option>
-            <option>Empresa C</option>
-          </select>
-          <div class="invalid-feedback">Selecione a empresa.</div>
-        </div>
-
-        <div class="mb-3">
-          <label for="tipoNota" class="form-label">Tipo de Nota</label>
-          <select id="tipoNota" class="form-select" required>
-            <option value="">Selecione</option>
-            <option value="Padrão" selected>Padrão</option>
-            <option value="Especial">Especial</option>
-            <option value="Outro">Outro</option>
-          </select>
-          <div class="invalid-feedback">Selecione o tipo de nota.</div>
-        </div>
-
-        <div class="mb-3">
-          <label for="fornecedor" class="form-label">Fornecedor</label>
-          <input id="fornecedor" class="form-control" placeholder="Nome do fornecedor" required />
-          <div class="invalid-feedback">Informe o fornecedor.</div>
-        </div>
-
+    <!-- Seção: Dados do Item de Pagamento -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Dados do Item de Pagamento</h5>
+      </div>
+      <div class="card-body">
         <div class="row g-3">
           <div class="col-md-6">
+            <label for="empresa" class="form-label">Empresa</label>
+            <select id="empresa" class="form-select">
+              <option value="">Selecione</option>
+              <option value="EMPRESA_A">Empresa AGT</option>
+              <option value="EMPRESA_B">Empresa B</option>
+              <option value="EMPRESA_C">Empresa C</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="tipoNota" class="form-label">Tipo de Nota</label>
+            <select id="tipoNota" class="form-select">
+              <option value="">Padrão</option>
+              <option value="NF">Nota Fiscal</option>
+              <option value="Recibo">Recibo</option>
+              <option value="Outros">Outros</option>
+            </select>
+          </div>
+          <div class="col-md-12">
+            <label for="fornecedor" class="form-label">Fornecedor</label>
+            <input type="text" id="fornecedor" value="BALDANI E TERCARIOLI ADVOGADOS ASSOCIADOS" class="form-control" placeholder="Nome do fornecedor" />
+          </div>
+          <div class="col-md-6">
             <label for="nrFornecedor" class="form-label">Nr do Fornecedor</label>
-            <input id="nrFornecedor" class="form-control" placeholder="xxxxx" required />
-            <div class="invalid-feedback">Informe o nº do fornecedor.</div>
+            <input type="text" id="nrFornecedor" value="00513856" class="form-control" placeholder="00513856" />
           </div>
           <div class="col-md-6">
             <label for="nomeLocalFornecedor" class="form-label">Nome local do Fornecedor</label>
-            <input id="nomeLocalFornecedor" class="form-control" placeholder="000144" required />
-            <div class="invalid-feedback">Informe o nome do local.</div>
+            <input type="text" id="nomeLocalFornecedor" value="000144" class="form-control" placeholder="000144" />
           </div>
-        </div>
-
-        <div class="row g-3 mt-3">
           <div class="col-md-6">
             <label for="dataEmissaoNF" class="form-label">Data da Emissão da NF</label>
-            <input type="date" id="dataEmissaoNF" class="form-control" required />
-            <div class="invalid-feedback">Informe a data da emissão.</div>
+            <input type="date" id="dataEmissaoNF" class="form-control" />
           </div>
           <div class="col-md-6">
             <label for="quantia" class="form-label">Quantia (R$)</label>
-            <input type="number" step="0.01" id="quantia" class="form-control text-end" placeholder="0,00" required />
-            <div class="invalid-feedback">Informe a quantia.</div>
+            <input type="text" id="quantia" class="form-control" placeholder="0,00" />
+          </div>
+          <div class="col-md-4">
+            <label for="processo" class="form-label">Processo</label>
+            <input type="text" id="processo" class="form-control" placeholder="Número do processo" />
+          </div>
+          <div class="col-md-4">
+            <label for="pasta" class="form-label">Pasta</label>
+            <input type="text" id="pasta" class="form-control" placeholder="Número da pasta" />
+          </div>
+          <div class="col-md-4">
+            <label for="reclamante" class="form-label">Reclamante</label>
+            <input type="text" id="reclamante" class="form-control" placeholder="Nome do reclamante" />
+          </div>
+          <div class="col-md-12">
+            <label for="descricaoItem" class="form-label">Descrição</label>
+            <textarea id="descricaoItem" class="form-control" rows="3" placeholder="Descreva detalhes sobre o pagamento..."></textarea>
+          </div>
+          <div class="col-md-12">
+            <label for="anexosItem" class="form-label">Anexos</label>
+            <input type="file" id="anexosItem" class="form-control" multiple />
+            <small class="text-muted">Você pode selecionar múltiplos arquivos</small>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção: Adicionar Beneficiários -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Adicionar Beneficiários</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="nomeBenef" class="form-label">Nome Beneficiário</label>
+            <input type="text" id="nomeBenef" class="form-control" placeholder="Nome completo" />
+          </div>
+          <div class="col-md-6">
+            <label for="cpfBenef" class="form-label">CPF Beneficiário</label>
+            <input type="text" id="cpfBenef" class="form-control" placeholder="000.000.000-00" />
+          </div>
+          <div class="col-md-3">
+            <label for="bancoBenef" class="form-label">Banco</label>
+            <input type="text" id="bancoBenef" class="form-control" placeholder="Nome do banco" />
+          </div>
+          <div class="col-md-3">
+            <label for="agenciaBenef" class="form-label">Agência</label>
+            <input type="text" id="agenciaBenef" class="form-control" placeholder="0000" />
+          </div>
+          <div class="col-md-3">
+            <label for="tipoContaBenef" class="form-label">Tipo de Conta</label>
+            <select id="tipoContaBenef" class="form-select">
+              <option value="">Selecione</option>
+              <option value="Corrente">Corrente</option>
+              <option value="Poupança">Poupança</option>
+              <option value="Salário">Salário</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="numeroContaBenef" class="form-label">Número da Conta</label>
+            <input type="text" id="numeroContaBenef" class="form-control" placeholder="0000-0" />
+          </div>
+          <div class="col-md-3">
+            <label for="valorBenef" class="form-label">Valor do Benefício (R$)</label>
+            <input type="text" id="valorBenef" class="form-control" placeholder="0,00" />
+          </div>
+          <div class="col-md-9">
+            <label for="descricaoBenef" class="form-label">Descrição do beneficio</label>
+            <textarea rows="3" id="descricaoBenef" class="form-control" placeholder="Descreva o que é o pagamento" > </textarea>
+          </div>
+          <div class="col-md-6">
+            <label for="chaveContabil" class="form-label">Chave Contábil</label>
+            <input type="text" id="chaveContabil" class="form-control" placeholder="Ex: 1.2.3.4.5" />
+          </div>
+          <div class="col-md-6">
+            <label for="dataPagamento" class="form-label">Data do Pagamento</label>
+            <input type="date" id="dataPagamento" class="form-control" />
+          </div>
+          <div class="col-12">
+            <button type="button" class="btn btn-outline-primary" onclick="adicionarBeneficiario()">
+              + Adicionar Beneficiário
+            </button>
           </div>
         </div>
 
-        <div class="d-flex gap-2 mt-4">
-          <button class="btn btn-primary" type="submit">Adicionar item</button>
-          <button class="btn btn-outline-primary ms-auto" type="button" id="btnProximo">Próximo &raquo;</button>
+        <!-- Tabela de Beneficiários -->
+        <div class="mt-4" id="listaBeneficiarios" style="display:none;">
+          <h6 class="mb-3">Beneficiários Adicionados</h6>
+          <div class="table-responsive">
+            <table class="table table-sm table-striped">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>CPF</th>
+                  <th>Banco</th>
+                  <th>Agência</th>
+                  <th>Tipo Conta</th>
+                  <th>Nº Conta</th>
+                  <th>Valor</th>
+                  <th>Descrição</th>
+                  <th>Chave Contábil</th>
+                  <th>Data Pagamento</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaBeneficiarios"></tbody>
+            </table>
+          </div>
+          <div class="totals-card mt-3">
+            <div class="d-flex justify-content-between">
+              <span class="label">Total Beneficiários:</span>
+              <span class="value success" id="totalBeneficiarios">R$ 0,00</span>
+            </div>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
 
-    <div class="card p-3">
-      <h5>Itens adicionados</h5>
-      <div style="max-height: 300px; overflow-y: auto;">
-        <table class="table table-sm table-hover align-middle" id="tabelaItens">
-          <thead>
-            <tr>
-              <th>Empresa</th>
-              <th>Tipo Nota</th>
-              <th>Fornecedor</th>
-              <th>Nr Forn.</th>
-              <th>Nome local</th>
-              <th>Data NF</th>
-              <th>Quantia</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-          <tfoot>
-            <tr>
-              <th colspan="6" class="text-end">Total:</th>
-              <th id="totalItens" class="text-end">R$ 0,00</th>
-              <th></th>
-            </tr>
-          </tfoot>
-        </table>
+    <!-- Seção: Adicionar INSS/Impostos -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Adicionar INSS / Impostos</h5>
       </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-3">
+            <label for="valorImposto" class="form-label">Valor (R$)</label>
+            <input type="text" id="valorImposto" class="form-control" placeholder="0,00" />
+          </div>
+          <div class="col-md-9">
+            <label for="descricaoImposto" class="form-label">Descrição</label>
+            <input type="text" id="descricaoImposto" class="form-control" placeholder="Descreva o pagamento" />
+          </div>
+          <div class="col-md-6">
+            <label for="tipoImposto" class="form-label">Tipo de Pagamento</label>
+            <select id="tipoImposto" class="form-select">
+              <option value="">Selecione</option>
+              <option value="INSS">INSS</option>
+              <option value="Imposto">Imposto</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="chaveContabilImposto" class="form-label">Chave Contábil</label>
+            <input type="text" id="chaveContabilImposto" class="form-control" placeholder="Ex: 1.2.3.4.5" />
+          </div>
+          <div class="col-12">
+            <button type="button" class="btn btn-outline-primary" onclick="adicionarImposto()">
+              + Adicionar INSS/Imposto
+            </button>
+          </div>
+        </div>
+
+        <!-- Tabela de INSS/Impostos -->
+        <div class="mt-4" id="listaImpostos" style="display:none;">
+          <h6 class="mb-3">INSS/Impostos Adicionados</h6>
+          <div class="table-responsive">
+            <table class="table table-sm table-striped">
+              <thead>
+                <tr>
+                  <th>Valor</th>
+                  <th>Descrição</th>
+                  <th>Tipo</th>
+                  <th>Chave Contábil</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaImpostos"></tbody>
+            </table>
+          </div>
+          <div class="totals-card mt-3">
+            <div class="d-flex justify-content-between">
+              <span class="label">Total INSS/Impostos:</span>
+              <span class="value success" id="totalImpostos">R$ 0,00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão Próximo -->
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary btn-lg" onclick="proximaPagina()">
+        Próximo »
+      </button>
     </div>
   </div>
 
   <script>
-    // Contexto do login (exemplo)
-    const empresaCtx = sessionStorage.getItem('empresa') || 'Empresa A';
-    const usuarioCtx = sessionStorage.getItem('usuario') || 'usuario@exemplo.com';
-    document.getElementById('empresaSpan').textContent = empresaCtx;
-    document.getElementById('usuarioSpan').textContent = usuarioCtx;
+  const empresa = sessionStorage.getItem('empresa');
+  const usuario = sessionStorage.getItem('usuario');
+  document.getElementById('empresaSpan').textContent = empresa || '-';
+  document.getElementById('usuarioSpan').textContent = usuario || '-';
 
-    // Estado dos itens
-    let itens = [];
+  let beneficiarios = [];
+  let impostos = [];
 
-    // Formatação moeda BRL
-    const brMoney = v => Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-    const fmtDate = v => v ? new Date(v).toLocaleDateString('pt-BR') : '__/__/____';
+  function adicionarBeneficiario() {
+    const nome = document.getElementById('nomeBenef').value.trim();
+    const cpf = document.getElementById('cpfBenef').value.trim();
+    const banco = document.getElementById('bancoBenef').value.trim();
+    const agencia = document.getElementById('agenciaBenef').value.trim();
+    const tipoConta = document.getElementById('tipoContaBenef').value;
+    const numeroConta = document.getElementById('numeroContaBenef').value.trim();
+    const valor = document.getElementById('valorBenef').value.trim();
+    const descricao = document.getElementById('descricaoBenef').value.trim();
+    const chaveContabil = document.getElementById('chaveContabil').value.trim();
+    const dataPagamento = document.getElementById('dataPagamento').value;
 
-    // Renderizar tabela
-    function renderTabela() {
-      const tbody = document.querySelector('#tabelaItens tbody');
-      tbody.innerHTML = '';
-      itens.forEach(item => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${item.empresa}</td>
-          <td>${item.tipoNota}</td>
-          <td>${item.fornecedor}</td>
-          <td>${item.nrFornecedor}</td>
-          <td>${item.nomeLocalFornecedor}</td>
-          <td>${fmtDate(item.dataEmissaoNF)}</td>
-          <td class="text-end">${brMoney(item.quantia)}</td>
-          <td class="text-end"><button class="btn btn-sm btn-outline-danger" onclick="removerItem('${item.id}')">Remover</button></td>
-        `;
-        tbody.appendChild(tr);
-      });
-      document.getElementById('totalItens').textContent = brMoney(itens.reduce((a, c) => a + (Number(c.quantia) || 0), 0));
+    if (!nome || !cpf || !banco || !agencia || !tipoConta || !numeroConta || !valor) {
+      alert('Preencha todos os campos obrigatórios do beneficiário!');
+      return;
     }
 
-    // Limpar campos do formulário
-    function limparCampos() {
-      ['tipoNota', 'fornecedor', 'nrFornecedor', 'nomeLocalFornecedor', 'dataEmissaoNF', 'quantia'].forEach(id => {
-        const el = document.getElementById(id);
-        if (id === 'tipoNota') el.value = 'Padrão';
-        else el.value = '';
-        el.classList.remove('is-invalid');
-      });
-    }
-
-    // Validar campos obrigatórios
-    function validarCampos() {
-      const camposObrigatorios = ['empresa', 'tipoNota', 'fornecedor', 'nrFornecedor', 'nomeLocalFornecedor', 'dataEmissaoNF', 'quantia'];
-      let valido = true;
-      camposObrigatorios.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el.value || (id === 'quantia' && Number(el.value) <= 0)) {
-          el.classList.add('is-invalid');
-          valido = false;
-        } else {
-          el.classList.remove('is-invalid');
-        }
-      });
-      return valido;
-    }
-
-    // Adicionar item
-    document.getElementById('formCliente').addEventListener('submit', e => {
-      e.preventDefault();
-      if (!validarCampos()) return;
-
-      const novoItem = {
-        id: crypto.randomUUID(),
-        empresa: document.getElementById('empresa').value,
-        tipoNota: document.getElementById('tipoNota').value,
-        fornecedor: document.getElementById('fornecedor').value.trim(),
-        nrFornecedor: document.getElementById('nrFornecedor').value.trim(),
-        nomeLocalFornecedor: document.getElementById('nomeLocalFornecedor').value.trim(),
-        dataEmissaoNF: document.getElementById('dataEmissaoNF').value,
-        quantia: Number(document.getElementById('quantia').value)
-      };
-
-      itens.push(novoItem);
-      renderTabela();
-      limparCampos();
+    beneficiarios.push({
+      nome, cpf, banco, agencia, tipoConta, numeroConta, valor,
+      descricao, chaveContabil, dataPagamento
     });
 
-    // Remover item
-    window.removerItem = function(id) {
-      itens = itens.filter(item => item.id !== id);
-      renderTabela();
+    renderizarBeneficiarios();
+
+    // Limpa campos
+    ['nomeBenef','cpfBenef','bancoBenef','agenciaBenef','tipoContaBenef','numeroContaBenef',
+     'valorBenef','descricaoBenef','chaveContabil','dataPagamento'].forEach(id => {
+      const el = document.getElementById(id);
+      el.value = '';
+    });
+  }
+
+  function renderizarBeneficiarios() {
+    const tbody = document.getElementById('tabelaBeneficiarios');
+    const lista = document.getElementById('listaBeneficiarios');
+    
+    if (beneficiarios.length === 0) {
+      lista.style.display = 'none';
+      return;
+    }
+
+    lista.style.display = 'block';
+    tbody.innerHTML = '';
+    let total = 0;
+
+    beneficiarios.forEach((b, idx) => {
+      const valorNum = parseFloat(b.valor.replace(',', '.')) || 0;
+      total += valorNum;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${b.nome}</td>
+        <td>${b.cpf}</td>
+        <td>${b.banco}</td>
+        <td>${b.agencia}</td>
+        <td>${b.tipoConta}</td>
+        <td>${b.numeroConta}</td>
+        <td>R$ ${b.valor}</td>
+        <td>${b.descricao || '-'}</td>
+        <td>${b.chaveContabil || '-'}</td>
+        <td>${b.dataPagamento ? new Date(b.dataPagamento + 'T00:00:00').toLocaleDateString('pt-BR') : '-'}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-danger" onclick="removerBeneficiario(${idx})">
+            Remover
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('totalBeneficiarios').textContent = 
+      `R$ ${total.toFixed(2).replace('.', ',')}`;
+  }
+
+  function removerBeneficiario(idx) {
+    beneficiarios.splice(idx, 1);
+    renderizarBeneficiarios();
+  }
+
+  function adicionarImposto() {
+    const valor = document.getElementById('valorImposto').value.trim();
+    const descricao = document.getElementById('descricaoImposto').value.trim();
+    const tipo = document.getElementById('tipoImposto').value;
+    const chaveContabil = document.getElementById('chaveContabilImposto').value.trim();
+
+    if (!valor || !descricao || !tipo) {
+      alert('Preencha todos os campos obrigatórios do INSS/Imposto!');
+      return;
+    }
+
+    impostos.push({ valor, descricao, tipo, chaveContabil });
+    renderizarImpostos();
+
+    // Limpa campos
+    document.getElementById('valorImposto').value = '';
+    document.getElementById('descricaoImposto').value = '';
+    document.getElementById('tipoImposto').value = '';
+    document.getElementById('chaveContabilImposto').value = '';
+  }
+
+  function renderizarImpostos() {
+    const tbody = document.getElementById('tabelaImpostos');
+    const lista = document.getElementById('listaImpostos');
+    
+    if (impostos.length === 0) {
+      lista.style.display = 'none';
+      return;
+    }
+
+    lista.style.display = 'block';
+    tbody.innerHTML = '';
+    let total = 0;
+
+    impostos.forEach((imp, idx) => {
+      const valorNum = parseFloat(imp.valor.replace(',', '.')) || 0;
+      total += valorNum;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>R$ ${imp.valor}</td>
+        <td>${imp.descricao}</td>
+        <td><span class="badge bg-info">${imp.tipo}</span></td>
+        <td>${imp.chaveContabil || '-'}</td>
+        <td>
+          <button class="btn btn-sm btn-outline-danger" onclick="removerImposto(${idx})">
+            Remover
+          </button>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('totalImpostos').textContent = 
+      `R$ ${total.toFixed(2).replace('.', ',')}`;
+  }
+
+  function removerImposto(idx) {
+    impostos.splice(idx, 1);
+    renderizarImpostos();
+  }
+
+  function proximaPagina() {
+    // Validação dos campos principais
+    const camposObrigatorios = ['empresa','fornecedor','nrFornecedor','processo','pasta','reclamante'];
+    let ok = true;
+    
+    camposObrigatorios.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.classList.add('is-invalid');
+        ok = false;
+      } else {
+        el.classList.remove('is-invalid');
+      }
+    });
+
+    if (!ok) {
+      alert('Preencha todos os campos obrigatórios!');
+      return;
+    }
+
+    if (beneficiarios.length === 0 && impostos.length === 0) {
+      alert('Adicione pelo menos um beneficiário ou INSS/Imposto!');
+      return;
+    }
+
+    // Captura o valor do tipoNota corretamente
+    const tipoNotaValue = document.getElementById('tipoNota').value;
+    const tipoNotaFinal = tipoNotaValue === '' ? 'Padrão' : tipoNotaValue;
+
+    // Salva dados no sessionStorage
+    const dados = {
+      empresa: document.getElementById('empresa').value,
+      tipoNota: tipoNotaFinal,
+      fornecedor: document.getElementById('fornecedor').value,
+      nrFornecedor: document.getElementById('nrFornecedor').value,
+      nomeLocalFornecedor: document.getElementById('nomeLocalFornecedor').value,
+      dataEmissaoNF: document.getElementById('dataEmissaoNF').value,
+      quantia: document.getElementById('quantia').value,
+      processo: document.getElementById('processo').value,
+      pasta: document.getElementById('pasta').value,
+      reclamante: document.getElementById('reclamante').value,
+      descricaoItem: document.getElementById('descricaoItem').value,
+      beneficiarios: beneficiarios,
+      impostos: impostos,
+      usuario: usuario,
+      dataEnvio: new Date().toISOString()
     };
 
-    // Botão Próximo: salvar no sessionStorage e ir para analista
-    document.getElementById('btnProximo').addEventListener('click', () => {
-      if (itens.length === 0) {
-        alert('Adicione pelo menos um item antes de continuar.');
-        return;
-      }
-      sessionStorage.setItem('acoesJudiciaisItens', JSON.stringify(itens));
-      window.location.href = 'acoes-judiciais-analista.html';
-    });
+    // Salva no sessionStorage
+    sessionStorage.setItem('dadosAcaoJudicial', JSON.stringify(dados));
+    
+    // Debug - verificar se salvou corretamente
+    console.log('✅ Dados salvos:', dados);
+    console.log('📦 SessionStorage:', sessionStorage.getItem('dadosAcaoJudicial'));
 
-    // Inicialização
-    renderTabela();
-  </script>
+    // Redireciona para tela do analista
+    window.location.href = 'acoes-judiciais-analista.html';
+  }
+</script>
 </body>
 </html>

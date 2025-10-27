@@ -1,261 +1,585 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ações Judiciais – Análise de Negócio</title>
+  <title>Ações Judiciais - Análise</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     :root {
-      --brand: #2563eb;
-      --brand-600: #1d4ed8;
+      --brand: #72bf44;
+      --brand-600: #5fa535;
+      --brand-light: #9fc612;
       --ink: #0f172a;
       --muted: #64748b;
+      --paper: #ffffff;
       --bg: #f3f6fb;
-      --border: #e5e7eb;
-      --success: #16a34a;
+      --success: #72bf44;
       --danger: #e11d48;
+      --border: #e5e7eb;
       --table-stripe: #fafbff;
     }
+
     body {
       background: var(--bg);
       color: var(--ink);
-      padding: 1rem;
     }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      color: var(--ink);
+      letter-spacing: .2px;
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-600) 100%);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .topbar .fw-bold {
+      color: #fff;
+      font-size: 1.2rem;
+    }
+
+    .topbar .text-muted {
+      color: rgba(255, 255, 255, 0.85) !important;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(2, 6, 23, .05);
+    }
+
+    .card-header {
+      background: linear-gradient(180deg, #f8fdf5, #e8f5e0);
+      border-bottom: 1px solid var(--border);
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+
+    .card-header h5 {
+      color: var(--brand-600);
+      font-weight: 700;
+    }
+
+    .info-row {
+      display: flex;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      font-weight: 600;
+      color: var(--muted);
+      min-width: 220px;
+    }
+
+    .info-value {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .form-control,
+    .form-select {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      transition: border-color .2s, box-shadow .2s;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 .2rem rgba(114, 191, 68, .25);
+    }
+
+    .btn-primary {
+      background: var(--brand);
+      border-color: var(--brand);
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-600);
+      border-color: var(--brand-600);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(114, 191, 68, 0.3);
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      border-color: #6c757d;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+      border-color: #545b62;
+    }
+
     .table {
       --bs-table-striped-bg: var(--table-stripe);
       border-color: var(--border);
     }
+
     .table thead th {
       position: sticky;
       top: 0;
-      background: #fff;
+      background: #e8f5e0;
       z-index: 2;
-      border-bottom: 2px solid var(--border);
-      color: #475569;
+      border-bottom: 2px solid var(--brand);
+      color: var(--brand-600);
       font-weight: 700;
+      font-size: 0.85rem;
     }
-    .text-danger {
-      color: var(--danger);
+
+    .table>tbody>tr>td,
+    .table>thead>tr>th {
+      vertical-align: middle;
     }
-    .is-invalid {
-      border-color: var(--danger) !important;
-      box-shadow: 0 0 0 0.25rem rgba(225, 29, 72, 0.25) !important;
+
+    .table-sm td,
+    .table-sm th {
+      padding: .55rem .6rem;
+      font-size: 0.9rem;
     }
-    tr:hover {
-      background-color: #e0e7ff;
-      cursor: pointer;
+
+    .totals-card {
+      border: 1px dashed #d0ecc0;
+      border-radius: 10px;
+      padding: .75rem 1rem;
+      background: #f8fdf5;
+    }
+
+    .totals-card .label {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .totals-card .value {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .totals-card .value.success {
+      color: var(--success);
+    }
+
+    .badge-status {
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .badge-pendente {
+      background: #fef3c7;
+      color: #92400e;
     }
   </style>
 </head>
-<body>
-  <div class="container">
-    <h4>Ações Judiciais – Análise de Negócio</h4>
-    <p><strong>Empresa:</strong> <span id="empresaSpan"></span> | <strong>Usuário:</strong> <span id="usuarioSpan"></span></p>
 
-    <div class="mb-3">
-      <h5>Itens lançados pelo cliente (clique para analisar)</h5>
-      <p><strong>Total dos Itens: R$ <span id="totalItens">0,00</span></strong></p>
-      <table class="table table-hover" id="tabelaItens">
-        <thead>
-          <tr>
-            <th>Empresa</th>
-            <th>Tipo Nota</th>
-            <th>Fornecedor</th>
-            <th>Nr Forn.</th>
-            <th>Nome local</th>
-            <th>Data NF</th>
-            <th>NFF/CI</th>
-            <th>Quantia</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+<body>
+  <nav class="topbar">
+    <div class="container py-2 d-flex align-items-center justify-content-between">
+      <div class="fw-bold">Portal Financeiro - Ações Judiciais</div>
+      <div class="text-muted small">
+        Empresa: <span id="empresaSpan">-</span> • Analista: <span id="analistaSpan">-</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container my-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h4 class="mb-0">Ações Judiciais – Análise</h4>
+      <div class="d-flex gap-2 align-items-center">
+        <span class="badge-status badge-pendente">
+          ⏱ Pendente de Análise
+        </span>
+        <a href="dashboard.html" class="btn btn-outline-secondary btn-sm">← Voltar</a>
+      </div>
     </div>
 
-    <form id="formAnalise" class="row g-3 needs-validation" novalidate>
-      <h5>Campos para análise (preenchidos pelo analista)</h5>
+    <!-- Dados do Pagamento -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Dados do Pagamento</h5>
+      </div>
+      <div class="card-body">
+        <div class="info-row">
+          <div class="info-label">Empresa:</div>
+          <div class="info-value" id="infoEmpresa">-</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Tipo de Nota:</div>
+          <div class="info-value" id="infoTipoNota">-</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Fornecedor:</div>
+          <div class="info-value" id="infoFornecedor">-</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Nr do Fornecedor:</div>
+          <div class="info-value" id="infoNrFornecedor">-</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Nome local do Fornecedor:</div>
+          <div class="info-value" id="infoNomeLocalFornecedor">-</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Data da Emissão da NF:</div>
+          <div class="info-value" id="infoDataEmissaoNF">-</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Quantia:</div>
+          <div class="info-value" id="infoQuantia">-</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Processo:</div>
+          <div class="info-value" id="infoProcesso">-</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Pasta:</div>
+          <div class="info-value" id="infoPasta">-</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Reclamante:</div>
+          <div class="info-value" id="infoReclamante">-</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Descrição:</div>
+          <div class="info-value" id="infoDescricao">-</div>
+        </div>
+      </div>
+    </div>
 
-      <div class="col-md-6">
-        <label for="nff" class="form-label text-danger">Nº da NFF/C.I.</label>
-        <input type="text" id="nff" class="form-control" required />
-        <div class="invalid-feedback">Informe o Nº da NFF/C.I.</div>
+    <!-- Beneficiários -->
+    <div class="card mb-4" id="cardBeneficiarios" style="display:none;">
+      <div class="card-header">
+        <h5 class="mb-0">Beneficiários</h5>
       </div>
-      <div class="col-md-6">
-        <label for="quantiaNff" class="form-label text-danger">Quantia da NFF/C.I. (R$)</label>
-        <input type="number" step="0.01" id="quantiaNff" class="form-control" required />
-        <div class="invalid-feedback">Informe a quantia da NFF/C.I.</div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm table-striped">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Banco</th>
+                <th>Agência</th>
+                <th>Tipo Conta</th>
+                <th>Nº Conta</th>
+                <th>Valor</th>
+                <th>Descrição</th>
+                <th>Chave Contábil</th>
+                <th>Data Pagamento</th>
+              </tr>
+            </thead>
+            <tbody id="tabelaBeneficiarios"></tbody>
+          </table>
+        </div>
+        <div class="totals-card mt-3">
+          <div class="d-flex justify-content-between">
+            <span class="label">Total:</span>
+            <span class="value success" id="totalBeneficiarios">R$ 0,00</span>
+          </div>
+        </div>
       </div>
-      <div class="col-md-6">
-        <label for="dataGl" class="form-label">Data GL</label>
-        <input type="date" id="dataGl" class="form-control" />
-      </div>
-      <div class="col-md-6">
-        <label for="dataTaxa" class="form-label">Data Taxa Pagto</label>
-        <input type="date" id="dataTaxa" class="form-control" />
-      </div>
-      <div class="col-md-6">
-        <label for="descricao" class="form-label">Descrição</label>
-        <textarea id="descricao" class="form-control" rows="2"></textarea>
-      </div>
-      <div class="col-md-6">
-        <label for="condicoes" class="form-label">Condições</label>
-        <textarea id="condicoes" class="form-control" rows="2"></textarea>
-      </div>
-      <div class="col-md-6">
-        <label for="chaveContabil" class="form-label">Chave Contábil</label>
-        <input type="text" id="chaveContabil" class="form-control" />
-      </div>
-      <div class="col-md-6">
-        <label for="metodoPagamento" class="form-label">Método de Pagamento</label>
-        <select id="metodoPagamento" class="form-select">
-          <option value="">Selecione</option>
-          <option>Eletrônico</option>
-          <option>Bordero</option>
-          <option>Cheque</option>
-          <option>Dinheiro</option>
-        </select>
-      </div>
-      <div class="col-md-6">
-        <label for="grupoPagamento" class="form-label">Grupo de Pagamento</label>
-        <input type="text" id="grupoPagamento" class="form-control" />
-      </div>
-      <div class="col-md-6">
-        <label for="pais" class="form-label">País</label>
-        <input type="text" id="pais" class="form-control" />
-      </div>
+    </div>
 
-      <div class="col-12">
-        <button type="submit" class="btn btn-primary">Salvar Análise</button>
+    <!-- INSS/Impostos -->
+    <div class="card mb-4" id="cardImpostos" style="display:none;">
+      <div class="card-header">
+        <h5 class="mb-0">INSS / Impostos</h5>
       </div>
-    </form>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-sm table-striped">
+            <thead>
+              <tr>
+                <th>Valor</th>
+                <th>Descrição</th>
+                <th>Tipo</th>
+                <th>Chave Contábil</th>
+              </tr>
+            </thead>
+            <tbody id="tabelaImpostos"></tbody>
+          </table>
+        </div>
+        <div class="totals-card mt-3">
+          <div class="d-flex justify-content-between">
+            <span class="label">Total:</span>
+            <span class="value success" id="totalImpostos">R$ 0,00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Análise do Processo -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Análise do Processo</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="centroCusto" class="form-label">Centro de Custo</label>
+            <select id="centroCusto" class="form-select">
+              <option value="">Selecione</option>
+              <option>CC-001 - Administrativo</option>
+              <option>CC-002 - Financeiro</option>
+              <option>CC-003 - Jurídico</option>
+              <option>CC-004 - Operacional
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="contaContabil" class="form-label">Conta Contábil</label>
+            <input type="text" id="contaContabil" class="form-control" placeholder="Ex: 1.1.01.001" />
+          </div>
+          <div class="col-md-12">
+            <label for="categoria" class="form-label">Categoria</label>
+            <select id="categoria" class="form-select">
+              <option>Ação Trabalhista</option>
+              <option>Ação Cível</option>
+              <option>Acordo Judicial</option>
+              <option>Honorários Advocatícios</option>
+              <option>Custas Processuais</option>
+            </select>
+          </div>
+          <div class="col-md-12">
+            <label for="observacoes" class="form-label">Observações do Analista</label>
+            <textarea id="observacoes" class="form-control" rows="4"
+              placeholder="Adicione observações sobre a análise..."></textarea>
+          </div>
+          <div class="col-md-12">
+            <label for="statusAnalise" class="form-label">Status da Análise</label>
+            <select id="statusAnalise" class="form-select">
+              <option value="">Selecione</option>
+              <option value="Aprovado">Aprovado</option>
+              <option value="Rejeitado">Rejeitado</option>
+              <option value="Pendente">Pendente de Informações</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dados do Anexo -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5 class="mb-0">Dados do Anexo</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="dataEmissaoNF" class="form-label">Data da Emissão da NF</label>
+            <input type="date" id="dataEmissaoNF" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label for="numeroNFF" class="form-label">Nº da NFF/C.I</label>
+            <input type="text" id="numeroNFF" class="form-control" placeholder="Número da NFF/C.I" />
+          </div>
+          <div class="col-md-12">
+            <label for="quantiaNFF" class="form-label">Quantia da NFF/C.I (R$)</label>
+            <input type="text" id="quantiaNFF" class="form-control" placeholder="0,00" />
+          </div>
+          <div class="col-md-6">
+            <label for="dataGL" class="form-label">Data GL</label>
+            <input type="date" id="dataGL" class="form-control" />
+          </div>
+          <div class="col-md-6">
+            <label for="dataTaxaPagto" class="form-label">Data Taxa Pagto</label>
+            <input type="date" id="dataTaxaPagto" class="form-control" />
+          </div>
+          <div class="col-md-12">
+            <label for="vincularAcao" class="form-label">Vincular Ação</label>
+            <input type="text" id="vincularAcao" class="form-control" placeholder="Ordem de Compra"
+              value="Ordem de Compra" readonly />
+          </div>
+          <div class="col-md-12">
+            <label for="dataCondicoes" class="form-label">Data das Condições</label>
+            <input type="date" id="dataCondicoes" class="form-control" />
+          </div>
+          <div class="col-md-12">
+            <label for="condicoes" class="form-label">Condições</label>
+            <input type="text" id="condicoes" class="form-control" placeholder="À vista" value="À vista" readonly />
+          </div>
+          <div class="col-md-6">
+            <label for="metodoPagamento" class="form-label">Método de Pagamento</label>
+            <select id="metodoPagamento" class="form-select">
+              <option value="">Selecione</option>
+              <option value="eletronico">Eletronico</option>
+              <option value="Transferência">Transferência</option>
+              <option value="Boleto">Boleto</option>
+              <option value="Cheque">Cheque</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="grupoPagamento" class="form-label">Grupo de Pagamento</label>
+            <input type="text" id="grupoPagamento" class="form-control" placeholder="Fornecedores" value="Fornecedores"
+              readonly />
+          </div>
+          <div class="col-md-12">
+            <label for="chaveContabilAnexo" class="form-label">Chave Contábil</label>
+            <input type="text" id="chaveContabilAnexo" class="form-control" placeholder="Informe a chave contábil" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botões -->
+    <div class="d-flex gap-2">
+      <button class="btn btn-secondary flex-fill" onclick="voltar()">
+        ← Voltar
+      </button>
+      <button class="btn btn-primary flex-fill" onclick="finalizarAnalise()">
+        ✓ Finalizar Análise
+      </button>
+    </div>
   </div>
 
-<script>
-  // Contexto do login
-  const empresaCtx = sessionStorage.getItem('empresa') || 'Empresa A';
-  const usuarioCtx = sessionStorage.getItem('usuario') || 'usuario@exemplo.com';
-  document.getElementById('empresaSpan').textContent = empresaCtx;
-  document.getElementById('usuarioSpan').textContent = usuarioCtx;
+  <script>
+    const empresa = sessionStorage.getItem('empresa');
+    const analista = sessionStorage.getItem('usuario');
+    document.getElementById('empresaSpan').textContent = empresa || '-';
+    document.getElementById('analistaSpan').textContent = analista || '-';
 
-  // Dados carregados do sessionStorage
-  let itens = JSON.parse(sessionStorage.getItem('acoesJudiciaisItens') || '[]');
+    // Carrega dados do sessionStorage
+    const dadosJSON = sessionStorage.getItem('dadosAcaoJudicial');
+    if (!dadosJSON) {
+      alert('Nenhum dado encontrado. Redirecionando...');
+      window.location.href = 'acoes-judiciais.html';
+    }
 
-  // Formatação moeda BRL
-  const brMoney = v => Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-  const fmtDate = v => {
-    if (!v) return '';
-    const d = new Date(v);
-    return isNaN(d) ? '' : d.toLocaleDateString('pt-BR');
-  };
+    const dados = JSON.parse(dadosJSON);
 
-  const tbody = document.querySelector('#tabelaItens tbody');
-  const totalItensSpan = document.getElementById('totalItens');
+    // Preenche dados do pagamento
+    document.getElementById('infoEmpresa').textContent = dados.empresa || '-';
+    document.getElementById('infoTipoNota').textContent = dados.tipoNota || 'Padrão';
+    document.getElementById('infoFornecedor').textContent = dados.fornecedor || '-';
+    document.getElementById('infoNrFornecedor').textContent = dados.nrFornecedor || '-';
+    document.getElementById('infoNomeLocalFornecedor').textContent = dados.nomeLocalFornecedor || '-';
+    document.getElementById('infoDataEmissaoNF').textContent = dados.dataEmissaoNF ?
+      new Date(dados.dataEmissaoNF + 'T00:00:00').toLocaleDateString('pt-BR') : '-';
+    document.getElementById('infoQuantia').textContent = dados.quantia ? `R$ ${dados.quantia}` : '-';
+    document.getElementById('infoProcesso').textContent = dados.processo || '-';
+    document.getElementById('infoPasta').textContent = dados.pasta || '-';
+    document.getElementById('infoReclamante').textContent = dados.reclamante || '-';
+    document.getElementById('infoDescricao').textContent = dados.descricaoItem || '-';
 
-  let selecionadoIndex = null;
+    // Renderiza beneficiários
+    if (dados.beneficiarios && dados.beneficiarios.length > 0) {
+      document.getElementById('cardBeneficiarios').style.display = 'block';
+      const tbody = document.getElementById('tabelaBeneficiarios');
+      let total = 0;
 
-  function renderTabela() {
-    tbody.innerHTML = '';
-    let soma = 0;
-    itens.forEach((item, idx) => {
-      soma += Number(item.quantia) || 0;
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${item.empresa || ''}</td>
-        <td>${item.tipoNota || ''}</td>
-        <td>${item.fornecedor || ''}</td>
-        <td>${item.nrFornecedor || ''}</td>
-        <td>${item.nomeLocalFornecedor || ''}</td>
-        <td>${fmtDate(item.dataEmissaoNF)}</td>
-        <td>${item.nrNFFCI || ''}</td>
-        <td>${brMoney(item.quantia)}</td>
+      dados.beneficiarios.forEach(b => {
+        const valorNum = parseFloat(b.valor.replace(',', '.')) || 0;
+        total += valorNum;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+        <td>${b.nome}</td>
+        <td>${b.cpf}</td>
+        <td>${b.banco}</td>
+        <td>${b.agencia || '-'}</td>
+        <td>${b.tipoConta}</td>
+        <td>${b.numeroConta}</td>
+        <td>R$ ${b.valor}</td>
+        <td>${b.descricao || '-'}</td>
+        <td>${b.chaveContabil || '-'}</td>
+        <td>${b.dataPagamento ? new Date(b.dataPagamento + 'T00:00:00').toLocaleDateString('pt-BR') : '-'}</td>
       `;
-      tr.style.cursor = 'pointer';
-      tr.onclick = () => selecionarItem(idx);
-      tbody.appendChild(tr);
-    });
-    totalItensSpan.textContent = brMoney(soma);
-  }
+        tbody.appendChild(tr);
+      });
 
-  function selecionarItem(idx) {
-    selecionadoIndex = idx;
-    const item = itens[idx];
-    if (!item) return;
+      document.getElementById('totalBeneficiarios').textContent =
+        `R$ ${total.toFixed(2).replace('.', ',')}`;
+    }
 
-    // Preenche os campos do formulário com dados do item e da análise (se existir)
-    document.getElementById('nff').value = item.nrNFFCI || '';
-    document.getElementById('quantiaNff').value = item.quantia || '';
-    document.getElementById('dataGl').value = item.analise?.dataGl || '';
-    document.getElementById('dataTaxa').value = item.analise?.dataTaxa || '';
-    document.getElementById('descricao').value = item.analise?.descricao || '';
-    document.getElementById('condicoes').value = item.analise?.condicoes || '';
-    document.getElementById('chaveContabil').value = item.analise?.chaveContabil || '';
-    document.getElementById('metodoPagamento').value = item.analise?.metodoPagamento || '';
-    document.getElementById('grupoPagamento').value = item.analise?.grupoPagamento || '';
-    document.getElementById('pais').value = item.analise?.pais || '';
+    // Renderiza INSS/Impostos
+    if (dados.impostos && dados.impostos.length > 0) {
+      document.getElementById('cardImpostos').style.display = 'block';
+      const tbody = document.getElementById('tabelaImpostos');
+      let total = 0;
 
-    // Remove marcação de erro ao preencher
-    ['nff', 'quantiaNff'].forEach(id => {
-      document.getElementById(id).classList.remove('is-invalid');
-    });
-  }
+      dados.impostos.forEach(imp => {
+        const valorNum = parseFloat(imp.valor.replace(',', '.')) || 0;
+        total += valorNum;
 
-  // Validação simples dos campos obrigatórios
-  function validarCampos() {
-    let valido = true;
-    ['nff', 'quantiaNff'].forEach(id => {
-      const el = document.getElementById(id);
-      if (!el.value.trim()) {
-        el.classList.add('is-invalid');
-        valido = false;
-      } else {
-        el.classList.remove('is-invalid');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+        <td>R$ ${imp.valor}</td>
+        <td>${imp.descricao}</td>
+        <td><span class="badge bg-info">${imp.tipo}</span></td>
+        <td>${imp.chaveContabil || '-'}</td>
+      `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('totalImpostos').textContent =
+        `R$ ${total.toFixed(2).replace('.', ',')}`;
+    }
+
+    function voltar() {
+      window.location.href = 'acoes-judiciais.html';
+    }
+
+    function finalizarAnalise() {
+      const centroCusto = document.getElementById('centroCusto').value;
+      const contaContabil = document.getElementById('contaContabil').value;
+      const categoria = document.getElementById('categoria').value;
+      const statusAnalise = document.getElementById('statusAnalise').value;
+
+      if (!centroCusto || !contaContabil || !categoria || !statusAnalise) {
+        alert('Preencha todos os campos obrigatórios da análise!');
+        return;
       }
-    });
-    return valido;
-  }
 
-  document.getElementById('formAnalise').addEventListener('submit', e => {
-    e.preventDefault();
+      // Adiciona dados da análise
+      dados.analise = {
+        centroCusto,
+        contaContabil,
+        categoria,
+        observacoes: document.getElementById('observacoes').value,
+        statusAnalise,
+        dataEmissaoNF: document.getElementById('dataEmissaoNF').value,
+        numeroNFF: document.getElementById('numeroNFF').value,
+        quantiaNFF: document.getElementById('quantiaNFF').value,
+        dataGL: document.getElementById('dataGL').value,
+        dataTaxaPagto: document.getElementById('dataTaxaPagto').value,
+        vincularAcao: document.getElementById('vincularAcao').value,
+        dataCondicoes: document.getElementById('dataCondicoes').value,
+        condicoes: document.getElementById('condicoes').value,
+        metodoPagamento: document.getElementById('metodoPagamento').value,
+        grupoPagamento: document.getElementById('grupoPagamento').value,
+        chaveContabilAnexo: document.getElementById('chaveContabilAnexo').value,
+        analista: analista,
+        dataAnalise: new Date().toISOString()
+      };
 
-    console.log('selecionadoIndex:', selecionadoIndex);
-    console.log('nff:', document.getElementById('nff').value);
-    console.log('quantiaNff:', document.getElementById('quantiaNff').value);
+      sessionStorage.setItem('dadosAcaoJudicial', JSON.stringify(dados));
 
-    if (selecionadoIndex === null) {
-      alert('Selecione um item para analisar.');
-      return;
+      alert('Análise finalizada com sucesso!');
+      window.location.href = 'acoes-judiciais-relatorio.html';
     }
-    if (!validarCampos()) {
-      alert('Preencha os campos obrigatórios destacados em vermelho.');
-      return;
-    }
-
-    // Atualiza os dados do item com os campos do analista
-    itens[selecionadoIndex].analise = {
-      dataGl: document.getElementById('dataGl').value,
-      dataTaxa: document.getElementById('dataTaxa').value,
-      descricao: document.getElementById('descricao').value,
-      condicoes: document.getElementById('condicoes').value,
-      chaveContabil: document.getElementById('chaveContabil').value,
-      metodoPagamento: document.getElementById('metodoPagamento').value,
-      grupoPagamento: document.getElementById('grupoPagamento').value,
-      pais: document.getElementById('pais').value
-    };
-
-    // Atualiza campos obrigatórios no item principal
-    itens[selecionadoIndex].nrNFFCI = document.getElementById('nff').value.trim();
-    itens[selecionadoIndex].quantia = Number(document.getElementById('quantiaNff').value);
-
-    // Salva no sessionStorage
-    sessionStorage.setItem('acoesJudiciaisItens', JSON.stringify(itens));
-
-    // Redireciona para a próxima tela de demonstração
-    window.location.href = 'acoes-judiciais-analista-resultado.html';
-  });
-
-  // Inicializa
-  renderTabela();
-</script>
+  </script>
 </body>
+
 </html>
