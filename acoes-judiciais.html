@@ -44,7 +44,7 @@
   .card-header h5{ color: var(--brand-600); font-weight: 700; }
 
   .form-label{ font-weight:600; color:#334155; }
-  .form-control,.form-select{
+  .form-control,.form-select, .form-control:disabled{
     border-radius:10px; border:1px solid var(--border);
     transition: border-color .2s, box-shadow .2s;
   }
@@ -52,6 +52,7 @@
     border-color: var(--brand);
     box-shadow: 0 0 0 .2rem rgba(114, 191, 68, .25);
   }
+  .form-control[readonly] { background-color: #e9ecef; }
   .btn-primary{
     background:var(--brand); border-color:var(--brand);
     border-radius:10px; font-weight:600;
@@ -102,17 +103,18 @@
 
   <div class="container my-4">
     <div class="d-flex align-items-center justify-content-between mb-3">
-      <h4 class="mb-0">Adicionar Item de Pagamento</h4>
+      <h4 class="mb-0">Nova Solicitação de Pagamento</h4>
       <a href="dashboard.html" class="btn btn-outline-secondary btn-sm">← Voltar</a>
     </div>
 
     <!-- Seção: Dados do Item de Pagamento -->
     <div class="card mb-4">
       <div class="card-header">
-        <h5 class="mb-0">Dados do Item de Pagamento</h5>
+        <h5 class="mb-0">Dados da Solicitação</h5>
       </div>
       <div class="card-body">
         <div class="row g-3">
+          <!-- Linha 1 -->
           <div class="col-md-6">
             <label for="empresa" class="form-label">Empresa</label>
             <select id="empresa" class="form-select">
@@ -125,16 +127,18 @@
           <div class="col-md-6">
             <label for="tipoNota" class="form-label">Tipo de Nota</label>
             <select id="tipoNota" class="form-select">
-              <option value="">Padrão</option>
+              <option value="Padrão">Padrão</option>
               <option value="NF">Nota Fiscal</option>
               <option value="Recibo">Recibo</option>
               <option value="Outros">Outros</option>
             </select>
           </div>
+          <!-- Linha 2 -->
           <div class="col-md-12">
             <label for="fornecedor" class="form-label">Fornecedor</label>
             <input type="text" id="fornecedor" value="BALDANI E TERCARIOLI ADVOGADOS ASSOCIADOS" class="form-control" placeholder="Nome do fornecedor" />
           </div>
+          <!-- Linha 3 -->
           <div class="col-md-6">
             <label for="nrFornecedor" class="form-label">Nr do Fornecedor</label>
             <input type="text" id="nrFornecedor" value="00513856" class="form-control" placeholder="00513856" />
@@ -143,14 +147,20 @@
             <label for="nomeLocalFornecedor" class="form-label">Nome local do Fornecedor</label>
             <input type="text" id="nomeLocalFornecedor" value="000144" class="form-control" placeholder="000144" />
           </div>
-          <div class="col-md-6">
+          <!-- Linha 4 -->
+          <div class="col-md-4">
             <label for="dataEmissaoNF" class="form-label">Data da Emissão da NF</label>
             <input type="date" id="dataEmissaoNF" class="form-control" />
           </div>
-          <div class="col-md-6">
-            <label for="quantia" class="form-label">Quantia (R$)</label>
-            <input type="text" id="quantia" class="form-control" placeholder="0,00" />
+          <div class="col-md-4">
+            <label for="numeroNFF" class="form-label">Nº da NFF/C.I</label>
+            <input type="text" id="numeroNFF" class="form-control" placeholder="Número NFF/C.I" />
           </div>
+          <div class="col-md-4">
+            <label for="quantiaNFF" class="form-label">Quantia da NFF/C.I (R$)</label>
+            <input type="text" id="quantiaNFF" class="form-control" placeholder="0,00" />
+          </div>
+          <!-- Linha 5 -->
           <div class="col-md-4">
             <label for="processo" class="form-label">Processo</label>
             <input type="text" id="processo" class="form-control" placeholder="Número do processo" />
@@ -163,9 +173,62 @@
             <label for="reclamante" class="form-label">Reclamante</label>
             <input type="text" id="reclamante" class="form-control" placeholder="Nome do reclamante" />
           </div>
+          <!-- Linha 6 -->
+          <div class="col-md-6">
+            <label for="centroCusto" class="form-label">Centro de Custo</label>
+            <select id="centroCusto" class="form-select">
+              <option value="">Selecione</option>
+              <option>CC-001 - Administrativo</option>
+              <option>CC-002 - Financeiro</option>
+              <option>CC-003 - Jurídico</option>
+              <option>CC-004 - Operacional</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="categoria" class="form-label">Categoria</label>
+            <select id="categoria" class="form-select">
+              <option value="">Selecione</option>
+              <option>Ação Trabalhista</option>
+              <option>Ação Cível</option>
+              <option>Acordo Judicial</option>
+              <option>Honorários Advocatícios</option>
+              <option>Custas Processuais</option>
+            </select>
+          </div>
+          <!-- Linha 7 - Campos Fixos/Automáticos -->
+          <div class="col-md-3">
+            <label for="dataGL" class="form-label">Data GL</label>
+            <input type="date" id="dataGL" class="form-control" readonly />
+          </div>
+          <div class="col-md-3">
+            <label for="dataTaxaPagto" class="form-label">Data Taxa Pagto</label>
+            <input type="date" id="dataTaxaPagto" class="form-control" readonly />
+          </div>
+          <div class="col-md-3">
+            <label for="dataCondicoes" class="form-label">Data das Condições</label>
+            <input type="date" id="dataCondicoes" class="form-control" readonly />
+          </div>
+          <div class="col-md-3">
+            <label for="vincularAcao" class="form-label">Vincular Ação</label>
+            <input type="text" id="vincularAcao" class="form-control" value="Ordem de Compra" readonly />
+          </div>
+          <!-- Linha 8 - Campos Fixos -->
+          <div class="col-md-4">
+            <label for="condicoes" class="form-label">Condições</label>
+            <input type="text" id="condicoes" class="form-control" value="À vista" readonly />
+          </div>
+          <div class="col-md-4">
+            <label for="metodoPagamento" class="form-label">Método de Pagamento</label>
+            <input type="text" id="metodoPagamento" class="form-control" value="Eletronico" readonly />
+          </div>
+          <div class="col-md-4">
+            <label for="grupoPagamento" class="form-label">Grupo de Pagamento</label>
+            <input type="text" id="grupoPagamento" class="form-control" value="Fornecedores" readonly />
+          </div>
+          <!-- Linha 9 - Descrição e Anexos -->
           <div class="col-md-12">
             <label for="descricaoItem" class="form-label">Descrição</label>
-            <textarea id="descricaoItem" class="form-control" rows="3" placeholder="Descreva detalhes sobre o pagamento..."></textarea>
+            <textarea id="descricaoItem" class="form-control" rows="7" placeholder="Descreva detalhes sobre o pagamento..."></textarea>
           </div>
           <div class="col-md-12">
             <label for="anexosItem" class="form-label">Anexos</label>
@@ -176,20 +239,38 @@
       </div>
     </div>
 
-    <!-- Seção: Adicionar Beneficiários -->
+    <!-- Seção Unificada: Adicionar Itens de Pagamento -->
     <div class="card mb-4">
       <div class="card-header">
-        <h5 class="mb-0">Adicionar Beneficiários</h5>
+        <h5 class="mb-0">Adicionar Itens de Pagamento</h5>
       </div>
       <div class="card-body">
         <div class="row g-3">
+          <div class="col-md-12">
+            <label for="tipoItem" class="form-label">Tipo de Item</label>
+            <select id="tipoItem" class="form-select">
+              <option value="beneficiario">Beneficiário</option>
+              <option value="imposto">INSS / Imposto</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Campos para Beneficiário -->
+        <div id="camposBeneficiario" class="row g-3 mt-2">
           <div class="col-md-6">
             <label for="nomeBenef" class="form-label">Nome Beneficiário</label>
             <input type="text" id="nomeBenef" class="form-control" placeholder="Nome completo" />
           </div>
-          <div class="col-md-6">
-            <label for="cpfBenef" class="form-label">CPF Beneficiário</label>
-            <input type="text" id="cpfBenef" class="form-control" placeholder="000.000.000-00" />
+          <div class="col-md-3">
+            <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
+            <select id="tipoDocumento" class="form-select">
+              <option value="CPF">CPF</option>
+              <option value="CNPJ">CNPJ</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="numeroDocumento" class="form-label">CPF/CNPJ do Beneficiário</label>
+            <input type="text" id="numeroDocumento" class="form-control" placeholder="000.000.000-00" maxlength="14" />
           </div>
           <div class="col-md-3">
             <label for="bancoBenef" class="form-label">Banco</label>
@@ -213,77 +294,34 @@
             <input type="text" id="numeroContaBenef" class="form-control" placeholder="0000-0" />
           </div>
           <div class="col-md-3">
-            <label for="valorBenef" class="form-label">Valor do Benefício (R$)</label>
+            <label for="valorBenef" class="form-label">Valor (R$)</label>
             <input type="text" id="valorBenef" class="form-control" placeholder="0,00" />
           </div>
           <div class="col-md-9">
-            <label for="descricaoBenef" class="form-label">Descrição do beneficio</label>
-            <textarea rows="3" id="descricaoBenef" class="form-control" placeholder="Descreva o que é o pagamento" > </textarea>
+            <label for="descricaoBenef" class="form-label">Descrição do Pagamento</label>
+            <textarea id="descricaoBenef" class="form-control" placeholder="Descreva o que é o pagamento"></textarea>
           </div>
           <div class="col-md-6">
-            <label for="chaveContabil" class="form-label">Chave Contábil</label>
-            <input type="text" id="chaveContabil" class="form-control" placeholder="Ex: 1.2.3.4.5" />
+            <label for="chaveContabilBenef" class="form-label">Chave Contábil</label>
+            <input type="text" id="chaveContabilBenef" class="form-control" placeholder="Ex: 1.2.3.4.5" />
           </div>
           <div class="col-md-6">
-            <label for="dataPagamento" class="form-label">Data do Pagamento</label>
-            <input type="date" id="dataPagamento" class="form-control" />
-          </div>
-          <div class="col-12">
-            <button type="button" class="btn btn-outline-primary" onclick="adicionarBeneficiario()">
-              + Adicionar Beneficiário
-            </button>
+            <label for="dataPagamentoBenef" class="form-label">Data do Pagamento</label>
+            <input type="date" id="dataPagamentoBenef" class="form-control" />
           </div>
         </div>
 
-        <!-- Tabela de Beneficiários -->
-        <div class="mt-4" id="listaBeneficiarios" style="display:none;">
-          <h6 class="mb-3">Beneficiários Adicionados</h6>
-          <div class="table-responsive">
-            <table class="table table-sm table-striped">
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>CPF</th>
-                  <th>Banco</th>
-                  <th>Agência</th>
-                  <th>Tipo Conta</th>
-                  <th>Nº Conta</th>
-                  <th>Valor</th>
-                  <th>Descrição</th>
-                  <th>Chave Contábil</th>
-                  <th>Data Pagamento</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody id="tabelaBeneficiarios"></tbody>
-            </table>
+        <!-- Campos para INSS/Imposto -->
+        <div id="camposImposto" class="row g-3 mt-2" style="display:none;">
+          <div class="col-md-12">
+            <label for="descricaoImposto" class="form-label">Descrição</label>
+            <textarea id="descricaoImposto" class="form-control" placeholder="Descreva o pagamento"></textarea>
           </div>
-          <div class="totals-card mt-3">
-            <div class="d-flex justify-content-between">
-              <span class="label">Total Beneficiários:</span>
-              <span class="value success" id="totalBeneficiarios">R$ 0,00</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Seção: Adicionar INSS/Impostos -->
-    <div class="card mb-4">
-      <div class="card-header">
-        <h5 class="mb-0">Adicionar INSS / Impostos</h5>
-      </div>
-      <div class="card-body">
-        <div class="row g-3">
-          <div class="col-md-3">
+          <div class="col-md-4">
             <label for="valorImposto" class="form-label">Valor (R$)</label>
             <input type="text" id="valorImposto" class="form-control" placeholder="0,00" />
           </div>
-          <div class="col-md-9">
-            <label for="descricaoImposto" class="form-label">Descrição</label>
-            <input type="text" id="descricaoImposto" class="form-control" placeholder="Descreva o pagamento" />
-          </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
             <label for="tipoImposto" class="form-label">Tipo de Pagamento</label>
             <select id="tipoImposto" class="form-select">
               <option value="">Selecione</option>
@@ -291,38 +329,46 @@
               <option value="Imposto">Imposto</option>
             </select>
           </div>
-          <div class="col-md-6">
+          <div class="col-md-4">
+            <label for="dataPagamentoImposto" class="form-label">Data do Pagamento</label>
+            <input type="date" id="dataPagamentoImposto" class="form-control" />
+          </div>
+          <div class="col-md-12">
             <label for="chaveContabilImposto" class="form-label">Chave Contábil</label>
             <input type="text" id="chaveContabilImposto" class="form-control" placeholder="Ex: 1.2.3.4.5" />
           </div>
-          <div class="col-12">
-            <button type="button" class="btn btn-outline-primary" onclick="adicionarImposto()">
-              + Adicionar INSS/Imposto
-            </button>
-          </div>
         </div>
 
-        <!-- Tabela de INSS/Impostos -->
-        <div class="mt-4" id="listaImpostos" style="display:none;">
-          <h6 class="mb-3">INSS/Impostos Adicionados</h6>
+        <div class="col-12 mt-3">
+          <button type="button" class="btn btn-outline-primary" onclick="adicionarItem()">
+            + Adicionar Item
+          </button>
+        </div>
+
+        <!-- Tabela de Itens Adicionados -->
+        <div class="mt-4" id="listaItens" style="display:none;">
+          <h6 class="mb-3">Itens Adicionados</h6>
           <div class="table-responsive">
             <table class="table table-sm table-striped">
               <thead>
                 <tr>
-                  <th>Valor</th>
-                  <th>Descrição</th>
                   <th>Tipo</th>
+                  <th>Nome / Descrição</th>
+                  <th>CPF/CNPJ</th>
+                  <th>Dados Bancários</th>
                   <th>Chave Contábil</th>
+                  <th>Data Pagto</th>
+                  <th>Valor</th>
                   <th>Ações</th>
                 </tr>
               </thead>
-              <tbody id="tabelaImpostos"></tbody>
+              <tbody id="tabelaItens"></tbody>
             </table>
           </div>
           <div class="totals-card mt-3">
             <div class="d-flex justify-content-between">
-              <span class="label">Total INSS/Impostos:</span>
-              <span class="value success" id="totalImpostos">R$ 0,00</span>
+              <span class="label">Total Geral dos Itens:</span>
+              <span class="value success" id="totalItens">R$ 0,00</span>
             </div>
           </div>
         </div>
@@ -332,7 +378,7 @@
     <!-- Botão Próximo -->
     <div class="d-grid gap-2">
       <button class="btn btn-primary btn-lg" onclick="proximaPagina()">
-        Próximo »
+        Enviar para Aprovação »
       </button>
     </div>
   </div>
@@ -343,46 +389,128 @@
   document.getElementById('empresaSpan').textContent = empresa || '-';
   document.getElementById('usuarioSpan').textContent = usuario || '-';
 
-  let beneficiarios = [];
-  let impostos = [];
+  let itensPagamento = [];
 
-  function adicionarBeneficiario() {
-    const nome = document.getElementById('nomeBenef').value.trim();
-    const cpf = document.getElementById('cpfBenef').value.trim();
-    const banco = document.getElementById('bancoBenef').value.trim();
-    const agencia = document.getElementById('agenciaBenef').value.trim();
-    const tipoConta = document.getElementById('tipoContaBenef').value;
-    const numeroConta = document.getElementById('numeroContaBenef').value.trim();
-    const valor = document.getElementById('valorBenef').value.trim();
-    const descricao = document.getElementById('descricaoBenef').value.trim();
-    const chaveContabil = document.getElementById('chaveContabil').value.trim();
-    const dataPagamento = document.getElementById('dataPagamento').value;
+  document.addEventListener('DOMContentLoaded', function() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
 
-    if (!nome || !cpf || !banco || !agencia || !tipoConta || !numeroConta || !valor) {
-      alert('Preencha todos os campos obrigatórios do beneficiário!');
-      return;
+    const dataEmissaoNF_El = document.getElementById('dataEmissaoNF');
+    dataEmissaoNF_El.value = formattedDate;
+    dataEmissaoNF_El.dispatchEvent(new Event('change'));
+  });
+
+  document.getElementById('dataEmissaoNF').addEventListener('change', function() {
+    const data = this.value;
+    document.getElementById('dataGL').value = data;
+    document.getElementById('dataTaxaPagto').value = data;
+    document.getElementById('dataCondicoes').value = data;
+  });
+
+  document.getElementById('tipoItem').addEventListener('change', function() {
+    const tipo = this.value;
+    if (tipo === 'beneficiario') {
+      document.getElementById('camposBeneficiario').style.display = 'flex';
+      document.getElementById('camposImposto').style.display = 'none';
+    } else if (tipo === 'imposto') {
+      document.getElementById('camposBeneficiario').style.display = 'none';
+      document.getElementById('camposImposto').style.display = 'flex';
+    }
+  });
+
+  const tipoDocumentoEl = document.getElementById('tipoDocumento');
+  const numeroDocumentoEl = document.getElementById('numeroDocumento');
+
+  tipoDocumentoEl.addEventListener('change', function() {
+    numeroDocumentoEl.value = '';
+    if (this.value === 'CPF') {
+      numeroDocumentoEl.placeholder = '000.000.000-00';
+      numeroDocumentoEl.maxLength = 14;
+    } else {
+      numeroDocumentoEl.placeholder = '00.000.000/0000-00';
+      numeroDocumentoEl.maxLength = 18;
+    }
+  });
+
+  numeroDocumentoEl.addEventListener('input', function(e) {
+    let value = e.target.value.replace(/\D/g, '');
+    if (tipoDocumentoEl.value === 'CPF') {
+      value = value.replace(/(\d{3})(\d)/, '$1.$2');
+      value = value.replace(/(\d{3})(\d)/, '$1.$2');
+      value = value.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    } else {
+      value = value.replace(/^(\d{2})(\d)/, '$1.$2');
+      value = value.replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3');
+      value = value.replace(/\.(\d{3})(\d)/, '.$1/$2');
+      value = value.replace(/(\d{4})(\d)/, '$1-$2');
+    }
+    e.target.value = value;
+  });
+
+
+  function adicionarItem() {
+    const tipo = document.getElementById('tipoItem').value;
+    let item = { tipo };
+    let valido = true;
+
+    if (tipo === 'beneficiario') {
+      item.nome = document.getElementById('nomeBenef').value.trim();
+      item.tipoDocumento = document.getElementById('tipoDocumento').value;
+      item.numeroDocumento = document.getElementById('numeroDocumento').value.trim();
+      item.banco = document.getElementById('bancoBenef').value.trim();
+      item.agencia = document.getElementById('agenciaBenef').value.trim();
+      item.tipoConta = document.getElementById('tipoContaBenef').value;
+      item.numeroConta = document.getElementById('numeroContaBenef').value.trim();
+      item.valor = document.getElementById('valorBenef').value.trim();
+      item.descricao = document.getElementById('descricaoBenef').value.trim();
+      item.chaveContabil = document.getElementById('chaveContabilBenef').value.trim();
+      item.dataPagamento = document.getElementById('dataPagamentoBenef').value;
+
+      if (!item.nome || !item.numeroDocumento || !item.banco || !item.agencia || !item.tipoConta || !item.numeroConta || !item.valor) {
+        alert('Preencha todos os campos obrigatórios do beneficiário!');
+        valido = false;
+      }
+    } else if (tipo === 'imposto') {
+      item.valor = document.getElementById('valorImposto').value.trim();
+      item.descricao = document.getElementById('descricaoImposto').value.trim();
+      item.tipoImposto = document.getElementById('tipoImposto').value;
+      item.chaveContabil = document.getElementById('chaveContabilImposto').value.trim();
+      item.dataPagamento = document.getElementById('dataPagamentoImposto').value; // <-- NOVO
+
+      if (!item.valor || !item.descricao || !item.tipoImposto || !item.dataPagamento) { // <-- NOVO
+        alert('Preencha todos os campos obrigatórios do INSS/Imposto!');
+        valido = false;
+      }
     }
 
-    beneficiarios.push({
-      nome, cpf, banco, agencia, tipoConta, numeroConta, valor,
-      descricao, chaveContabil, dataPagamento
-    });
-
-    renderizarBeneficiarios();
-
-    // Limpa campos
-    ['nomeBenef','cpfBenef','bancoBenef','agenciaBenef','tipoContaBenef','numeroContaBenef',
-     'valorBenef','descricaoBenef','chaveContabil','dataPagamento'].forEach(id => {
-      const el = document.getElementById(id);
-      el.value = '';
-    });
+    if (valido) {
+      itensPagamento.push(item);
+      renderizarItens();
+      limparCamposItem(tipo);
+    }
   }
 
-  function renderizarBeneficiarios() {
-    const tbody = document.getElementById('tabelaBeneficiarios');
-    const lista = document.getElementById('listaBeneficiarios');
+  function limparCamposItem(tipo) {
+    if (tipo === 'beneficiario') {
+      ['nomeBenef','numeroDocumento','bancoBenef','agenciaBenef','tipoContaBenef','numeroContaBenef',
+       'valorBenef','descricaoBenef','chaveContabilBenef','dataPagamentoBenef'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+    } else if (tipo === 'imposto') {
+      ['valorImposto','descricaoImposto','tipoImposto','chaveContabilImposto', 'dataPagamentoImposto'].forEach(id => { // <-- NOVO
+        document.getElementById(id).value = '';
+      });
+    }
+  }
+
+  function renderizarItens() {
+    const tbody = document.getElementById('tabelaItens');
+    const lista = document.getElementById('listaItens');
     
-    if (beneficiarios.length === 0) {
+    if (itensPagamento.length === 0) {
       lista.style.display = 'none';
       return;
     }
@@ -391,105 +519,57 @@
     tbody.innerHTML = '';
     let total = 0;
 
-    beneficiarios.forEach((b, idx) => {
-      const valorNum = parseFloat(b.valor.replace(',', '.')) || 0;
+    itensPagamento.forEach((item, idx) => {
+      const valorNum = parseFloat(item.valor.replace(',', '.')) || 0;
       total += valorNum;
-
       const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${b.nome}</td>
-        <td>${b.cpf}</td>
-        <td>${b.banco}</td>
-        <td>${b.agencia}</td>
-        <td>${b.tipoConta}</td>
-        <td>${b.numeroConta}</td>
-        <td>R$ ${b.valor}</td>
-        <td>${b.descricao || '-'}</td>
-        <td>${b.chaveContabil || '-'}</td>
-        <td>${b.dataPagamento ? new Date(b.dataPagamento + 'T00:00:00').toLocaleDateString('pt-BR') : '-'}</td>
-        <td>
-          <button class="btn btn-sm btn-outline-danger" onclick="removerBeneficiario(${idx})">
-            Remover
-          </button>
-        </td>
-      `;
+      const dataPagtoFormatada = item.dataPagamento ? new Date(item.dataPagamento + 'T00:00:00').toLocaleDateString('pt-BR') : '-';
+
+      if (item.tipo === 'beneficiario') {
+        tr.innerHTML = `
+          <td><span class="badge bg-primary">Beneficiário</span></td>
+          <td>${item.nome}</td>
+          <td>${item.numeroDocumento}</td>
+          <td>${item.banco} / Ag: ${item.agencia} / CC: ${item.numeroConta}</td>
+          <td>${item.chaveContabil || '-'}</td>
+          <td>${dataPagtoFormatada}</td>
+          <td>R$ ${item.valor}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-danger" onclick="removerItem(${idx})">
+              Remover
+            </button>
+          </td>
+        `;
+      } else if (item.tipo === 'imposto') { // <-- MUDANÇA AQUI
+        tr.innerHTML = `
+          <td><span class="badge bg-info">${item.tipoImposto}</span></td>
+          <td>${item.descricao}</td>
+          <td>-</td>
+          <td>-</td>
+          <td>${item.chaveContabil || '-'}</td>
+          <td>${dataPagtoFormatada}</td>
+          <td>R$ ${item.valor}</td>
+          <td>
+            <button class="btn btn-sm btn-outline-danger" onclick="removerItem(${idx})">
+              Remover
+            </button>
+          </td>
+        `;
+      }
       tbody.appendChild(tr);
     });
 
-    document.getElementById('totalBeneficiarios').textContent = 
+    document.getElementById('totalItens').textContent = 
       `R$ ${total.toFixed(2).replace('.', ',')}`;
   }
 
-  function removerBeneficiario(idx) {
-    beneficiarios.splice(idx, 1);
-    renderizarBeneficiarios();
-  }
-
-  function adicionarImposto() {
-    const valor = document.getElementById('valorImposto').value.trim();
-    const descricao = document.getElementById('descricaoImposto').value.trim();
-    const tipo = document.getElementById('tipoImposto').value;
-    const chaveContabil = document.getElementById('chaveContabilImposto').value.trim();
-
-    if (!valor || !descricao || !tipo) {
-      alert('Preencha todos os campos obrigatórios do INSS/Imposto!');
-      return;
-    }
-
-    impostos.push({ valor, descricao, tipo, chaveContabil });
-    renderizarImpostos();
-
-    // Limpa campos
-    document.getElementById('valorImposto').value = '';
-    document.getElementById('descricaoImposto').value = '';
-    document.getElementById('tipoImposto').value = '';
-    document.getElementById('chaveContabilImposto').value = '';
-  }
-
-  function renderizarImpostos() {
-    const tbody = document.getElementById('tabelaImpostos');
-    const lista = document.getElementById('listaImpostos');
-    
-    if (impostos.length === 0) {
-      lista.style.display = 'none';
-      return;
-    }
-
-    lista.style.display = 'block';
-    tbody.innerHTML = '';
-    let total = 0;
-
-    impostos.forEach((imp, idx) => {
-      const valorNum = parseFloat(imp.valor.replace(',', '.')) || 0;
-      total += valorNum;
-
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>R$ ${imp.valor}</td>
-        <td>${imp.descricao}</td>
-        <td><span class="badge bg-info">${imp.tipo}</span></td>
-        <td>${imp.chaveContabil || '-'}</td>
-        <td>
-          <button class="btn btn-sm btn-outline-danger" onclick="removerImposto(${idx})">
-            Remover
-          </button>
-        </td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    document.getElementById('totalImpostos').textContent = 
-      `R$ ${total.toFixed(2).replace('.', ',')}`;
-  }
-
-  function removerImposto(idx) {
-    impostos.splice(idx, 1);
-    renderizarImpostos();
+  function removerItem(idx) {
+    itensPagamento.splice(idx, 1);
+    renderizarItens();
   }
 
   function proximaPagina() {
-    // Validação dos campos principais
-    const camposObrigatorios = ['empresa','fornecedor','nrFornecedor','processo','pasta','reclamante'];
+    const camposObrigatorios = ['empresa','fornecedor','nrFornecedor','processo','pasta','reclamante', 'centroCusto', 'categoria', 'dataEmissaoNF'];
     let ok = true;
     
     camposObrigatorios.forEach(id => {
@@ -503,47 +583,45 @@
     });
 
     if (!ok) {
-      alert('Preencha todos os campos obrigatórios!');
+      alert('Preencha todos os campos obrigatórios do cabeçalho!');
       return;
     }
 
-    if (beneficiarios.length === 0 && impostos.length === 0) {
-      alert('Adicione pelo menos um beneficiário ou INSS/Imposto!');
+    if (itensPagamento.length === 0) {
+      alert('Adicione pelo menos um item de pagamento (beneficiário ou imposto)!');
       return;
     }
 
-    // Captura o valor do tipoNota corretamente
-    const tipoNotaValue = document.getElementById('tipoNota').value;
-    const tipoNotaFinal = tipoNotaValue === '' ? 'Padrão' : tipoNotaValue;
-
-    // Salva dados no sessionStorage
     const dados = {
       empresa: document.getElementById('empresa').value,
-      tipoNota: tipoNotaFinal,
+      tipoNota: document.getElementById('tipoNota').value,
       fornecedor: document.getElementById('fornecedor').value,
       nrFornecedor: document.getElementById('nrFornecedor').value,
       nomeLocalFornecedor: document.getElementById('nomeLocalFornecedor').value,
       dataEmissaoNF: document.getElementById('dataEmissaoNF').value,
-      quantia: document.getElementById('quantia').value,
+      numeroNFF: document.getElementById('numeroNFF').value,
+      quantiaNFF: document.getElementById('quantiaNFF').value,
       processo: document.getElementById('processo').value,
       pasta: document.getElementById('pasta').value,
       reclamante: document.getElementById('reclamante').value,
+      centroCusto: document.getElementById('centroCusto').value,
+      categoria: document.getElementById('categoria').value,
+      dataGL: document.getElementById('dataGL').value,
+      dataTaxaPagto: document.getElementById('dataTaxaPagto').value,
+      dataCondicoes: document.getElementById('dataCondicoes').value,
+      vincularAcao: document.getElementById('vincularAcao').value,
+      condicoes: document.getElementById('condicoes').value,
+      metodoPagamento: document.getElementById('metodoPagamento').value,
+      grupoPagamento: document.getElementById('grupoPagamento').value,
       descricaoItem: document.getElementById('descricaoItem').value,
-      beneficiarios: beneficiarios,
-      impostos: impostos,
+      itensPagamento: itensPagamento,
       usuario: usuario,
       dataEnvio: new Date().toISOString()
     };
 
-    // Salva no sessionStorage
     sessionStorage.setItem('dadosAcaoJudicial', JSON.stringify(dados));
-    
-    // Debug - verificar se salvou corretamente
-    console.log('✅ Dados salvos:', dados);
-    console.log('📦 SessionStorage:', sessionStorage.getItem('dadosAcaoJudicial'));
-
-    // Redireciona para tela do analista
-    window.location.href = 'acoes-judiciais-analista.html';
+    console.log('Dados salvos:', dados);
+    window.location.href = 'acoes-judiciais-relatorio.html';
   }
 </script>
 </body>
