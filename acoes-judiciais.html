@@ -160,7 +160,11 @@
             <label for="quantiaNFF" class="form-label">Quantia da NFF/C.I (R$)</label>
             <input type="text" id="quantiaNFF" class="form-control" placeholder="0,00" />
           </div>
-          <!-- Linha 5 -->
+          <!-- Linha 5 - Reordenada -->
+          <div class="col-md-4">
+            <label for="reclamante" class="form-label">Reclamante</label>
+            <input type="text" id="reclamante" class="form-control" placeholder="Nome do reclamante" />
+          </div>
           <div class="col-md-4">
             <label for="processo" class="form-label">Processo</label>
             <input type="text" id="processo" class="form-control" placeholder="Número do processo" />
@@ -169,63 +173,7 @@
             <label for="pasta" class="form-label">Pasta</label>
             <input type="text" id="pasta" class="form-control" placeholder="Número da pasta" />
           </div>
-          <div class="col-md-4">
-            <label for="reclamante" class="form-label">Reclamante</label>
-            <input type="text" id="reclamante" class="form-control" placeholder="Nome do reclamante" />
-          </div>
-          <!-- Linha 6 -->
-          <div class="col-md-6">
-            <label for="centroCusto" class="form-label">Centro de Custo</label>
-            <select id="centroCusto" class="form-select">
-              <option value="">Selecione</option>
-              <option>CC-001 - Administrativo</option>
-              <option>CC-002 - Financeiro</option>
-              <option>CC-003 - Jurídico</option>
-              <option>CC-004 - Operacional</option>
-            </select>
-          </div>
-          <div class="col-md-6">
-            <label for="categoria" class="form-label">Categoria</label>
-            <select id="categoria" class="form-select">
-              <option value="">Selecione</option>
-              <option>Ação Trabalhista</option>
-              <option>Ação Cível</option>
-              <option>Acordo Judicial</option>
-              <option>Honorários Advocatícios</option>
-              <option>Custas Processuais</option>
-            </select>
-          </div>
-          <!-- Linha 7 - Campos Fixos/Automáticos -->
-          <div class="col-md-3">
-            <label for="dataGL" class="form-label">Data GL</label>
-            <input type="date" id="dataGL" class="form-control" readonly />
-          </div>
-          <div class="col-md-3">
-            <label for="dataTaxaPagto" class="form-label">Data Taxa Pagto</label>
-            <input type="date" id="dataTaxaPagto" class="form-control" readonly />
-          </div>
-          <div class="col-md-3">
-            <label for="dataCondicoes" class="form-label">Data das Condições</label>
-            <input type="date" id="dataCondicoes" class="form-control" readonly />
-          </div>
-          <div class="col-md-3">
-            <label for="vincularAcao" class="form-label">Vincular Ação</label>
-            <input type="text" id="vincularAcao" class="form-control" value="Ordem de Compra" readonly />
-          </div>
-          <!-- Linha 8 - Campos Fixos -->
-          <div class="col-md-4">
-            <label for="condicoes" class="form-label">Condições</label>
-            <input type="text" id="condicoes" class="form-control" value="À vista" readonly />
-          </div>
-          <div class="col-md-4">
-            <label for="metodoPagamento" class="form-label">Método de Pagamento</label>
-            <input type="text" id="metodoPagamento" class="form-control" value="Eletronico" readonly />
-          </div>
-          <div class="col-md-4">
-            <label for="grupoPagamento" class="form-label">Grupo de Pagamento</label>
-            <input type="text" id="grupoPagamento" class="form-control" value="Fornecedores" readonly />
-          </div>
-          <!-- Linha 9 - Descrição e Anexos -->
+          <!-- Linha 6 - Descrição e Anexos -->
           <div class="col-md-12">
             <label for="descricaoItem" class="form-label">Descrição</label>
             <textarea id="descricaoItem" class="form-control" rows="7" placeholder="Descreva detalhes sobre o pagamento..."></textarea>
@@ -293,21 +241,30 @@
             <label for="numeroContaBenef" class="form-label">Número da Conta</label>
             <input type="text" id="numeroContaBenef" class="form-control" placeholder="0000-0" />
           </div>
+          
+          <!-- CAMPOS DE PARCELAMENTO -->
           <div class="col-md-3">
-            <label for="valorBenef" class="form-label">Valor (R$)</label>
+            <label for="tipoParcela" class="form-label">Tipo de Parcela</label>
+            <select id="tipoParcela" class="form-select">
+              <option value="avista">À vista</option>
+              <option value="parcelado">Parcelado</option>
+            </select>
+          </div>
+          <div class="col-md-3" id="parcelasContainer" style="display:none;">
+            <label for="qtdParcelas" class="form-label">Qtde. Parcelas</label>
+            <input type="number" id="qtdParcelas" class="form-control" placeholder="Ex: 3" min="2" />
+          </div>
+          <div class="col-md-3">
+            <label for="valorBenef" class="form-label">Valor Total (R$)</label>
             <input type="text" id="valorBenef" class="form-control" placeholder="0,00" />
           </div>
-          <div class="col-md-9">
-            <label for="descricaoBenef" class="form-label">Descrição do Pagamento</label>
-            <textarea id="descricaoBenef" class="form-control" placeholder="Descreva o que é o pagamento"></textarea>
+          <div class="col-md-3">
+            <label for="dataPagamentoBenef" class="form-label">Data do Vencimento</label>
+            <input type="date" id="dataPagamentoBenef" class="form-control" />
           </div>
-          <div class="col-md-6">
+          <div class="col-md-12">
             <label for="chaveContabilBenef" class="form-label">Chave Contábil</label>
             <input type="text" id="chaveContabilBenef" class="form-control" placeholder="Ex: 1.2.3.4.5" />
-          </div>
-          <div class="col-md-6">
-            <label for="dataPagamentoBenef" class="form-label">Data do Pagamento</label>
-            <input type="date" id="dataPagamentoBenef" class="form-control" />
           </div>
         </div>
 
@@ -398,17 +355,43 @@
     const day = String(today.getDate()).padStart(2, '0');
     const formattedDate = `${year}-${month}-${day}`;
 
-    const dataEmissaoNF_El = document.getElementById('dataEmissaoNF');
-    dataEmissaoNF_El.value = formattedDate;
-    dataEmissaoNF_El.dispatchEvent(new Event('change'));
+    document.getElementById('dataEmissaoNF').value = formattedDate;
+
+    document.getElementById('tipoParcela').addEventListener('change', function() {
+      const parcelasContainer = document.getElementById('parcelasContainer');
+      const dataLabel = document.querySelector('label[for="dataPagamentoBenef"]');
+      if (this.value === 'parcelado') {
+        parcelasContainer.style.display = 'block';
+        dataLabel.textContent = 'Data do 1º Vencimento';
+      } else {
+        parcelasContainer.style.display = 'none';
+        dataLabel.textContent = 'Data do Vencimento';
+      }
+    });
   });
 
-  document.getElementById('dataEmissaoNF').addEventListener('change', function() {
-    const data = this.value;
-    document.getElementById('dataGL').value = data;
-    document.getElementById('dataTaxaPagto').value = data;
-    document.getElementById('dataCondicoes').value = data;
-  });
+  const reclamanteEl = document.getElementById('reclamante');
+  const processoEl = document.getElementById('processo');
+  const pastaEl = document.getElementById('pasta');
+  const descricaoEl = document.getElementById('descricaoItem');
+
+  function atualizarDescricao() {
+    const reclamante = reclamanteEl.value.trim();
+    const processo = processoEl.value.trim();
+    const pasta = pastaEl.value.trim();
+    
+    let desc = [];
+    if (reclamante) desc.push(`Custas processuais: RT ${reclamante}`);
+    if (processo) desc.push(`Processo: ${processo}`);
+    if (pasta) desc.push(`Pasta: ${pasta}`);
+    
+    descricaoEl.value = desc.join(' / ');
+  }
+
+  reclamanteEl.addEventListener('input', atualizarDescricao);
+  processoEl.addEventListener('input', atualizarDescricao);
+  pastaEl.addEventListener('input', atualizarDescricao);
+
 
   document.getElementById('tipoItem').addEventListener('change', function() {
     const tipo = this.value;
@@ -450,57 +433,122 @@
     e.target.value = value;
   });
 
+  function parseCurrency(value) {
+    if (!value || typeof value !== 'string') return 0;
+    const numericString = value.replace(/\./g, '').replace(',', '.');
+    const number = parseFloat(numericString);
+    return isNaN(number) ? 0 : number;
+  }
 
   function adicionarItem() {
     const tipo = document.getElementById('tipoItem').value;
-    let item = { tipo };
-    let valido = true;
-
+    
     if (tipo === 'beneficiario') {
-      item.nome = document.getElementById('nomeBenef').value.trim();
-      item.tipoDocumento = document.getElementById('tipoDocumento').value;
-      item.numeroDocumento = document.getElementById('numeroDocumento').value.trim();
-      item.banco = document.getElementById('bancoBenef').value.trim();
-      item.agencia = document.getElementById('agenciaBenef').value.trim();
-      item.tipoConta = document.getElementById('tipoContaBenef').value;
-      item.numeroConta = document.getElementById('numeroContaBenef').value.trim();
-      item.valor = document.getElementById('valorBenef').value.trim();
-      item.descricao = document.getElementById('descricaoBenef').value.trim();
-      item.chaveContabil = document.getElementById('chaveContabilBenef').value.trim();
-      item.dataPagamento = document.getElementById('dataPagamentoBenef').value;
-
-      if (!item.nome || !item.numeroDocumento || !item.banco || !item.agencia || !item.tipoConta || !item.numeroConta || !item.valor) {
-        alert('Preencha todos os campos obrigatórios do beneficiário!');
-        valido = false;
-      }
+      adicionarBeneficiario();
     } else if (tipo === 'imposto') {
-      item.valor = document.getElementById('valorImposto').value.trim();
-      item.descricao = document.getElementById('descricaoImposto').value.trim();
-      item.tipoImposto = document.getElementById('tipoImposto').value;
-      item.chaveContabil = document.getElementById('chaveContabilImposto').value.trim();
-      item.dataPagamento = document.getElementById('dataPagamentoImposto').value; // <-- NOVO
+      adicionarImposto();
+    }
+  }
 
-      if (!item.valor || !item.descricao || !item.tipoImposto || !item.dataPagamento) { // <-- NOVO
-        alert('Preencha todos os campos obrigatórios do INSS/Imposto!');
-        valido = false;
+  function adicionarBeneficiario() {
+    const tipoParcela = document.getElementById('tipoParcela').value;
+    const nome = document.getElementById('nomeBenef').value.trim();
+    const valorTotalStr = document.getElementById('valorBenef').value.trim();
+    const dataPagamento = document.getElementById('dataPagamentoBenef').value;
+
+    const baseItem = {
+      tipo: 'beneficiario',
+      nome: nome,
+      tipoDocumento: document.getElementById('tipoDocumento').value,
+      numeroDocumento: document.getElementById('numeroDocumento').value.trim(),
+      banco: document.getElementById('bancoBenef').value.trim(),
+      agencia: document.getElementById('agenciaBenef').value.trim(),
+      tipoConta: document.getElementById('tipoContaBenef').value,
+      numeroConta: document.getElementById('numeroContaBenef').value.trim(),
+      chaveContabil: document.getElementById('chaveContabilBenef').value.trim(),
+    };
+
+    if (!baseItem.nome || !baseItem.numeroDocumento || !baseItem.banco || !baseItem.agencia || !baseItem.tipoConta || !baseItem.numeroConta || !valorTotalStr || !dataPagamento) {
+      alert('Preencha todos os campos obrigatórios do beneficiário!');
+      return;
+    }
+
+    if (tipoParcela === 'avista') {
+      itensPagamento.push({ ...baseItem, valor: valorTotalStr, dataPagamento: dataPagamento });
+    } else { // Parcelado
+      const qtdParcelas = parseInt(document.getElementById('qtdParcelas').value, 10);
+      if (isNaN(qtdParcelas) || qtdParcelas < 2) {
+        alert('A quantidade de parcelas deve ser 2 ou mais.');
+        return;
+      }
+
+      const valorTotalNum = parseCurrency(valorTotalStr);
+      // --- LÓGICA DE ARREDONDAMENTO CORRIGIDA ---
+      const valorParcelaBase = Math.floor((valorTotalNum / qtdParcelas) * 100) / 100;
+      let somaDistribuida = 0;
+      const dataBase = new Date(dataPagamento + 'T00:00:00');
+
+      for (let i = 0; i < qtdParcelas; i++) {
+        let valorDaParcela;
+
+        if (i === qtdParcelas - 1) {
+          // Última parcela: pega a diferença para garantir que o total feche
+          valorDaParcela = valorTotalNum - somaDistribuida;
+        } else {
+          valorDaParcela = valorParcelaBase;
+          somaDistribuida += valorParcelaBase;
+        }
+        
+        const dataVencimento = new Date(dataBase);
+        dataVencimento.setDate(dataVencimento.getDate() + (i * 30));
+        
+        const itemParcela = {
+          ...baseItem,
+          nome: `${nome} (${i + 1}/${qtdParcelas})`,
+          valor: valorDaParcela.toFixed(2).replace('.', ','),
+          dataPagamento: dataVencimento.toISOString().split('T')[0]
+        };
+        itensPagamento.push(itemParcela);
       }
     }
+    
+    renderizarItens();
+    limparCamposItem('beneficiario');
+  }
 
-    if (valido) {
-      itensPagamento.push(item);
-      renderizarItens();
-      limparCamposItem(tipo);
+  function adicionarImposto() {
+    const item = {
+      tipo: 'imposto',
+      valor: document.getElementById('valorImposto').value.trim(),
+      descricao: document.getElementById('descricaoImposto').value.trim(),
+      tipoImposto: document.getElementById('tipoImposto').value,
+      chaveContabil: document.getElementById('chaveContabilImposto').value.trim(),
+      dataPagamento: document.getElementById('dataPagamentoImposto').value,
+    };
+
+    if (!item.valor || !item.descricao || !item.tipoImposto || !item.dataPagamento) {
+      alert('Preencha todos os campos obrigatórios do INSS/Imposto!');
+      return;
     }
+    
+    itensPagamento.push(item);
+    renderizarItens();
+    limparCamposItem('imposto');
   }
 
   function limparCamposItem(tipo) {
     if (tipo === 'beneficiario') {
       ['nomeBenef','numeroDocumento','bancoBenef','agenciaBenef','tipoContaBenef','numeroContaBenef',
-       'valorBenef','descricaoBenef','chaveContabilBenef','dataPagamentoBenef'].forEach(id => {
-        document.getElementById(id).value = '';
+       'valorBenef','chaveContabilBenef','dataPagamentoBenef', 'qtdParcelas'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
       });
+      document.getElementById('tipoParcela').value = 'avista';
+      document.getElementById('parcelasContainer').style.display = 'none';
+      document.querySelector('label[for="dataPagamentoBenef"]').textContent = 'Data do Vencimento';
+
     } else if (tipo === 'imposto') {
-      ['valorImposto','descricaoImposto','tipoImposto','chaveContabilImposto', 'dataPagamentoImposto'].forEach(id => { // <-- NOVO
+      ['valorImposto','descricaoImposto','tipoImposto','chaveContabilImposto', 'dataPagamentoImposto'].forEach(id => {
         document.getElementById(id).value = '';
       });
     }
@@ -520,7 +568,7 @@
     let total = 0;
 
     itensPagamento.forEach((item, idx) => {
-      const valorNum = parseFloat(item.valor.replace(',', '.')) || 0;
+      const valorNum = parseCurrency(item.valor);
       total += valorNum;
       const tr = document.createElement('tr');
       const dataPagtoFormatada = item.dataPagamento ? new Date(item.dataPagamento + 'T00:00:00').toLocaleDateString('pt-BR') : '-';
@@ -540,7 +588,7 @@
             </button>
           </td>
         `;
-      } else if (item.tipo === 'imposto') { // <-- MUDANÇA AQUI
+      } else if (item.tipo === 'imposto') {
         tr.innerHTML = `
           <td><span class="badge bg-info">${item.tipoImposto}</span></td>
           <td>${item.descricao}</td>
@@ -569,7 +617,7 @@
   }
 
   function proximaPagina() {
-    const camposObrigatorios = ['empresa','fornecedor','nrFornecedor','processo','pasta','reclamante', 'centroCusto', 'categoria', 'dataEmissaoNF'];
+    const camposObrigatorios = ['empresa','fornecedor','nrFornecedor','processo','pasta','reclamante', 'dataEmissaoNF', 'quantiaNFF'];
     let ok = true;
     
     camposObrigatorios.forEach(id => {
@@ -592,31 +640,51 @@
       return;
     }
 
+    const quantiaNFFEl = document.getElementById('quantiaNFF');
+    const quantiaNFFNum = parseCurrency(quantiaNFFEl.value);
+    
+    let totalItensNum = 0;
+    itensPagamento.forEach(item => {
+      totalItensNum += parseCurrency(item.valor);
+    });
+
+    if (Math.abs(quantiaNFFNum - totalItensNum) > 0.001) {
+      const quantiaFormatada = quantiaNFFNum.toFixed(2).replace('.', ',');
+      const totalFormatado = totalItensNum.toFixed(2).replace('.', ',');
+      
+      alert(`O valor da "Quantia da NFF/C.I" (R$ ${quantiaFormatada}) não corresponde ao Total dos Itens (R$ ${totalFormatado}). Por favor, verifique os valores.`);
+      
+      quantiaNFFEl.classList.add('is-invalid');
+      quantiaNFFEl.focus();
+      return;
+    } else {
+      quantiaNFFEl.classList.remove('is-invalid');
+    }
+
+    const dataNF = document.getElementById('dataEmissaoNF').value;
     const dados = {
       empresa: document.getElementById('empresa').value,
       tipoNota: document.getElementById('tipoNota').value,
       fornecedor: document.getElementById('fornecedor').value,
       nrFornecedor: document.getElementById('nrFornecedor').value,
       nomeLocalFornecedor: document.getElementById('nomeLocalFornecedor').value,
-      dataEmissaoNF: document.getElementById('dataEmissaoNF').value,
+      dataEmissaoNF: dataNF,
       numeroNFF: document.getElementById('numeroNFF').value,
       quantiaNFF: document.getElementById('quantiaNFF').value,
       processo: document.getElementById('processo').value,
       pasta: document.getElementById('pasta').value,
       reclamante: document.getElementById('reclamante').value,
-      centroCusto: document.getElementById('centroCusto').value,
-      categoria: document.getElementById('categoria').value,
-      dataGL: document.getElementById('dataGL').value,
-      dataTaxaPagto: document.getElementById('dataTaxaPagto').value,
-      dataCondicoes: document.getElementById('dataCondicoes').value,
-      vincularAcao: document.getElementById('vincularAcao').value,
-      condicoes: document.getElementById('condicoes').value,
-      metodoPagamento: document.getElementById('metodoPagamento').value,
-      grupoPagamento: document.getElementById('grupoPagamento').value,
       descricaoItem: document.getElementById('descricaoItem').value,
       itensPagamento: itensPagamento,
       usuario: usuario,
-      dataEnvio: new Date().toISOString()
+      dataEnvio: new Date().toISOString(),
+      dataGL: dataNF,
+      dataTaxaPagto: dataNF,
+      dataCondicoes: dataNF,
+      vincularAcao: "Ordem de Compra",
+      condicoes: "À vista",
+      metodoPagamento: "Eletronico",
+      grupoPagamento: "Fornecedores"
     };
 
     sessionStorage.setItem('dadosAcaoJudicial', JSON.stringify(dados));
