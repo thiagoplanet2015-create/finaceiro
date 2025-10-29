@@ -250,9 +250,10 @@
             <td>R$ ${item.valor}</td>
           `;
         } else if (item.tipo === 'imposto') {
+          const anexoHtml = item.anexoNome ? `<br><small class="text-muted">📎 ${item.anexoNome}</small>` : '';
           tr.innerHTML = `
             <td><span class="badge bg-info">${item.tipoImposto}</span></td>
-            <td>${item.descricao}</td>
+            <td>${item.descricao}${anexoHtml}</td>
             <td>-</td>
             <td>-</td>
             <td>${item.chaveContabil || '-'}</td>

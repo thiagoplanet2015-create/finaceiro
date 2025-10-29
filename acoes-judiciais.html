@@ -290,9 +290,14 @@
             <label for="dataPagamentoImposto" class="form-label">Data do Pagamento</label>
             <input type="date" id="dataPagamentoImposto" class="form-control" />
           </div>
-          <div class="col-md-12">
+          <div class="col-md-6">
             <label for="chaveContabilImposto" class="form-label">Chave Contábil</label>
             <input type="text" id="chaveContabilImposto" class="form-control" placeholder="Ex: 1.2.3.4.5" />
+          </div>
+          <!-- NOVO CAMPO DE ANEXO -->
+          <div class="col-md-6">
+            <label for="anexoImposto" class="form-label">Anexo do Imposto</label>
+            <input class="form-control" type="file" id="anexoImposto">
           </div>
         </div>
 
@@ -475,7 +480,7 @@
 
     if (tipoParcela === 'avista') {
       itensPagamento.push({ ...baseItem, valor: valorTotalStr, dataPagamento: dataPagamento });
-    } else { // Parcelado
+    } else { 
       const qtdParcelas = parseInt(document.getElementById('qtdParcelas').value, 10);
       if (isNaN(qtdParcelas) || qtdParcelas < 2) {
         alert('A quantidade de parcelas deve ser 2 ou mais.');
@@ -483,7 +488,6 @@
       }
 
       const valorTotalNum = parseCurrency(valorTotalStr);
-      // --- LÓGICA DE ARREDONDAMENTO CORRIGIDA ---
       const valorParcelaBase = Math.floor((valorTotalNum / qtdParcelas) * 100) / 100;
       let somaDistribuida = 0;
       const dataBase = new Date(dataPagamento + 'T00:00:00');
@@ -492,7 +496,6 @@
         let valorDaParcela;
 
         if (i === qtdParcelas - 1) {
-          // Última parcela: pega a diferença para garantir que o total feche
           valorDaParcela = valorTotalNum - somaDistribuida;
         } else {
           valorDaParcela = valorParcelaBase;
@@ -517,6 +520,7 @@
   }
 
   function adicionarImposto() {
+    const anexoInput = document.getElementById('anexoImposto');
     const item = {
       tipo: 'imposto',
       valor: document.getElementById('valorImposto').value.trim(),
@@ -524,6 +528,7 @@
       tipoImposto: document.getElementById('tipoImposto').value,
       chaveContabil: document.getElementById('chaveContabilImposto').value.trim(),
       dataPagamento: document.getElementById('dataPagamentoImposto').value,
+      anexoNome: anexoInput.files.length > 0 ? anexoInput.files[0].name : null
     };
 
     if (!item.valor || !item.descricao || !item.tipoImposto || !item.dataPagamento) {
@@ -548,7 +553,7 @@
       document.querySelector('label[for="dataPagamentoBenef"]').textContent = 'Data do Vencimento';
 
     } else if (tipo === 'imposto') {
-      ['valorImposto','descricaoImposto','tipoImposto','chaveContabilImposto', 'dataPagamentoImposto'].forEach(id => {
+      ['valorImposto','descricaoImposto','tipoImposto','chaveContabilImposto', 'dataPagamentoImposto', 'anexoImposto'].forEach(id => {
         document.getElementById(id).value = '';
       });
     }
@@ -589,9 +594,10 @@
           </td>
         `;
       } else if (item.tipo === 'imposto') {
+        const anexoHtml = item.anexoNome ? `<br><small class="text-muted">📎 ${item.anexoNome}</small>` : '';
         tr.innerHTML = `
           <td><span class="badge bg-info">${item.tipoImposto}</span></td>
-          <td>${item.descricao}</td>
+          <td>${item.descricao}${anexoHtml}</td>
           <td>-</td>
           <td>-</td>
           <td>${item.chaveContabil || '-'}</td>
