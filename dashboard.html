@@ -167,9 +167,14 @@
 <body>
   <nav class="topbar">
     <div class="container py-2 d-flex align-items-center justify-content-between">
-      <div class="fw-bold">Portal Financeiro</div>
-      <div class="text-muted small">
-        Empresa: <span id="empresaSpan">-</span> • Usuário: <span id="usuarioSpan">-</span>
+      <div class="fw-bold">Adiantamento de Viagem</div>
+      <div class="d-flex align-items-center gap-3">
+        <div class="text-muted small">
+          Empresa: <span id="empresaSpan">-</span> • Usuário: <span id="usuarioSpan">agt@agt.com.br</span>
+        </div>
+        <button class="btn btn-sm btn-light" onclick="sair()">
+          <i class="fas fa-sign-out-alt me-1"></i>Sair
+        </button>
       </div>
     </div>
   </nav>
@@ -177,7 +182,7 @@
   <div class="container my-4">
     <div class="d-flex align-items-center justify-content-between mb-3">
       <h4 class="mb-0">Selecione o processo</h4>
-      <a href="index.html" class="btn btn-outline-secondary btn-sm">Sair</a>
+     
     </div>
 
     <div class="row g-3">
@@ -256,6 +261,16 @@
   const usuario = sessionStorage.getItem('usuario');
   document.getElementById('empresaSpan').textContent = empresa || '-';
   document.getElementById('usuarioSpan').textContent = usuario || '-';
+
+
+   function sair() {
+            if (confirm('Deseja realmente sair? Todos os dados não salvos serão perdidos.')) {
+                sessionStorage.clear();
+                localStorage.clear();
+                window.location.href = 'index.html';
+            }
+        }
+
 
   // Rotas (apenas se estiver usando iniciar())
   function iniciar(tipo) {

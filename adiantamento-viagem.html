@@ -103,9 +103,14 @@
 <body>
   <nav class="topbar">
     <div class="container py-2 d-flex align-items-center justify-content-between">
-      <div class="fw-bold">Solicitação de Adiantamento para Viagens</div>
-      <div class="text-muted small">
-        Empresa: <span id="empresaSpan">EMPRESA_A</span> • Usuário: <span id="usuarioSpan">agt@agt.com.br</span>
+      <div class="fw-bold">Adiantamento de Viagem</div>
+      <div class="d-flex align-items-center gap-3">
+        <div class="text-muted small">
+          Empresa: <span id="empresaSpan">-</span> • Usuário: <span id="usuarioSpan">agt@agt.com.br</span>
+        </div>
+        <button class="btn btn-sm btn-light" onclick="sair()">
+          <i class="fas fa-sign-out-alt me-1"></i>Sair
+        </button>
       </div>
     </div>
   </nav>
@@ -310,6 +315,17 @@
     const usrCtx = sessionStorage.getItem('usuario') || 'agt@agt.com.br';
     document.getElementById('empresaSpan').textContent = empCtx;
     document.getElementById('usuarioSpan').textContent = usrCtx;
+
+
+    // Função para sair e limpar storage
+    function sair() {
+      if (confirm('Deseja realmente sair? Todos os dados não salvos serão perdidos.')) {
+        sessionStorage.clear();
+        localStorage.clear();
+        window.location.href = 'index.html';
+      }
+    }
+
 
     function togglePagamento() {
       const forma = document.getElementById('formaPagamento').value;
