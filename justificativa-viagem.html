@@ -1,534 +1,619 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Justificativa de Despesas de Viagem (Empresa)</title>
-
-  <!-- Bootstrap -->
+  <title>Justificativa de Despesas de Viagem</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <!-- Bootstrap Icons (opcional para ícones nos labels) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-
-  <!-- Estilo aprimorado -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    :root{
-      --brand:#2563eb;          /* azul primário */
-      --brand-600:#1d4ed8;
-      --ink:#0f172a;             /* texto */
-      --muted:#64748b;           /* texto secundário */
-      --paper:#ffffff;           /* fundo card */
-      --bg:#f3f6fb;              /* fundo página */
-      --success:#16a34a;
-      --danger:#e11d48;
-      --border:#e5e7eb;
-      --table-stripe:#fafbff;
+    :root {
+      --brand: #72bf44;
+      --brand-600: #5fa535;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --paper: #ffff;
+      --bg: #f3f6fb;
+      --success: #16a34a;
+      --danger: #e11d48;
+      --border: #e5e7eb;
+      --table-stripe: #fafbff;
     }
 
-    /* Página */
-    body{ background:var(--bg); color:var(--ink); }
-    h1,h2,h3,h4,h5 { color:var(--ink); letter-spacing:.2px; }
-    .page-title{
-      font-weight:700;
-      font-size: clamp(1.1rem, 1.2rem + .5vw, 1.6rem);
-      display:flex; align-items:center; gap:.6rem;
-    }
-    .page-title .badge{
-      background:linear-gradient(135deg,var(--brand),#0ea5e9);
-      border:none; font-weight:600;
+    body {
+      background: var(--bg);
+      color: var(--ink);
     }
 
-    /* Cards */
-    .card{
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      color: var(--ink);
+      letter-spacing: .2px;
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-600) 100%);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .topbar .fw-bold {
+      color: #fff;
+      font-size: 1.2rem;
+    }
+
+    .topbar .text-muted {
+      color: rgba(255, 255, 255, 0.85) !important;
+    }
+
+    .card {
       border: 1px solid var(--border);
       border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(2,6,23,.05);
-    }
-    .card-header{
-      background:linear-gradient(180deg,#fff, #fafafa);
-      border-bottom:1px solid var(--border);
-      border-top-left-radius:12px; border-top-right-radius:12px;
+      box-shadow: 0 6px 20px rgba(2, 6, 23, .05);
     }
 
-    /* Formulário */
-    .form-label{ font-weight:600; color:#334155; }
-    .form-control,.form-select{
-      border-radius:10px; border:1px solid var(--border);
-      transition: border-color .2s, box-shadow .2s;
+    .card-header {
+      background: linear-gradient(180deg, #f8fdf5, #e8f5e0);
+      border-bottom: 1px solid var(--border);
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
     }
-    .form-control:focus,.form-select:focus{
+
+    .card-header h5 {
+      color: var(--brand-600);
+      font-weight: 700;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .form-control,
+    .form-select {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
       border-color: var(--brand);
-      box-shadow: 0 0 0 .2rem rgba(37,99,235,.15);
+      box-shadow: 0 0 0 .2rem rgba(114, 191, 68, .25);
     }
-    .btn-primary{
-      background:var(--brand); border-color:var(--brand);
-      border-radius:10px; font-weight:600;
-    }
-    .btn-primary:hover{ background:var(--brand-600); border-color:var(--brand-600); }
-    .btn-outline-primary{
-      border-radius:10px; font-weight:600; color:var(--brand); border-color:var(--brand);
-    }
-    .btn-outline-primary:hover{ background:var(--brand); color:#fff; }
 
-    /* Resumo */
-    .preview-paper{
-      background:var(--paper); border:1px solid var(--border);
-      border-radius:12px; padding:18px;
+    .btn-primary {
+      background: var(--brand);
+      border-color: var(--brand);
+      border-radius: 10px;
+      font-weight: 600;
     }
-    .preview-header{
-      display:flex; justify-content:space-between; align-items:center; gap:1rem;
-    }
-    .meta small{ color:var(--muted); }
-    .meta .value{ font-weight:600; color:var(--ink); }
 
-    /* Tabelas */
-    .table{
+    .btn-primary:hover {
+      background: var(--brand-600);
+      border-color: var(--brand-600);
+    }
+
+    .btn-outline-primary {
+      border-radius: 10px;
+      font-weight: 600;
+      color: var(--brand);
+      border-color: var(--brand);
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    .btn-outline-danger {
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .table {
       --bs-table-striped-bg: var(--table-stripe);
       border-color: var(--border);
     }
-    .table thead th{
-      position:sticky; top:0; background:#fff; z-index:2;
-      border-bottom:2px solid var(--border); color:#475569; font-weight:700;
+
+    .table thead th {
+      background: #e8f5e0;
+      color: var(--brand-600);
+      font-weight: 700;
+      font-size: 0.85rem;
     }
-    .table>tbody>tr>td, .table>thead>tr>th{
+
+    .table>tbody>tr>td {
       vertical-align: middle;
-    }
-    .table-sm td, .table-sm th{ padding:.55rem .6rem; }
-
-    /* Quadro de totais no resumo */
-    .totals-card{
-      border:1px dashed var(--border); border-radius:10px; padding:.5rem .75rem;
-      background:#fcfdff;
-    }
-    .totals-card .label{ color:var(--muted); }
-    .totals-card .value{ font-weight:700; }
-    .totals-card .value.success{ color:var(--success); }
-    .totals-card .value.danger{ color:var(--danger); }
-
-    /* Linhas de assinatura */
-    .sign-line{
-      border-top:1px solid var(--border); height:1px; margin:24px 0 6px;
+      font-size: 0.9rem;
     }
 
-    /* Chips de contexto (empresa/usuário) */
-    .chip{
-      padding:.25rem .6rem; border-radius:999px; font-size:.78rem; font-weight:600;
-      background:#eef2ff; color:var(--brand); border:1px solid #e0e7ff;
+    .totals-card {
+      border: 1px dashed #d0ecc0;
+      border-radius: 10px;
+      padding: 1rem;
+      background: #f8fdf5;
     }
 
-    @media (max-width: 992px){
-      .preview-header{ flex-direction:column; align-items:flex-start; }
+    .totals-card .total-item {
+      display: flex;
+      justify-content: between;
+      margin-bottom: 0.5rem;
+    }
+
+    .totals-card .label {
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .totals-card .value {
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    .totals-card .value.devolver {
+      color: var(--danger);
+    }
+
+    .totals-card .value.receber {
+      color: var(--success);
+    }
+
+    .situacao-box {
+      padding: 1rem;
+      border-radius: 10px;
+      background: #f8f9fa;
+      border: 1px solid var(--border);
+      font-weight: 600;
+    }
+
+    .alert-adiantamento {
+      background: linear-gradient(135deg, #0d6efd 0%, #0b5ed7 100%);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
+    }
+
+    .alert-adiantamento h5 {
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    .alert-adiantamento .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .alert-adiantamento .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .alert-adiantamento .info-label {
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    .alert-adiantamento .info-value {
+      font-weight: 700;
+      font-family: 'Courier New', monospace;
     }
   </style>
 </head>
+
 <body>
-<div class="container my-4">
-
-  <!-- Cabeçalho com contexto -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <div class="page-title">
-      Justificativa de Despesas de Viagem – Empresa
-      <span class="badge text-bg-primary">Protótipo</span>
-    </div>
-    <div class="d-flex gap-2 text-muted small">
-      <span class="chip">Empresa: <strong id="empresaSpan">-</strong></span>
-      <span class="chip">Usuário: <strong id="usuarioSpan">-</strong></span>
-    </div>
-  </div>
-
-  <div class="row g-3">
-    <!-- Formulário -->
-    <div class="col-12 col-lg-6">
-      <div class="card">
-        <div class="card-body">
-          <form id="formJust" novalidate>
-            <h6 class="mb-3">Identificação</h6>
-            <div class="row g-2">
-              <div class="col-12">
-                <label class="form-label"><i class="bi bi-building me-1 text-primary"></i>Empresa</label>
-                <select id="empresa" class="form-select" required>
-                  <option value="" selected>Selecione</option>
-                  <option>Empresa A</option>
-                  <option>Empresa B</option>
-                  <option>Empresa C</option>
-                </select>
-                <div class="invalid-feedback">Selecione a empresa.</div>
-              </div>
-              <div class="col-12">
-                <label class="form-label"><i class="bi bi-person me-1 text-primary"></i>Colaborador</label>
-                <input id="colaborador" class="form-control" placeholder="Nome completo" required />
-                <div class="invalid-feedback">Informe o nome.</div>
-              </div>
-              <div class="col-6">
-                <label class="form-label"><i class="bi bi-card-list me-1 text-primary"></i>Matrícula</label>
-                <input id="matricula" class="form-control" />
-              </div>
-              <div class="col-6">
-                <label class="form-label"><i class="bi bi-diagram-3 me-1 text-primary"></i>Setor</label>
-                <input id="setor" class="form-control" />
-              </div>
-            </div>
-
-            <h6 class="mt-4 mb-2">Viagem</h6>
-            <div class="row g-2">
-              <div class="col-8">
-                <label class="form-label"><i class="bi bi-geo-alt me-1 text-primary"></i>Local e Finalidade</label>
-                <input id="finalidade" class="form-control" placeholder="Ex.: São Paulo – reunião com cliente" required />
-                <div class="invalid-feedback">Informe o objetivo da viagem.</div>
-              </div>
-              <div class="col-4">
-                <label class="form-label"><i class="bi bi-calendar3 me-1 text-primary"></i>Data</label>
-                <input type="date" id="dataViagem" class="form-control" required />
-                <div class="invalid-feedback">Informe a data.</div>
-              </div>
-            </div>
-
-            <div class="mt-3">
-              <label class="form-label"><i class="bi bi-chat-left-text me-1 text-primary"></i>Observações</label>
-              <textarea id="obs" class="form-control" rows="2"></textarea>
-            </div>
-
-            <h6 class="mt-4 mb-2">Lançar Despesas</h6>
-            <div class="row g-2 align-items-end">
-              <div class="col-5">
-                <label class="form-label">Descrição</label>
-                <select id="desc" class="form-select">
-                   <option> ALUGUÉIS DE IMÓVEIS</option>
-                   <option> ALUGUÉIS DE VEÍCULO</option>
-                   <option> ANÚNCIOS E PUBLICAÇ</option>
-                   <option> AUXÍLIO FUNERAL	
-                   <option> ASSINATURA DE TV CA</option>
-                   <option> COMBUSTÍVEIS	
-                   <option> CONSELHOS REGIONAIS</option>
-                   <option> CONSULTORIA/ASSESSO</option>
-                   <option> CONSULTORIA/ASSESSO</option>
-                   <option> CONTA CAIXA	
-                   <option> DESPESAS COM CARTÓR</option>
-                   <option> DESPESAS COM HOSPED</option>
-                   <option> DESPESAS COM PASSAG</option>
-                   <option> DESPESAS COM TÁXI	</option>
-                   <option> DESPESAS POSTAIS E </option>
-                   <option> EV. - DATAS COMEMOR</option>
-                   <option> EV. - CONFRATERNIZA</option>
-                   <option> EXAMES - PERIÓDICOS</option>
-                   <option> JORNAIS/REVISTAS/LI</option>
-                   <option> LANCHES E CAFÉS ESP</option>
-                   <option> LICENCIAMENTO DE VE</option>
-                   <option> MATERIAIS DE ESCRIT</option>
-                   <option> PEÇAS E MATERIAIS D</option>
-                   <option> PEDÁGIOS E ESTACION</option>
-                   <option> REFEIÇÕES E LANCHES</option>
-                   <option> ROUPARIA E LAVANDER</option>
-                   <option> SEGURO DE VEÍCULO	</option>
-                   <option> SERVIÇOS DE TERCEIR</option>
-                   <option> SERVIÇOS DE TERCEIR</option>
-                   <option> TRAVESSIA/BALSA	
-                   <option> TELEFONEMAS - MÓVEL</option>
-                   <option> TAXAS DIVERSAS</option>
-                </select>
-              </div>
-              <div class="col-3">
-                <label class="form-label">Data</label>
-                <input type="date" id="dataDesp" class="form-control" />
-              </div>
-              <div class="col-2">
-                <label class="form-label">Qtd</label>
-                <input type="number" step="1" id="qtd" class="form-control" value="1" />
-              </div>
-              <div class="col-2">
-                <label class="form-label">Valor</label>
-                <input type="number" step="0.01" id="valor" class="form-control text-end" placeholder="0,00" />
-              </div>
-              <div class="col-12 mt-2">
-                <label class="form-label">Comprovante (opcional)</label>
-                <input type="file" id="anexo" class="form-control" accept="image/*,application/pdf" />
-                <div class="form-text">Você pode anexar imagens ou PDF do recibo/nota.</div>
-              </div>
-              <div class="col-12 d-grid mt-2">
-                <button class="btn btn-outline-primary" type="button" id="addLinha">Adicionar</button>
-              </div>
-            </div>
-
-            <div class="table-responsive mt-3" style="max-height: 280px;">
-              <table class="table table-sm align-middle" id="tabela">
-                <thead>
-                <tr>
-                  <th style="min-width:160px;">Descrição</th>
-                  <th>Data</th>
-                  <th class="text-end">Qtd</th>
-                  <th class="text-end">Valor unit.</th>
-                  <th class="text-end">Subtotal</th>
-                  <th>Anexo</th>
-                  <th></th>
-                </tr>
-                </thead>
-                <tbody></tbody>
-                <tfoot>
-                <tr>
-                  <th colspan="4" class="text-end">Total de despesas:</th>
-                  <th class="text-end" id="totalDesp">R$ 0,00</th>
-                  <th colspan="2"></th>
-                </tr>
-                </tfoot>
-              </table>
-            </div>
-
-            <h6 class="mt-4 mb-2">Adiantamento recebido</h6>
-            <div class="row g-2">
-              <div class="col-6">
-                <label class="form-label">Valor do adiantamento (R$)</label>
-                <input type="number" step="0.01" id="adiantamento" class="form-control text-end" value="0" />
-              </div>
-              <div class="col-6">
-                <label class="form-label">Situação</label>
-                <input id="situacao" class="form-control" readonly value="—" />
-              </div>
-            </div>
-
-            <div class="d-grid mt-4">
-              <button class="btn btn-primary" type="submit">Gerar Resumo</button>
-            </div>
-          </form>
-        </div>
+  <nav class="topbar">
+    <div class="container py-2 d-flex align-items-center justify-content-between">
+      <div class="fw-bold">Justificativa de Despesas de Viagem</div>
+      <div class="text-muted small">
+        Empresa: <span id="empresaSpan">EMPRESA_A</span> • Usuário: <span id="usuarioSpan">agt@agt.com.br</span>
       </div>
-      <p class="text-muted mt-2">
-        Dica: use “Imprimir/Salvar PDF” no resumo para enviar ao financeiro.
+    </div>
+  </nav>
+
+  <div class="container my-4">
+    <!-- Alerta de Adiantamento (aparece quando vem do recibo) -->
+    <div id="alertaAdiantamento" class="alert-adiantamento" style="display: none;">
+      <h5><i class="fas fa-info-circle me-2"></i>Acerto de Contas - Adiantamento Recebido</h5>
+      <div class="info-row">
+        <span class="info-label">Colaborador:</span>
+        <span class="info-value" id="info_colaborador">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Valor do Adiantamento:</span>
+        <span class="info-value" id="info_valorAdiantamento">R$ 0,00</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Data do Adiantamento:</span>
+        <span class="info-value" id="info_dataAdiantamento">-</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Motivo:</span>
+        <span class="info-value" id="info_motivo">-</span>
+      </div>
+      <p class="mb-0 mt-3">
+        <i class="fas fa-arrow-right me-2"></i>
+        <strong>Agora, lance as despesas realizadas durante a viagem para calcular o acerto final.</strong>
       </p>
     </div>
 
-    <!-- Resumo/Prévia -->
-    <div class="col-12 col-lg-6">
-      <div class="card">
-        <div class="card-body">
-          <div class="preview-paper" id="resumo">
-            <div class="preview-header">
-              <h5 class="mb-0">Resumo da Justificativa</h5>
-              <button class="btn btn-outline-secondary btn-sm" onclick="window.print()">
-                <i class="bi bi-printer me-1"></i>Imprimir / Salvar PDF
-              </button>
-            </div>
-
-            <div class="row g-2 mt-3">
-              <div class="col-lg-7 meta">
-                <div><small>Empresa:</small> <span class="value" id="r_empresa">—</span></div>
-                <div><small>Colaborador:</small> <span class="value" id="r_colaborador">—</span></div>
-                <div><small>Matrícula:</small> <span class="value" id="r_matricula">—</span>
-                     <small class="ms-2">Setor:</small> <span class="value" id="r_setor">—</span></div>
-              </div>
-              <div class="col-lg-5 meta">
-                <div><small>Local/Finalidade:</small> <span class="value" id="r_finalidade">—</span></div>
-                <div><small>Data:</small> <span class="value" id="r_dataViagem">__/__/____</span></div>
-              </div>
-            </div>
-
-            <hr/>
-
-            <div class="table-responsive">
-              <table class="table table-sm">
-                <thead>
-                <tr>
-                  <th>Descrição</th>
-                  <th>Data</th>
-                  <th class="text-end">Qtd</th>
-                  <th class="text-end">Valor unit.</th>
-                  <th class="text-end">Subtotal</th>
-                </tr>
-                </thead>
-                <tbody id="r_itens"></tbody>
-              </table>
-            </div>
-
-            <div class="row">
-              <div class="col-lg-8">
-                <div class="small text-muted"><strong>Observações:</strong> <span id="r_obs">—</span></div>
-              </div>
-              <div class="col-lg-4">
-                <div class="totals-card">
-                  <div class="d-flex justify-content-between">
-                    <span class="label">Total de gastos</span>
-                    <span class="value" id="r_total">R$ 0,00</span>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <span class="label">Adiantamento</span>
-                    <span class="value" id="r_adiant">R$ 0,00</span>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <span class="label">A devolver empresa</span>
-                    <span class="value danger" id="r_devolver">R$ 0,00</span>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <span class="label">A receber funcionário</span>
-                    <span class="value success" id="r_receber">R$ 0,00</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row mt-4 text-center">
-              <div class="col-6">
-                <div class="sign-line"></div>
-                <div>Gerência</div>
-              </div>
-              <div class="col-6">
-                <div class="sign-line"></div>
-                <div>Funcionário</div>
-              </div>
-            </div>
-
+    <!-- Card: Identificação -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5><i class="fas fa-user-circle me-2"></i>Identificação</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="empresa" class="form-label">Empresa</label>
+            <select id="empresa" class="form-select">
+              <option value="">Selecione</option>
+              <option value="05">05 - Agroterenas Citrus Ltda.</option>
+              <option value="11">11 - Agroterenas Industrial Citrus Ltda.</option>
+              <option value="16">16 - Agroterenas S/A - Cana</option>
+              <option value="17">17 - XXXXXXXX</option>
+              <option value="20">20 - Agt Estrela do Oeste</option>
+              <option value="21">21 - Agroterenas International E.C.</option>
+              <option value="24">24 - Agroterenas International LLC</option>
+              <option value="30">30 - Agroterenas S/A - Administração e Participações</option>
+              <option value="40">40 - Agroventura</option>
+              <option value="41">41 - Agroterenas Terras Ltda.</option>
+              <option value="42">42 - Associação Semear</option>
+              <option value="43">43 - AGT Adubos e Fertilizantes</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label for="colaborador" class="form-label">Colaborador</label>
+            <input type="text" id="colaborador" class="form-control" placeholder="Nome completo">
+          </div>
+          <div class="col-md-6">
+            <label for="matricula" class="form-label">Matrícula</label>
+            <input type="text" id="matricula" class="form-control">
+          </div>
+          <div class="col-md-6">
+            <label for="setor" class="form-label">Setor</label>
+            <input type="text" id="setor" class="form-control">
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Card: Viagem -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5><i class="fas fa-map-marked-alt me-2"></i>Viagem</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-8">
+            <label for="localFinalidade" class="form-label">Local e Finalidade</label>
+            <input type="text" id="localFinalidade" class="form-control"
+              placeholder="Ex: São Paulo - reunião com cliente">
+          </div>
+          <div class="col-md-4">
+            <label for="dataViagem" class="form-label">Data</label>
+            <input type="date" id="dataViagem" class="form-control">
+          </div>
+          <div class="col-12">
+            <label for="observacoesViagem" class="form-label">Observações</label>
+            <textarea id="observacoesViagem" class="form-control" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Lançar Despesas -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5><i class="fas fa-receipt me-2"></i>Lançar Despesas</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-12">
+            <label for="tipoDespesa" class="form-label">Descrição</label>
+            <select id="tipoDespesa" class="form-select">
+              <option value="">Selecione uma despesa</option>
+              <option value="42030101">ALUGUÉIS DE AERONAVES</option>
+              <option value="42030102">ALUGUÉIS DE IMÓVEIS</option>
+              <option value="42030106">ALUGUÉIS DE VEÍCULOS (KM)</option>
+              <option value="42040102">ANÚNCIOS E PUBLICAÇÕES</option>
+              <option value="45030103">AUXÍLIO FUNERAL</option>
+              <option value="42040106">ASSINATURA DE TV CABO</option>
+              <option value="43010102">COMBUSTÍVEIS</option>
+              <option value="44010409">CONSELHOS REGIONAIS</option>
+              <option value="42010201">CONSULTORIA/ASSESSORIA PF</option>
+              <option value="42010202">CONSULTORIA/ASSESSORIA PJ</option>
+              <option value="11010101">CONTA CAIXA</option>
+              <option value="42040109">DESPESAS COM CARTÓRIO</option>
+              <option value="42040201">DESPESAS COM HOSPEDAGENS</option>
+              <option value="42040203">DESPESAS COM PASSAGENS</option>
+              <option value="42040202">DESPESAS COM TÁXI</option>
+              <option value="42040110">DESPESAS POSTAIS E MALOTES</option>
+              <option value="45030309">EV. - DATAS COMEMORATIVAS</option>
+              <option value="45030308">EV. - CONFRATERNIZAÇÃO</option>
+              <option value="45031006">EXAMES - PERIÓDICOS</option>
+              <option value="42040105">JORNAIS/REVISTAS/LIVROS</option>
+              <option value="43010208">LANCHES E CAFÉS ESPECIAIS</option>
+              <option value="44010202">LICENCIAMENTO DE VEÍCULOS</option>
+              <option value="43010109">MATERIAIS DE ESCRITÓRIO</option>
+              <option value="43010111">PEÇAS E MATERIAIS DIVERSOS</option>
+              <option value="42040204">PEDÁGIOS E ESTACIONAMENTO</option>
+              <option value="42040115">REFEIÇÕES E LANCHES</option>
+              <option value="42040116">ROUPARIA E LAVANDERIA</option>
+              <option value="44010508">SEGURO DE VEÍCULO</option>
+              <option value="42010404">SERVIÇOS DE TERCEIROS - PF</option>
+              <option value="42010405">SERVIÇOS DE TERCEIROS - PJ</option>
+              <option value="42040118">TRAVESSIA/BALSA</option>
+              <option value="44010204">TELEFONEMAS - MÓVEL</option>
+              <option value="44010204">TAXAS DIVERSAS</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="dataDespesa" class="form-label">Data</label>
+            <input type="date" id="dataDespesa" class="form-control">
+          </div>
+          <div class="col-md-2">
+            <label for="qtd" class="form-label">Qtd</label>
+            <input type="number" id="qtd" class="form-control" value="1" min="1">
+          </div>
+          <div class="col-md-3">
+            <label for="valor" class="form-label">Valor</label>
+            <input type="number" step="0.01" id="valor" class="form-control" placeholder="0,00">
+          </div>
+          <div class="col-md-3">
+            <button type="button" class="btn btn-outline-primary w-100" onclick="adicionarDespesa()">+
+              Adicionar</button>
+          </div>
+          <div class="col-12">
+            <label for="comprovante" class="form-label">Comprovante (opcional)</label>
+            <input class="form-control" type="file" id="comprovante">
+            <small class="text-muted">Você pode anexar imagens ou PDF do recibo/nota.</small>
+          </div>
+        </div>
+
+        <!-- Tabela e Totais -->
+        <div id="resumoContainer" class="mt-4" style="display: none;">
+          <h6 class="mb-3">Despesas Lançadas</h6>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Descrição</th>
+                  <th>Data</th>
+                  <th>Qtd</th>
+                  <th>Valor Unit.</th>
+                  <th>Subtotal</th>
+                  <th>Anexo</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="tabelaDespesas"></tbody>
+              <tfoot>
+                <tr>
+                  <th colspan="4" class="text-end">Total de despesas:</th>
+                  <th id="totalDespesas">R$ 0,00</th>
+                  <th colspan="2"></th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card: Adiantamento e Situação -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5><i class="fas fa-calculator me-2"></i>Adiantamento Recebido</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="adiantamento" class="form-label">Valor do adiantamento (R$)</label>
+            <input type="number" step="0.01" id="adiantamento" class="form-control" value="0"
+              oninput="calcularSituacao()">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Situação</label>
+            <div class="situacao-box" id="situacao">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botão Final -->
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary btn-lg" onclick="gerarResumo()">
+        Gerar Resumo »
+      </button>
+    </div>
   </div>
-</div>
 
-<!-- Script: mantém o comportamento e sincroniza apenas o Resumo -->
-<script>
-  // Contexto vindo do login para exibir no topo e no resumo
-  const empCtx = sessionStorage.getItem('empresa') || '';
-  const usrCtx = sessionStorage.getItem('usuario') || '';
-  if (empCtx) document.getElementById('empresaSpan').textContent = empCtx;
-  if (usrCtx) document.getElementById('usuarioSpan').textContent = usrCtx;
+  <script>
+    let despesasRealizadas = [];
+    let dadosAdiantamento = null;
 
-  // Helpers
-  const brMoney = v => (Number(v||0)).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-  const fmtDate = v => v ? new Date(v).toLocaleDateString('pt-BR') : '__/__/____';
-
-  // Estado dos itens (linhas de despesa)
-  const itens = [];
-
-  // Apenas atualizar o RESUMO conforme o usuário digita (form permanece intocado)
-  ['empresa','colaborador','matricula','setor','finalidade','dataViagem','obs'].forEach(id=>{
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener('input', syncResumoHeader);
-    el.addEventListener('change', syncResumoHeader);
-  });
-
-  // Preenche o resumo com login como padrão inicial, sem mexer no formulário
-  function initResumoWithLogin() {
-    document.getElementById('r_empresa').textContent = empCtx || '—';
-    if (usrCtx) document.getElementById('r_colaborador').textContent = usrCtx;
-  }
-  initResumoWithLogin();
-
-  function syncResumoHeader(){
-    const empresa = document.getElementById('empresa')?.value || document.getElementById('r_empresa').textContent || '—';
-    const colaborador = document.getElementById('colaborador')?.value || document.getElementById('r_colaborador').textContent || '—';
-    const matricula = document.getElementById('matricula')?.value || '—';
-    const setor = document.getElementById('setor')?.value || '—';
-    const finalidade = document.getElementById('finalidade')?.value || '—';
-    const dataV = document.getElementById('dataViagem')?.value || '';
-
-    document.getElementById('r_empresa').textContent = empresa || '—';
-    document.getElementById('r_colaborador').textContent = colaborador || '—';
-    document.getElementById('r_matricula').textContent = matricula || '—';
-    document.getElementById('r_setor').textContent = setor || '—';
-    document.getElementById('r_finalidade').textContent = finalidade || '—';
-    document.getElementById('r_dataViagem').textContent = fmtDate(dataV);
-    document.getElementById('r_obs').textContent = document.getElementById('obs')?.value || '—';
-  }
-  // Inicial
-  syncResumoHeader();
-
-  // Lançamento de despesas
-  document.getElementById('addLinha').addEventListener('click', () => {
-    const desc = document.getElementById('desc').value;
-    const data = document.getElementById('dataDesp').value;
-    const qtd  = Number(document.getElementById('qtd').value || 1);
-    const val  = Number(document.getElementById('valor').value || 0);
-    const anexoInput = document.getElementById('anexo');
-    const anexoNome = anexoInput.files[0]?.name || '';
-
-    if (!desc || val <= 0 || qtd <= 0) {
-      alert('Informe descrição, quantidade e valor (>0).');
-      return;
+    function formatCurrency(value) {
+      return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 
-    const subtotal = qtd * val;
-    itens.push({ id: crypto.randomUUID(), desc, data, qtd, val, subtotal, anexoNome });
-    renderTabela();
-    document.getElementById('valor').value = '';
-    document.getElementById('qtd').value = 1;
-    document.getElementById('anexo').value = '';
-  });
+    function formatDate(dateString) {
+      if (!dateString) return '__/__/____';
+      return new Date(dateString + 'T00:00:00').toLocaleDateString('pt-BR');
+    }
 
-  function renderTabela(){
-    const tbody = document.querySelector('#tabela tbody');
-    tbody.innerHTML = '';
-    let total = 0;
-    itens.forEach(it => {
-      total += it.subtotal;
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${it.desc}</td>
-        <td>${fmtDate(it.data)}</td>
-        <td class="text-end">${it.qtd}</td>
-        <td class="text-end">${brMoney(it.val)}</td>
-        <td class="text-end">${brMoney(it.subtotal)}</td>
-        <td>${it.anexoNome || '-'}</td>
-        <td class="text-end">
-          <button class="btn btn-sm btn-outline-danger" onclick="removerItem('${it.id}')">Remover</button>
-        </td>`;
-      tbody.appendChild(tr);
+    function adicionarDespesa() {
+      const descEl = document.getElementById('tipoDespesa');
+      const dataEl = document.getElementById('dataDespesa');
+      const qtdEl = document.getElementById('qtd');
+      const valorEl = document.getElementById('valor');
+      const comprovanteEl = document.getElementById('comprovante');
+
+      const valor = parseFloat(valorEl.value) || 0;
+      const qtd = parseInt(qtdEl.value, 10);
+      const chave = descEl.value;
+      const descricao = descEl.options[descEl.selectedIndex].text;
+
+      if (!chave || !dataEl.value || qtd <= 0 || valor <= 0) {
+        alert('Preencha todos os campos da despesa.');
+        return;
+      }
+
+      const novaDespesa = {
+        id: Date.now(),
+        chave: chave,
+        descricao: descricao,
+        data: dataEl.value,
+        quantidade: qtd,
+        valorUnitario: valor,
+        subtotal: qtd * valor,
+        comprovante: comprovanteEl.files.length > 0 ? comprovanteEl.files[0].name : null
+      };
+
+      despesasRealizadas.push(novaDespesa);
+      renderizarTabela();
+
+      // Limpar campos
+      descEl.selectedIndex = 0;
+      dataEl.value = new Date().toISOString().split('T')[0];
+      qtdEl.value = 1;
+      valorEl.value = '';
+      comprovanteEl.value = null;
+      descEl.focus();
+    }
+
+    function removerDespesa(id) {
+      despesasRealizadas = despesasRealizadas.filter(d => d.id !== id);
+      renderizarTabela();
+    }
+
+    function renderizarTabela() {
+      const resumoContainer = document.getElementById('resumoContainer');
+      const tbody = document.getElementById('tabelaDespesas');
+      tbody.innerHTML = '';
+      let totalGastos = 0;
+
+      if (despesasRealizadas.length === 0) {
+        resumoContainer.style.display = 'none';
+        return;
+      }
+      resumoContainer.style.display = 'block';
+
+      despesasRealizadas.forEach(d => {
+        totalGastos += d.subtotal;
+        const tr = document.createElement('tr');
+        const comprovanteInfo = d.comprovante ? d.comprovante : '-';
+        tr.innerHTML = `
+    <td>${d.descricao}</td>
+    <td>${formatDate(d.data)}</td>
+    <td>${d.quantidade}</td>
+    <td>${formatCurrency(d.valorUnitario)}</td>
+    <td>${formatCurrency(d.subtotal)}</td>
+    <td><small class="text-muted">${comprovanteInfo}</small></td>
+    <td>
+    <button class="btn btn-sm btn-outline-danger" onclick="removerDespesa(${d.id})">
+    Remover
+    </button>
+    </td>
+    `;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById('totalDespesas').textContent = formatCurrency(totalGastos);
+      calcularSituacao();
+    }
+
+    function calcularSituacao() {
+      const totalGastos = despesasRealizadas.reduce((acc, item) => acc + item.subtotal, 0);
+      const adiantamento = parseFloat(document.getElementById('adiantamento').value) || 0;
+      const diferenca = totalGastos - adiantamento;
+
+      const situacaoEl = document.getElementById('situacao');
+
+      if (diferenca > 0) {
+        situacaoEl.textContent = `Empresa deve pagar ${formatCurrency(diferenca)}`;
+        situacaoEl.style.color = 'var(--danger)';
+      } else if (diferenca < 0) {
+        situacaoEl.textContent = `Colaborador deve devolver ${formatCurrency(Math.abs(diferenca))}`;
+        situacaoEl.style.color = 'var(--success)';
+      } else {
+        situacaoEl.textContent = 'Quitado';
+        situacaoEl.style.color = 'var(--ink)';
+      }
+    }
+
+    function gerarResumo() {
+      if (despesasRealizadas.length === 0) {
+        alert('Adicione pelo menos uma despesa para justificar.');
+        return;
+      }
+
+      const dados = {
+        empresa: document.getElementById('empresa').value,
+        colaborador: document.getElementById('colaborador').value,
+        matricula: document.getElementById('matricula').value,
+        setor: document.getElementById('setor').value,
+        localFinalidade: document.getElementById('localFinalidade').value,
+        dataViagem: document.getElementById('dataViagem').value,
+        observacoes: document.getElementById('observacoesViagem').value,
+        despesas: despesasRealizadas,
+        valorAdiantamento: parseFloat(document.getElementById('adiantamento').value) || 0,
+        totalGastos: despesasRealizadas.reduce((acc, item) => acc + item.subtotal, 0),
+        dadosAdiantamento: dadosAdiantamento // Incluir dados do adiantamento original
+      };
+
+      sessionStorage.setItem('dadosJustificativaViagem', JSON.stringify(dados));
+      console.log('Dados salvos:', dados);
+
+      // Redirecionar para o relatório
+      window.location.href = 'justificativa-viagem-relatorio.html';
+    }
+
+    function carregarDadosAdiantamento() {
+      const dadosStr = sessionStorage.getItem('dadosAcertoViagem');
+
+      if (dadosStr) {
+        dadosAdiantamento = JSON.parse(dadosStr);
+
+        // Mostrar alerta de adiantamento
+        document.getElementById('alertaAdiantamento').style.display = 'block';
+        document.getElementById('info_colaborador').textContent = dadosAdiantamento.colaborador;
+        document.getElementById('info_valorAdiantamento').textContent = formatCurrency(dadosAdiantamento.valorAdiantamento);
+        document.getElementById('info_dataAdiantamento').textContent = formatDate(dadosAdiantamento.dataAdiantamento);
+        document.getElementById('info_motivo').textContent = dadosAdiantamento.motivo;
+
+        // Preencher campos automaticamente
+        document.getElementById('empresa').value = dadosAdiantamento.empresa;
+        document.getElementById('colaborador').value = dadosAdiantamento.colaborador;
+        document.getElementById('adiantamento').value = dadosAdiantamento.valorAdiantamento;
+        document.getElementById('localFinalidade').value = dadosAdiantamento.motivo;
+
+        // Desabilitar campos preenchidos automaticamente
+        document.getElementById('empresa').disabled = true;
+        document.getElementById('colaborador').disabled = true;
+        document.getElementById('adiantamento').disabled = true;
+
+        console.log('Dados do adiantamento carregados:', dadosAdiantamento);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('dataViagem').value = today;
+      document.getElementById('dataDespesa').value = today;
+
+      // Carregar dados do adiantamento se existirem
+      carregarDadosAdiantamento();
     });
-    document.getElementById('totalDesp').textContent = brMoney(total);
-    recalcularResumo();
-
-    // atualiza a tabela do Resumo
-    const rtbody = document.getElementById('r_itens');
-    rtbody.innerHTML = '';
-    itens.forEach(it => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${it.desc}</td>
-        <td>${fmtDate(it.data)}</td>
-        <td class="text-end">${it.qtd}</td>
-        <td class="text-end">${brMoney(it.val)}</td>
-        <td class="text-end">${brMoney(it.subtotal)}</td>`;
-      rtbody.appendChild(tr);
-    });
-  }
-
-  window.removerItem = (id) => {
-    const idx = itens.findIndex(x=>x.id===id);
-    if (idx>=0){ itens.splice(idx,1); renderTabela(); }
-  }
-
-  function somaTotal(){ return itens.reduce((a,c)=>a+c.subtotal,0); }
-
-  function recalcularResumo(){
-    const total = somaTotal();
-    const ad = Number(document.getElementById('adiantamento').value || 0);
-    const dif = total - ad;
-
-    document.getElementById('situacao').value =
-      dif>0 ? `Empresa deve pagar R$ ${brMoney(dif).replace('R$ ','')}` :
-      dif<0 ? `Colaborador deve devolver R$ ${brMoney(-dif).replace('R$ ','')}` : 'Quitado';
-
-    document.getElementById('r_total').textContent = brMoney(total);
-    document.getElementById('r_adiant').textContent = brMoney(ad);
-    document.getElementById('r_devolver').textContent = brMoney(dif<0 ? -dif : 0);
-    document.getElementById('r_receber').textContent = brMoney(dif>0 ? dif : 0);
-  }
-
-  document.getElementById('adiantamento').addEventListener('input', recalcularResumo);
-
-  // Submit: sincroniza e rola
-  document.getElementById('formJust').addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const req = ['empresa','colaborador','finalidade','dataViagem'];
-    let ok = true;
-    req.forEach(id=>{
-      const el = document.getElementById(id);
-      if(!el.value.trim()){ el.classList.add('is-invalid'); ok=false; } else el.classList.remove('is-invalid');
-    });
-    if(!ok) return;
-    syncResumoHeader();
-    recalcularResumo();
-    document.getElementById('resumo').scrollIntoView({behavior:'smooth'});
-  });
-</script>
+  </script>
 </body>
+
 </html>

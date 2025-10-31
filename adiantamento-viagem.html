@@ -1,316 +1,407 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Solicitação de Adiantamento – Viagem</title>
+  <title>Solicitação de Adiantamento para Viagens</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    :root{ --brand:#2563eb; --brand-600:#1d4ed8; --ink:#0f172a; --muted:#64748b; --bg:#f3f6fb; --border:#e5e7eb; --danger:#e11d48; }
-    body{ background:var(--bg); color:var(--ink); }
-    .chip{ padding:.25rem .6rem; border-radius:999px; font-size:.78rem; font-weight:600; background:#eef2ff; color:#2563eb; border:1px solid #e0e7ff; }
-    .card{ border:1px solid var(--border); border-radius:12px; box-shadow:0 6px 20px rgba(2,6,23,.05); }
-    .form-label{ font-weight:600; color:#334155; }
-    .form-control,.form-select{ border-radius:10px; border:1px solid var(--border); }
-    .form-control:focus,.form-select:focus{ border-color:var(--brand); box-shadow:0 0 0 .2rem rgba(37,99,235,.15); }
-    .btn-primary{ background:var(--brand); border-color:var(--brand); border-radius:10px; font-weight:600; }
-    .btn-primary:hover{ background:var(--brand-600); border-color:var(--brand-600); }
-    .preview-paper{ background:#111; color:#eee; padding:24px; border-radius:12px; font-family:"Times New Roman", serif; border:1px solid #222; }
-    .preview-paper h2{ letter-spacing:.6rem; text-align:center; text-decoration: underline; }
-    .preview-paper .sub{ color:#ff6b6b; }
-    .signature-line { border-top:1px solid #ccc; height:1px; margin:28px 0 4px; }
-    .mono { font-family: ui-monospace, Menlo, Monaco, Consolas, "Courier New", monospace; }
+    :root {
+      --brand: #72bf44;
+      --brand-600: #5fa535;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --paper: #ffffff;
+      --bg: #f3f6fb;
+      --border: #e5e7eb;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      color: var(--ink);
+      letter-spacing: .2px;
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-600) 100%);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .topbar .fw-bold {
+      color: #fff;
+      font-size: 1.2rem;
+    }
+
+    .topbar .text-muted {
+      color: rgba(255, 255, 255, 0.85) !important;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(2, 6, 23, .05);
+    }
+
+    .card-header {
+      background: linear-gradient(180deg, #f8fdf5, #e8f5e0);
+      border-bottom: 1px solid var(--border);
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+    }
+
+    .card-header h5 {
+      color: var(--brand-600);
+      font-weight: 700;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #334155;
+    }
+
+    .form-control,
+    .form-select {
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 .2rem rgba(114, 191, 68, .25);
+    }
+
+    .btn-primary {
+      background: var(--brand);
+      border-color: var(--brand);
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      background: var(--brand-600);
+      border-color: var(--brand-600);
+    }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
+
 <body>
-<div class="container my-4">
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <div class="fs-4 fw-bold">Solicitação de Adiantamento para Viagens</div>
-    <div class="d-flex gap-2 text-muted small">
-      <span class="chip">Empresa: <strong id="empresaSpan">-</strong></span>
-      <span class="chip">Usuário: <strong id="usuarioSpan">-</strong></span>
+  <nav class="topbar">
+    <div class="container py-2 d-flex align-items-center justify-content-between">
+      <div class="fw-bold">Solicitação de Adiantamento para Viagens</div>
+      <div class="text-muted small">
+        Empresa: <span id="empresaSpan">EMPRESA_A</span> • Usuário: <span id="usuarioSpan">agt@agt.com.br</span>
+      </div>
     </div>
-  </div>
+  </nav>
 
-  <div class="row g-3">
-    <!-- Formulário -->
-    <div class="col-12 col-lg-5">
-      <div class="card">
-        <div class="card-body">
-          <form id="formRecibo" novalidate>
-            <h6 class="mb-3">Dados do Colaborador</h6>
+  <div class="container my-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <!-- Card: Dados do Colaborador -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5><i class="fas fa-user-circle me-2"></i>Dados do Colaborador</h5>
+          </div>
+          <div class="card-body">
+            <form id="formRecibo" novalidate>
+              <div class="mb-3">
+                <label for="empresa" class="form-label">Empresa</label>
+                <select id="empresa" class="form-select" required>
+                  <option value="" selected>Selecione a empresa</option>
+                  <option value="05">05 - Agroterenas Citrus Ltda.</option>
+                  <option value="11">11 - Agroterenas Industrial Citrus Ltda.</option>
+                  <option value="16">16 - Agroterenas S/A - Cana</option>
+                  <option value="17">17 - XXXXXXXX</option>
+                  <option value="20">20 - Agt Estrela do Oeste</option>
+                  <option value="21">21 - Agroterenas International E.C.</option>
+                  <option value="24">24 - Agroterenas International LLC</option>
+                  <option value="30">30 - Agroterenas S/A - Administração e Participações</option>
+                  <option value="40">40 - Agroventura</option>
+                  <option value="41">41 - Agroterenas Terras Ltda.</option>
+                  <option value="42">42 - Associação Semear</option>
+                  <option value="43">43 - AGT Adubos e Fertilizantes</option>
+                </select>
+                <div class="invalid-feedback">Selecione uma empresa.</div>
+              </div>
+
+
+
+
+              <div class="mb-3">
+                <label for="nome" class="form-label">Nome completo</label>
+                <input type="text" id="nome" class="form-control" required />
+                <div class="invalid-feedback">Informe o nome.</div>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-md-6">
+                  <label for="rg" class="form-label">RG</label>
+                  <input type="text" id="rg" class="form-control" placeholder="Ex: 12.345.678-9" required />
+                  <div class="invalid-feedback">Informe o RG.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="cpf" class="form-label">CPF</label>
+                  <input type="text" id="cpf" class="form-control" placeholder="XXX.XXX.XXX-XX" required />
+                  <div class="invalid-feedback">CPF inválido.</div>
+                </div>
+              </div>
+
+              <div class="mb-3 mt-3">
+                <label for="nacionalidade" class="form-label">Nacionalidade</label>
+                <input type="text" id="nacionalidade" class="form-control" value="Brasileiro(a)" required />
+              </div>
+
+              <!-- Endereço separado -->
+              <div class="row g-2 mb-2">
+                <div class="col-md-8">
+                  <label for="rua" class="form-label">Rua</label>
+                  <input type="text" id="rua" class="form-control" placeholder="Nome da rua" required />
+                  <div class="invalid-feedback">Informe a rua.</div>
+                </div>
+                <div class="col-md-4">
+                  <label for="numero" class="form-label">Número</label>
+                  <input type="text" id="numero" class="form-control" placeholder="Nº" required />
+                  <div class="invalid-feedback">Informe o número.</div>
+                </div>
+              </div>
+
+              <div class="row g-2 mb-3">
+                <div class="col-md-6">
+                  <label for="bairro" class="form-label">Bairro</label>
+                  <input type="text" id="bairro" class="form-control" placeholder="Bairro" required />
+                  <div class="invalid-feedback">Informe o bairro.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="cidade" class="form-label">Cidade</label>
+                  <input type="text" id="cidade" class="form-control" placeholder="Cidade/UF" required />
+                  <div class="invalid-feedback">Informe a cidade.</div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Card: Forma de Pagamento -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5><i class="fas fa-money-check-alt me-2"></i>Forma de Pagamento</h5>
+          </div>
+          <div class="card-body">
             <div class="mb-3">
-              <label class="form-label">Empresa</label>
-              <select id="empresa" class="form-select" required>
-                <option value="" selected>Selecione</option>
-                <option>Empresa A</option><option>Empresa B</option><option>Empresa C</option>
+              <label for="formaPagamento" class="form-label">Selecione a forma de pagamento</label>
+              <select id="formaPagamento" class="form-select" required onchange="togglePagamento()">
+                <option value="">Selecione</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Depósito">Depósito Bancário</option>
               </select>
-              <div class="invalid-feedback">Selecione a empresa.</div>
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Nome completo</label>
-              <input type="text" id="nome" class="form-control" required />
-              <div class="invalid-feedback">Informe o nome.</div>
-            </div>
-            <div class="row g-2">
-              <div class="col-6">
-                <label class="form-label">RG</label>
-                <input type="text" id="rg" class="form-control" placeholder="Ex: 12.345.678-9" required />
-                <div class="invalid-feedback">Informe o RG.</div>
-              </div>
-              <div class="col-6">
-                <label class="form-label">CPF</label>
-                <input type="text" id="cpf" class="form-control" placeholder="XXX.XXX.XXX-XX" required />
-                <div class="invalid-feedback">CPF inválido.</div>
-              </div>
-            </div>
-            <div class="mb-3 mt-2">
-              <label class="form-label">Nacionalidade</label>
-              <input type="text" id="nacionalidade" class="form-control" value="Brasileiro(a)" required />
-            </div>
-            <div class="mb-3">
-              <label class="form-label">Endereço completo</label>
-              <input type="text" id="endereco" class="form-control" placeholder="Rua, número, bairro, cidade, UF, CEP" required />
-              <div class="invalid-feedback">Informe o endereço.</div>
+              <div class="invalid-feedback">Selecione a forma de pagamento.</div>
             </div>
 
-            <h6 class="mt-4 mb-3">Dados do Depósito (Titularidade do colaborador)</h6>
-            <div class="mb-2">
-              <label class="form-label">Banco</label>
-              <input type="text" id="banco" class="form-control" placeholder="Banco XYZ" required />
-            </div>
-            <div class="row g-2">
-              <div class="col-4">
-                <label class="form-label">Agência</label>
-                <input type="text" id="agencia" class="form-control" required />
+            <!-- Campos bancários (aparecem apenas se Depósito for selecionado) -->
+            <div id="dadosBancarios" class="hidden">
+              <div class="mb-3">
+                <label for="banco" class="form-label">Banco</label>
+                <input type="text" id="banco" class="form-control" placeholder="Banco XYZ" />
               </div>
-              <div class="col-8">
-                <label class="form-label">Conta</label>
-                <input type="text" id="conta" class="form-control" placeholder="Número + dígito" required />
-              </div>
-            </div>
 
-            <h6 class="mt-4 mb-3">Adiantamento</h6>
-            <div class="row g-2">
-              <div class="col-6">
-                <label class="form-label">Valor (R$)</label>
+              <div class="row g-2 mb-3">
+                <div class="col-4">
+                  <label for="agencia" class="form-label">Agência</label>
+                  <input type="text" id="agencia" class="form-control" />
+                </div>
+                <div class="col-8">
+                  <label for="conta" class="form-label">Conta</label>
+                  <input type="text" id="conta" class="form-control" placeholder="Número + dígito" />
+                </div>
+              </div>
+
+              <div class="mb-0">
+                <label for="tipoConta" class="form-label">Tipo de Conta</label>
+                <select id="tipoConta" class="form-select">
+                  <option value="">Selecione</option>
+                  <option value="Conta Corrente">Conta Corrente</option>
+                  <option value="Poupança">Poupança</option>
+                  <option value="Salário">Salário</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: Adiantamento -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5><i class="fas fa-money-bill-wave me-2"></i>Adiantamento</h5>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="valor" class="form-label">Valor (R$)</label>
                 <input type="number" step="0.01" id="valor" class="form-control" required />
                 <div class="invalid-feedback">Informe o valor.</div>
               </div>
-              <div class="col-6">
-                <label class="form-label">Data do depósito</label>
-                <input type="date" id="dataDeposito" class="form-control" required />
+              <div class="col-md-6">
+                <label for="dataPagamento" class="form-label">Data do pagamento</label>
+                <input type="date" id="dataPagamento" class="form-control" required />
               </div>
             </div>
 
-            <div class="mb-3 mt-2">
-              <label class="form-label">Motivo / Descrição da viagem</label>
-              <textarea id="motivo" class="form-control" rows="2" placeholder="Descrever motivo" required></textarea>
+            <div class="mt-3">
+              <label for="motivo" class="form-label">Motivo / Descrição da viagem</label>
+              <textarea id="motivo" class="form-control" rows="3" placeholder="Descrever motivo" required></textarea>
               <div class="invalid-feedback">Descreva o motivo.</div>
             </div>
+          </div>
+        </div>
 
-            <h6 class="mt-4 mb-2">Cidade/Estado e Data do Recibo</h6>
+        <!-- Card: Local e Data -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h5><i class="fas fa-map-marker-alt me-2"></i>Cidade/Estado e Data do Recibo</h5>
+          </div>
+          <div class="card-body">
             <div class="row g-2">
-              <div class="col-6">
+              <div class="col-md-6">
+                <label for="local" class="form-label">Local</label>
                 <input type="text" id="local" class="form-control" placeholder="Ex: Maracaí/SP" required />
               </div>
-              <div class="col-6">
+              <div class="col-md-6">
+                <label for="dataRecibo" class="form-label">Data</label>
                 <input type="date" id="dataRecibo" class="form-control" required />
               </div>
             </div>
 
-            <div class="form-text mt-3">
-              Observação: O colaborador declara que, havendo sobra, devolverá em até 3 dias do retorno com a devida prestação de contas.
+            <div class="alert alert-info mt-3 mb-0">
+              <small><strong>Observação:</strong> O colaborador declara que, havendo sobra, devolverá em até 3 dias do
+                retorno com a devida prestação de contas.</small>
             </div>
-
-            <div class="d-grid mt-3">
-              <button class="btn btn-primary" type="submit">Gerar Recibo</button>
-            </div>
-
-            <!-- Botão Próximo para ir para a tela do analista -->
-          <div class="d-grid mt-2">
-            <button id="btnProximo" class="btn btn-outline-primary" type="button">Próximo &raquo;</button>
           </div>
-          </form>
         </div>
-      </div>
-      <p class="text-muted mt-2">Após gerar, você pode imprimir ou salvar como PDF pelo navegador.</p>
-    </div>
 
-    <!-- Prévia do Recibo -->
-    <div class="col-12 col-lg-7">
-      <div class="card">
-        <div class="card-body">
-          <div id="recibo" class="preview-paper">
-            <h2>R E C I B O</h2>
-            <p class="text-center">
-              <strong>VALOR: <span id="pv_valor" class="sub">R$ 0,00</span> (<span id="pv_valor_extenso" class="sub">—</span>)</strong>
-            </p>
-
-            <p>
-              Eu, <span class="sub" id="pv_nome">NOME COMPLETO</span>, <span id="pv_nacionalidade">Brasileiro(a)</span>, portador da cédula de identidade RG nº
-              <span class="sub" id="pv_rg">XXXXX</span> e do CPF/MF sob o nº <span class="sub" id="pv_cpf">XXX.XXX.XXX-XX</span>,
-              residente e domiciliado(a) na <span class="sub" id="pv_endereco">ENDEREÇO COMPLETO</span>, recebi da
-              <span class="sub" id="pv_empresa">EMPRESA</span>, estabelecida no endereço da empresa,
-              a importância de <span class="sub" id="pv_valor2">R$ 0,00</span> (<span id="pv_valor_extenso2" class="sub">—</span>)
-              via depósito bancário em conta corrente de minha titularidade
-              (Banco: <span class="sub" id="pv_banco">—</span> | Agência: <span class="sub" id="pv_agencia">—</span> | Conta: <span class="sub" id="pv_conta">—</span>),
-              na data de <span class="sub" id="pv_dataDeposito">__/__/____</span>, valor este destinado (<span class="sub" id="pv_motivo">DESCREVER MOTIVO</span>).
-            </p>
-
-            <p>
-              Declaro que, caso haja sobra do valor, me comprometo a devolver para a Empresa via depósito bancário ou em espécie
-              em até 3 dias posteriores ao retorno da viagem, com a devida apresentação dos comprovantes fiscais para comprovação
-              dos valores. Sendo expressão da verdade, assino o presente sob as penas da lei.
-            </p>
-
-            <div class="text-end mono mt-4">
-              <span id="pv_local">Local</span>, <span id="pv_dataRecibo">__/__/____</span>.
-            </div>
-
-            <div class="row mt-5">
-              <div class="col-6 text-center">
-                <div class="signature-line"></div>
-                <div id="pv_nome2">NOME COMPLETO</div>
-                <div class="text-muted">CPF: <span id="pv_cpf2">XXX.XXX.XXX-XX</span></div>
-              </div>
-              <div class="col-6 text-center">
-                <div class="signature-line"></div>
-                <div>GERÊNCIA:</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="d-flex gap-2 mt-3">
-            <button class="btn btn-outline-secondary btn-sm" onclick="window.print()"><i class="bi bi-printer me-1"></i>Imprimir / Salvar PDF</button>
-          </div>
+        <!-- Botão Gerar -->
+        <div class="d-grid gap-2">
+          <button class="btn btn-primary btn-lg" type="button" onclick="gerarRecibo()">
+            <i class="fas fa-file-invoice me-2"></i>Gerar Recibo »
+          </button>
         </div>
       </div>
     </div>
-
   </div>
-</div>
 
-<script>
-  // Contexto do login
-  const empCtx = sessionStorage.getItem('empresa') || '';
-  const usrCtx = sessionStorage.getItem('usuario') || '';
-  if (empCtx) document.getElementById('empresaSpan').textContent = empCtx;
-  if (usrCtx) document.getElementById('usuarioSpan').textContent = usrCtx;
+  <script>
+    // Contexto do login
+    const empCtx = sessionStorage.getItem('empresa') || 'EMPRESA_A';
+    const usrCtx = sessionStorage.getItem('usuario') || 'agt@agt.com.br';
+    document.getElementById('empresaSpan').textContent = empCtx;
+    document.getElementById('usuarioSpan').textContent = usrCtx;
 
-  function moedaBR(v){ if(!v && v!==0) return 'R$ 0,00'; return Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
-  function numeroPorExtenso(n){
-    try{ const f=new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL'}).format(n).replace('R$','').trim().split(',');
-      return `${f[0]} reais e ${(f[1]||'00')} centavos`; }catch{return 'valor por extenso';}
-  }
-  function cpfValido(c){ const clean=(c||'').replace(/\D/g,''); return clean.length===11; }
-  function atualizarPreview(form){
-    const empresa=form.empresa.value||'EMPRESA';
-    const nome=form.nome.value||'NOME COMPLETO';
-    const rg=form.rg.value||'XXXXX';
-    const cpf=form.cpf.value||'XXX.XXX.XXX-XX';
-    const nac=form.nacionalidade.value||'Brasileiro(a)';
-    const end=form.endereco.value||'ENDEREÇO COMPLETO';
-    const banco=form.banco.value||'—';
-    const ag=form.agencia.value||'—';
-    const conta=form.conta.value||'—';
-    const valor=Number(form.valor.value||0);
-    const dataDep=form.dataDeposito.value? new Date(form.dataDeposito.value).toLocaleDateString('pt-BR'):'__/__/____';
-    const motivo=form.motivo.value||'DESCREVER MOTIVO';
-    const local=form.local.value||'Local';
-    const dataRecibo=form.dataRecibo.value? new Date(form.dataRecibo.value).toLocaleDateString('pt-BR'):'__/__/____';
+    function togglePagamento() {
+      const forma = document.getElementById('formaPagamento').value;
+      const dadosBancarios = document.getElementById('dadosBancarios');
 
-    document.getElementById('pv_empresa').textContent=empresa;
-    document.getElementById('pv_nome').textContent=nome;
-    document.getElementById('pv_nome2').textContent=nome;
-    document.getElementById('pv_rg').textContent=rg;
-    document.getElementById('pv_cpf').textContent=cpf;
-    document.getElementById('pv_cpf2').textContent=cpf;
-    document.getElementById('pv_nacionalidade').textContent=nac;
-    document.getElementById('pv_endereco').textContent=end;
-    document.getElementById('pv_banco').textContent=banco;
-    document.getElementById('pv_agencia').textContent=ag;
-    document.getElementById('pv_conta').textContent=conta;
+      if (forma === 'Depósito') {
+        dadosBancarios.classList.remove('hidden');
+      } else {
+        dadosBancarios.classList.add('hidden');
+      }
+    }
 
-    document.getElementById('pv_valor').textContent=moedaBR(valor);
-    document.getElementById('pv_valor2').textContent=moedaBR(valor);
-    const ext=numeroPorExtenso(valor);
-    document.getElementById('pv_valor_extenso').textContent=ext;
-    document.getElementById('pv_valor_extenso2').textContent=ext;
+    function cpfValido(c) {
+      const clean = (c || '').replace(/\D/g, '');
+      return clean.length === 11;
+    }
 
-    document.getElementById('pv_dataDeposito').textContent=dataDep;
-    document.getElementById('pv_motivo').textContent=motivo;
-    document.getElementById('pv_local').textContent=local;
-    document.getElementById('pv_dataRecibo').textContent=dataRecibo;
-  }
-  const form=document.getElementById('formRecibo');
-  ['empresa','nome','rg','cpf','nacionalidade','endereco','banco','agencia','conta','valor','dataDeposito','motivo','local','dataRecibo']
-    .forEach(id=> document.getElementById(id).addEventListener('input', ()=> atualizarPreview(form)));
-  form.addEventListener('submit',(e)=>{
-    e.preventDefault();
-    let ok=true;
-    const req=['empresa','nome','rg','cpf','endereco','banco','agencia','conta','valor','dataDeposito','motivo','local','dataRecibo'];
-    req.forEach(id=>{
-      const el=document.getElementById(id); const v=el.value && el.value.toString().trim();
-      if(!v || (id==='cpf' && !cpfValido(v))){ el.classList.add('is-invalid'); ok=false; } else el.classList.remove('is-invalid');
+    function gerarRecibo() {
+      const form = document.getElementById('formRecibo');
+      let ok = true;
+      const req = ['empresa', 'nome', 'rg', 'cpf', 'rua', 'numero', 'bairro', 'cidade', 'formaPagamento', 'valor', 'dataPagamento', 'motivo', 'local', 'dataRecibo'];
+
+      req.forEach(id => {
+        const el = document.getElementById(id);
+        const v = el.value && el.value.toString().trim();
+        if (!v || (id === 'cpf' && !cpfValido(v))) {
+          el.classList.add('is-invalid');
+          ok = false;
+        } else {
+          el.classList.remove('is-invalid');
+        }
+      });
+
+      // Validar campos bancários se Depósito for selecionado
+      const formaPagamento = document.getElementById('formaPagamento').value;
+      if (formaPagamento === 'Depósito') {
+        const bancarios = ['banco', 'agencia', 'conta', 'tipoConta'];
+        bancarios.forEach(id => {
+          const el = document.getElementById(id);
+          const v = el.value && el.value.toString().trim();
+          if (!v) {
+            el.classList.add('is-invalid');
+            ok = false;
+          } else {
+            el.classList.remove('is-invalid');
+          }
+        });
+      }
+
+      if (!ok) {
+        alert('Preencha todos os campos obrigatórios corretamente.');
+        return;
+      }
+
+      // Montar endereço completo
+      const rua = document.getElementById('rua').value;
+      const numero = document.getElementById('numero').value;
+      const bairro = document.getElementById('bairro').value;
+      const cidade = document.getElementById('cidade').value;
+      const enderecoCompleto = `${rua}, ${numero}, ${bairro}, ${cidade}`;
+
+      // Salvar dados no sessionStorage
+      const dados = {
+        empresa: document.getElementById('empresa').value,
+        nome: document.getElementById('nome').value,
+        rg: document.getElementById('rg').value,
+        cpf: document.getElementById('cpf').value,
+        nacionalidade: document.getElementById('nacionalidade').value,
+        endereco: enderecoCompleto,
+        formaPagamento: formaPagamento,
+        banco: formaPagamento === 'Depósito' ? document.getElementById('banco').value : '',
+        agencia: formaPagamento === 'Depósito' ? document.getElementById('agencia').value : '',
+        conta: formaPagamento === 'Depósito' ? document.getElementById('conta').value : '',
+        tipoConta: formaPagamento === 'Depósito' ? document.getElementById('tipoConta').value : '',
+        valor: Number(document.getElementById('valor').value),
+        dataPagamento: document.getElementById('dataPagamento').value,
+        motivo: document.getElementById('motivo').value,
+        local: document.getElementById('local').value,
+        dataRecibo: document.getElementById('dataRecibo').value
+      };
+
+      sessionStorage.setItem('dadosRecibo', JSON.stringify(dados));
+      window.location.href = 'adiantamento-viagem-recibo.html';
+    }
+
+    // Inicializar datas
+    document.addEventListener('DOMContentLoaded', function () {
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('dataPagamento').value = today;
+      document.getElementById('dataRecibo').value = today;
     });
-    if(!ok) return;
-    atualizarPreview(form);
-    document.getElementById('recibo').scrollIntoView({behavior:'smooth'});
-  });
-  atualizarPreview(form);
-
-  // Função para coletar dados do formulário
-  function coletarDadosFormulario() {
-    return {
-      empresa: document.getElementById('empresa').value,
-      nome: document.getElementById('nome').value,
-      rg: document.getElementById('rg').value,
-      cpf: document.getElementById('cpf').value,
-      nacionalidade: document.getElementById('nacionalidade').value,
-      endereco: document.getElementById('endereco').value,
-      banco: document.getElementById('banco').value,
-      agencia: document.getElementById('agencia').value,
-      conta: document.getElementById('conta').value,
-      valor: Number(document.getElementById('valor').value),
-      dataDeposito: document.getElementById('dataDeposito').value,
-      motivo: document.getElementById('motivo').value,
-      local: document.getElementById('local').value,
-      dataRecibo: document.getElementById('dataRecibo').value
-    };
-  }
-
- document.getElementById('btnProximo').addEventListener('click', () => {
-  const form = document.getElementById('formRecibo');
-  if (!form.checkValidity()) {
-    form.reportValidity();
-    return;
-  }
-  const dados = {
-    empresa: form.empresa.value,
-    nome: form.nome.value,
-    rg: form.rg.value,
-    cpf: form.cpf.value,
-    nacionalidade: form.nacionalidade.value,
-    endereco: form.endereco.value,
-    banco: form.banco.value,
-    agencia: form.agencia.value,
-    conta: form.conta.value,
-    valor: Number(form.valor.value),
-    dataDeposito: form.dataDeposito.value,
-    motivo: form.motivo.value,
-    local: form.local.value,
-    dataRecibo: form.dataRecibo.value
-  };
-  let registros = JSON.parse(sessionStorage.getItem('adiantamentoViagemItens') || '[]');
-  registros.push(dados);
-  sessionStorage.setItem('adiantamentoViagemItens', JSON.stringify(registros));
-  window.location.href = 'adiantamento-viagem-analista.html';
-});
-  
-
-
-</script>
+  </script>
 </body>
+
 </html>
