@@ -11,7 +11,7 @@
       --brand-600:#5fa535;
       --ink:#0f172a;
       --muted:#64748b;
-      --paper:#ffffff;
+      --paper:#ffff;
       --bg:#f3f6fb;
       --border:#e5e7eb;
       --table-stripe:#fafbff;
@@ -164,6 +164,26 @@
             </div>
           </div>
         </div>
+
+        <!-- Card: JSON da Solicitação -->
+        <div class="card mb-4">
+          <div class="card-header d-flex align-items-center justify-content-between">
+            <h5 class="mb-0">JSON da Solicitação</h5>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-outline-primary" id="btnCopiarJSON">Copiar JSON</button>
+              <button class="btn btn-sm btn-outline-secondary" id="btnBaixarJSON">Baixar .json</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-text mb-2">
+              Este é o payload completo que foi enviado da tela anterior (dadosAcaoJudicial).
+            </div>
+            <pre class="bg-light p-3 rounded" style="max-height: 360px; overflow:auto; font-size: .9rem;">
+<code id="jsonPreview">{}</code>
+            </pre>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -188,8 +208,21 @@
     }
 
     function formatDate(dateString) {
-        if (!dateString) return '-';
-        return new Date(dateString + 'T00:00:00').toLocaleDateString('pt-BR');
+      if (!dateString) return '-';
+      return new Date(dateString + 'T00:00:00').toLocaleDateString('pt-BR');
+    }
+
+    // Utilitário para baixar JSON em arquivo
+    function baixarJSON(obj, fileName = 'dados.json') {
+      const blob = new Blob([JSON.stringify(obj, null, 2)], { type: 'application/json;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -208,37 +241,37 @@
       document.getElementById('usuarioSpan').textContent = dados.usuario || '-';
 
       // Preencher detalhes da solicitação
-      document.getElementById('empresa').textContent = dados.empresa;
-      document.getElementById('fornecedor').textContent = dados.fornecedor;
-      document.getElementById('nrFornecedor').textContent = dados.nrFornecedor;
-      document.getElementById('nomeLocalFornecedor').textContent = dados.nomeLocalFornecedor;
-      document.getElementById('reclamante').textContent = dados.reclamante;
-      document.getElementById('tipoNota').textContent = dados.tipoNota;
-      document.getElementById('numeroNFF').textContent = dados.numeroNFF;
-      document.getElementById('quantiaNFF').textContent = `R$ ${dados.quantiaNFF}`;
-      document.getElementById('processo').textContent = dados.processo;
-      document.getElementById('pasta').textContent = dados.pasta;
-      document.getElementById('descricaoItem').textContent = dados.descricaoItem;
+      document.getElementById('empresa').textContent = dados.empresa || '-';
+      document.getElementById('fornecedor').textContent = dados.fornecedor || '-';
+      document.getElementById('nrFornecedor').textContent = dados.nrFornecedor || '-';
+      document.getElementById('nomeLocalFornecedor').textContent = dados.nomeLocalFornecedor || '-';
+      document.getElementById('reclamante').textContent = dados.reclamante || '-';
+      document.getElementById('tipoNota').textContent = dados.tipoNota || '-';
+      document.getElementById('numeroNFF').textContent = dados.numeroNFF || '-';
+      document.getElementById('quantiaNFF').textContent = `R$ ${dados.quantiaNFF || '0,00'}`;
+      document.getElementById('processo').textContent = dados.processo || '-';
+      document.getElementById('pasta').textContent = dados.pasta || '-';
+      document.getElementById('descricaoItem').textContent = dados.descricaoItem || '';
 
       // Preencher informações para o Oracle
       document.getElementById('dataGL').textContent = formatDate(dados.dataGL);
       document.getElementById('dataTaxaPagto').textContent = formatDate(dados.dataTaxaPagto);
       document.getElementById('dataCondicoes').textContent = formatDate(dados.dataCondicoes);
-      document.getElementById('condicoes').textContent = dados.condicoes;
-      document.getElementById('metodoPagamento').textContent = dados.metodoPagamento;
-      document.getElementById('grupoPagamento').textContent = dados.grupoPagamento;
-      document.getElementById('vincularAcao').textContent = dados.vincularAcao;
+      document.getElementById('condicoes').textContent = dados.condicoes || '-';
+      document.getElementById('metodoPagamento').textContent = dados.metodoPagamento || '-';
+      document.getElementById('grupoPagamento').textContent = dados.grupoPagamento || '-';
+      document.getElementById('vincularAcao').textContent = dados.vincularAcao || '-';
 
       // Preencher tabela de itens
       const tbody = document.getElementById('tabelaItens');
       tbody.innerHTML = '';
       let total = 0;
 
-      dados.itensPagamento.forEach(item => {
+      (dados.itensPagamento || []).forEach(item => {
         const valorNum = parseCurrency(item.valor);
         total += valorNum;
         const tr = document.createElement('tr');
-        
+
         if (item.tipo === 'beneficiario') {
           tr.innerHTML = `
             <td><span class="badge bg-primary">Beneficiário</span></td>
@@ -266,6 +299,42 @@
 
       // Preencher total
       document.getElementById('totalGeral').textContent = `R$ ${total.toFixed(2).replace('.', ',')}`;
+
+      // Exibir o JSON formatado no card
+      const jsonPreviewEl = document.getElementById('jsonPreview');
+      if (jsonPreviewEl) {
+        jsonPreviewEl.textContent = JSON.stringify(dados, null, 2);
+      }
+
+      // Copiar JSON
+      const btnCopiar = document.getElementById('btnCopiarJSON');
+      if (btnCopiar) {
+        btnCopiar.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(JSON.stringify(dados, null, 2));
+            const original = btnCopiar.textContent;
+            btnCopiar.textContent = 'Copiado!';
+            btnCopiar.classList.remove('btn-outline-primary');
+            btnCopiar.classList.add('btn-primary');
+            setTimeout(() => {
+              btnCopiar.textContent = original;
+              btnCopiar.classList.remove('btn-primary');
+              btnCopiar.classList.add('btn-outline-primary');
+            }, 1500);
+          } catch (e) {
+            alert('Não foi possível copiar para a área de transferência.');
+          }
+        });
+      }
+
+      // Baixar JSON
+      const btnBaixar = document.getElementById('btnBaixarJSON');
+      if (btnBaixar) {
+        btnBaixar.addEventListener('click', () => {
+          const fileName = `solicitacao-acoes-judiciais-${(dados.numeroNFF || 'sem-nff')}.json`;
+          baixarJSON(dados, fileName);
+        });
+      }
     });
 
     function enviarParaAnalise() {
