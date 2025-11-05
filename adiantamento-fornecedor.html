@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portal Financeiro - Adiantamento ao Fornecedor</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --cor-primaria: #65a30d; /* Verde principal */
+      --cor-primaria-texto: #ffffff;
+      --cor-fundo-secao: #f0fdf4; /* Verde bem claro */
+      --cor-texto-secao: #3f6212; /* Verde escuro para texto */
+      --cor-fundo-pagina: #f8fafc; /* Cinza bem claro */
+      --cor-borda: #e2e8f0;
+    }
+    body {
+      background-color: var(--cor-fundo-pagina);
+      color: #334155;
+    }
+    .portal-header {
+      background-color: var(--cor-primaria);
+      color: var(--cor-primaria-texto);
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+    }
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+    .page-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #1e293b;
+    }
+    .btn-voltar {
+      border-color: var(--cor-borda);
+    }
+    .form-section {
+      background-color: #ffffff;
+      border: 1px solid var(--cor-borda);
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+    .section-title {
+      background-color: var(--cor-fundo-secao);
+      color: var(--cor-texto-secao);
+      padding: 0.75rem 1.25rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--cor-borda);
+      border-top-left-radius: 0.5rem;
+      border-top-right-radius: 0.5rem;
+    }
+    .section-body {
+      padding: 1.5rem;
+    }
+    .form-label {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+    .required::after {
+      content: " *";
+      color: #dc2626;
+    }
+    .btn-adicionar {
+      background-color: var(--cor-fundo-secao);
+      color: var(--cor-texto-secao);
+      border: 1px solid #a3e635;
+      font-weight: 600;
+    }
+    .btn-adicionar:hover {
+      background-color: #dcfce7;
+    }
+    .btn-enviar {
+      background-color: var(--cor-primaria);
+      color: var(--cor-primaria-texto);
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 0.75rem 2rem;
+      border: none;
+    }
+    .btn-enviar:hover {
+      background-color: #4d7c0f;
+      color: var(--cor-primaria-texto);
+    }
+    .file-list li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem;
+      border-bottom: 1px solid var(--cor-borda);
+    }
+    .file-list li:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="portal-header d-flex justify-content-between">
+    <span>Portal Financeiro - Adiantamento ao Fornecedor</span>
+    <span>Empresa: 16 • Usuário: agt@agt.com.br</span>
+  </header>
+
+  <main class="container py-4">
+    <div class="page-header">
+      <h1 class="page-title">Novo Adiantamento ao Fornecedor</h1>
+      <a href="#" class="btn btn-light btn-voltar">← Voltar</a>
+    </div>
+
+    
+    <div class="col-lg-11 col-xl-10 p-0">
+      <!-- Dados da Solicitação -->
+      <section class="form-section">
+        <h5 class="section-title">Dados da Solicitação</h5>
+        <div class="section-body">
+          <div class="row g-3">
+            <div class="col-md-4">
+            <label for="empresa" class="form-label">Empresa</label>
+            <select id="empresa" class="form-select" required>
+              <option value="">Selecione a empresa</option>
+              <option value="05">05 - Agroterenas Citrus Ltda.</option>
+              <option value="11">11 - Agroterenas Industrial Citrus Ltda.</option>
+              <option value="16">16 - Agroterenas S/A - Cana</option>
+              <option value="20">20 - Agt Estrela do Oeste</option>
+              <option value="21">21 - Agroterenas International E.C.</option>
+              <option value="24">24 - Agroterenas International LLC</option>
+              <option value="30">30 - Agroterenas S/A - Administração e Participações</option>
+              <option value="40">40 - Agroventura</option>
+              <option value="41">41 - Agroterenas Terras Ltda.</option>
+              <option value="42">42 - Associação Semear</option>
+              <option value="43">43 - AGT Adubos e Fertilizantes</option>
+            </select>
+            <div class="invalid-feedback">Selecione uma empresa.</div>
+          </div>
+            <div class="col-md-4">
+              <label class="form-label required">Data</label>
+              <input id="data" type="date" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label required">Setor Pagamento</label>
+              <input id="setor_pagamento" class="form-control" placeholder="Ex.: Financeiro - Contas a Pagar" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label required">Nome do Fornecedor</label>
+              <input id="fornecedor_nome" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label required">CNPJ</label>
+              <input id="fornecedor_cnpj" class="form-control" placeholder="00.000.000/0000-00" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label required">Descrição (motivo da compra/adiantamento)</label>
+              <textarea id="descricao" class="form-control" rows="3" required></textarea>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Valores -->
+      <section class="form-section">
+        <h5 class="section-title">Valores</h5>
+        <div class="section-body">
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label required">Valor do Adiantamento (Bruto)</label>
+              <input id="valor_bruto" type="number" step="0.01" min="0" class="form-control" required>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label required">Haverá retenção de imposto na NF?</label>
+              <div class="d-flex gap-3 pt-2">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="retencao" id="ret_sim" value="sim">
+                  <label class="form-check-label" for="ret_sim">Sim</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="retencao" id="ret_nao" value="nao" checked>
+                  <label class="form-check-label" for="ret_nao">Não</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4" id="grupoRetencao" style="display:none">
+              <label class="form-label">Valor da Retenção</label>
+              <input id="valor_retencao" type="number" step="0.01" min="0" class="form-control" placeholder="0,00">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label required">Valor líquido a creditar</label>
+              <input id="valor_liquido" type="number" step="0.01" min="0" class="form-control" required readonly>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label required">Data do acerto</label>
+              <input id="data_acerto" type="date" class="form-control" required>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pagamento e Anexos -->
+      <section class="form-section">
+        <h5 class="section-title">Pagamento e Anexos</h5>
+        <div class="section-body">
+          <div class="row g-3 mb-3">
+            <div class="col-md-4">
+              <label class="form-label required">Tipo de pagamento</label>
+              <select id="tipo_pagamento" class="form-select" required>
+                <option value="">Selecione</option>
+                <option value="boleto">Boleto</option>
+                <option value="deposito">Depósito</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label required">Data do pagamento</label>
+              <input id="data_pagamento" type="date" class="form-control" required>
+            </div>
+          </div>
+          <div class="row g-3">
+            <div class="col-12" id="grupoBoleto" style="display:none">
+              <div class="alert alert-info py-2 mb-0">Para pagamento via boleto, anexe o PDF/XML abaixo.</div>
+            </div>
+            <div id="grupoDeposito" class="row g-3 d-none">
+              <div class="col-md-3"><label class="form-label required">Banco</label><input id="banco" class="form-control"></div>
+              <div class="col-md-3"><label class="form-label required">Agência</label><input id="agencia" class="form-control"></div>
+              <div class="col-md-3"><label class="form-label required">Tipo de conta</label><select id="tipo_conta" class="form-select"><option value="">Selecione</option><option value="corrente">Corrente</option><option value="poupanca">Poupança</option></select></div>
+              <div class="col-md-3"><label class="form-label required">Número da conta</label><input id="numero_conta" class="form-control"></div>
+            </div>
+          </div>
+          <hr class="my-4">
+          <label class="form-label">Anexos</label>
+          <div class="row g-2 align-items-center">
+            <div class="col-lg-6"><input id="inputFile" type="file" class="form-control" multiple></div>
+            <div class="col-auto"><button class="btn btn-adicionar" id="btnUpload">+ Adicionar</button></div>
+          </div>
+          <ul id="listaArquivos" class="mt-3 list-unstyled file-list border rounded" style="display:none;"></ul>
+        </div>
+      </section>
+
+      <!-- Ações Finais -->
+      <div class="mt-4 d-flex justify-content-center gap-3">
+        <button id="btnRascunho" type="button" class="btn btn-outline-secondary">Salvar como rascunho</button>
+        <button id="btnEnviar" type="button" class="btn btn-enviar">Enviar para Análise »</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const hojeISO = () => {
+      const d = new Date(), off = d.getTimezoneOffset();
+      return new Date(d.getTime() - off*60000).toISOString().slice(0,10);
+    };
+    const $ = id => document.getElementById(id);
+    const anexos = [];
+
+    function renderAnexos(){
+      const ul = $('listaArquivos');
+      ul.innerHTML = '';
+      if (anexos.length === 0) {
+        ul.style.display = 'none';
+        return;
+      }
+      ul.style.display = 'block';
+      anexos.forEach((a,i)=>{
+        const li = document.createElement('li');
+        li.innerHTML = `<span>${a.name} (${(a.size/1024).toFixed(1)} KB)</span><button class="btn btn-sm btn-outline-danger" data-index="${i}">Remover</button>`;
+        ul.appendChild(li);
+      });
+    }
+
+    function addFilesToList(e){
+      e.preventDefault();
+      const files = Array.from($('inputFile').files || []);
+      files.forEach(f => anexos.push({ name:f.name, size:f.size }));
+      $('inputFile').value = '';
+      renderAnexos();
+    }
+
+    function toggleRetencao(){
+      const sim = $('ret_sim').checked;
+      $('grupoRetencao').style.display = sim ? '' : 'none';
+      if(!sim) $('valor_retencao').value = '';
+      calcLiquido();
+    }
+
+    function calcLiquido(){
+      const bruto = parseFloat($('valor_bruto').value || 0);
+      const ret = $('ret_sim').checked ? parseFloat($('valor_retencao').value || 0) : 0;
+      const liquido = Math.max(bruto - ret, 0);
+      $('valor_liquido').value = liquido.toFixed(2);
+    }
+
+    function togglePagamento(){
+      const tipo = $('tipo_pagamento').value;
+      $('grupoDeposito').classList.toggle('d-none', tipo !== 'deposito');
+      $('grupoBoleto').style.display = (tipo === 'boleto') ? '' : 'none';
+    }
+
+    function validarObrigatorios(){
+      const obrig = ['empresa','data','setor_pagamento','fornecedor_nome','fornecedor_cnpj','descricao',
+                     'valor_bruto','valor_liquido','data_acerto','tipo_pagamento','data_pagamento'];
+      if ($('tipo_pagamento').value === 'deposito'){
+        obrig.push('banco','agencia','tipo_conta','numero_conta');
+      }
+      let ok = true;
+      obrig.forEach(id=>{
+        const el = $(id);
+        if(!el || !el.value){ el?.classList.add('is-invalid'); ok=false; }
+        else el.classList.remove('is-invalid');
+      });
+      return ok;
+    }
+
+    function payload(){
+      const retencao_havera = $('ret_sim').checked;
+      return {
+        empresa: $('empresa')?.value, data: $('data')?.value, setor_pagamento: $('setor_pagamento')?.value,
+        fornecedor_nome: $('fornecedor_nome')?.value, fornecedor_cnpj: $('fornecedor_cnpj')?.value,
+        descricao: $('descricao')?.value, valor_bruto: Number($('valor_bruto')?.value||0),
+        retencao: { havera: retencao_havera, valor: retencao_havera ? Number($('valor_retencao')?.value||0) : 0 },
+        valor_liquido: Number($('valor_liquido')?.value||0), data_acerto: $('data_acerto')?.value,
+        pagamento: {
+          tipo: $('tipo_pagamento')?.value, data_pagamento: $('data_pagamento')?.value,
+          bancarios: $('tipo_pagamento')?.value === 'deposito' ? {
+            banco: $('banco')?.value, agencia: $('agencia')?.value,
+            tipo_conta: $('tipo_conta')?.value, numero_conta: $('numero_conta')?.value
+          } : null
+        },
+        anexos: anexos.map(a => ({ nome:a.name, tamanho:a.size }))
+      };
+    }
+
+    window.addEventListener('DOMContentLoaded', ()=>{
+      $('data').value = hojeISO();
+      $('data_acerto').value = hojeISO();
+      $('data_pagamento').value = hojeISO();
+
+      $('btnUpload').addEventListener('click', addFilesToList);
+      $('listaArquivos').addEventListener('click', e => {
+        if (e.target.tagName === 'BUTTON') {
+          anexos.splice(e.target.dataset.index, 1);
+          renderAnexos();
+        }
+      });
+      $('ret_sim').addEventListener('change', toggleRetencao);
+      $('ret_nao').addEventListener('change', toggleRetencao);
+      $('valor_bruto').addEventListener('input', calcLiquido);
+      $('valor_retencao').addEventListener('input', calcLiquido);
+      $('tipo_pagamento').addEventListener('change', togglePagamento);
+
+      $('btnRascunho').addEventListener('click', ()=>{
+        if(!validarObrigatorios()) return alert('Preencha os campos obrigatórios.');
+        console.log('Salvar rascunho:', payload());
+        alert('Rascunho preparado (veja o console).');
+      });
+      $('btnEnviar').addEventListener('click', ()=>{
+        if(!validarObrigatorios()) return alert('Preencha os campos obrigatórios.');
+        console.log('Enviar:', payload());
+        alert('Solicitação preparada para envio (veja o console).');
+      });
+
+      togglePagamento();
+      calcLiquido();
+    });
+  </script>
+</body>
+</html>
