@@ -84,6 +84,9 @@
           <div class="report-item"><span>Fornecedor</span><strong id="r_fornecedor_nome">—</strong></div>
           <div class="report-item"><span>CNPJ</span><strong id="r_fornecedor_cnpj">—</strong></div>
           <div class="report-item"><span>Descrição</span><strong id="r_descricao" class="text-end">—</strong></div>
+          <div class="report-item"><span>Anexos da Solicitação</span>
+            <div id="r_anexos_solicitacao" class="text-end">Nenhum anexo.</div>
+          </div>
         </div>
       </div>
 
@@ -110,7 +113,10 @@
             <div class="report-item"><span>Tipo de Conta</span><strong id="r_tipo_conta">—</strong></div>
             <div class="report-item"><span>Número da Conta</span><strong id="r_numero_conta">—</strong></div>
           </div>
-          <div class="report-item"><span>Anexos</span><div id="r_anexos" class="text-end">Nenhum anexo.</div></div>
+          <div class="report-item" id="r_boleto_anexos_row" style="display:none;">
+            <span>Anexos do Boleto</span>
+            <div id="r_anexos_boleto" class="text-end">Nenhum anexo.</div>
+          </div>
         </div>
       </div>
 
@@ -164,6 +170,13 @@
       $('r_fornecedor_cnpj').textContent = data.fornecedor_cnpj || '—';
       $('r_descricao').textContent = data.descricao || '—';
 
+      // Anexos da Solicitação
+      if (data.anexos_solicitacao && data.anexos_solicitacao.length > 0) {
+        $('r_anexos_solicitacao').innerHTML = data.anexos_solicitacao.map(a => `<div>${a.nome}</div>`).join('');
+      } else {
+        $('r_anexos_solicitacao').textContent = 'Nenhum anexo.';
+      }
+
       // Valores
       $('r_valor_bruto').textContent = fmtBRL(data.valor_bruto);
       $('r_retencao').textContent = data.retencao.havera ? `Sim (${fmtBRL(data.retencao.valor)})` : 'Não';
@@ -181,9 +194,16 @@
         $('r_numero_conta').textContent = data.pagamento.bancarios.numero_conta || '—';
       }
 
-      // Anexos
-      if (data.anexos && data.anexos.length > 0) {
-        $('r_anexos').innerHTML = data.anexos.map(a => `<div>${a.nome}</div>`).join('');
+      // Anexos do Boleto
+      if (data.pagamento.tipo === 'boleto') {
+        $('r_boleto_anexos_row').style.display = '';
+        if (data.anexos_boleto && data.anexos_boleto.length > 0) {
+          $('r_anexos_boleto').innerHTML = data.anexos_boleto.map(a => `<div>${a.nome}</div>`).join('');
+        } else {
+          $('r_anexos_boleto').textContent = 'Nenhum anexo.';
+        }
+      } else {
+        $('r_boleto_anexos_row').style.display = 'none';
       }
 
       // Oracle
