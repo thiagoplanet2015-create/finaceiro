@@ -7,63 +7,63 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <style>
     :root {
-      --brand: #72bf44;
-      --brand-600: #5fa535;
-      --brand-light: #9fc612;
-      --ink: #0f172a;
-      --muted: #64748b;
-      --paper: #ffff;
-      --bg: #f3f6fb;
-      --success: #72bf44;
-      --danger: #e11d48;
-      --border: #e5e7eb;
-      --table-stripe: #fafbff;
+    --brand: #72bf44;
+    --brand-600: #5fa535;
+    --brand-light: #9fc612;
+    --ink: #0f172a;
+    --muted: #64748b;
+    --paper: #ffff;
+    --bg: #f3f6fb;
+    --success: #72bf44;
+    --danger: #e11d48;
+    --border: #e5e7eb;
+    --table-stripe: #fafbff;
     }
     body { background: var(--bg); color: var(--ink); }
     h1,h2,h3,h4,h5 { color: var(--ink); letter-spacing: .2px; }
     .topbar {
-      background: linear-gradient(135deg, var(--brand) 0%, var(--brand-600) 100%);
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-600) 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     .topbar .fw-bold { color: #fff; font-size: 1.2rem; }
     .topbar .text-muted { color: rgba(255, 255, 255, 0.85) !important; }
     .card { border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 6px 20px rgba(2, 6, 23, .05); }
     .card-header {
-      background: linear-gradient(180deg, #f8fdf5, #e8f5e0);
-      border-bottom: 1px solid var(--border);
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
+    background: linear-gradient(180deg, #f8fdf5, #e8f5e0);
+    border-bottom: 1px solid var(--border);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
     }
     .card-header h5 { color: var(--brand-600); font-weight: 700; }
     .form-label { font-weight: 600; color: #334155; }
     .form-control, .form-select, .form-control:disabled {
-      border-radius: 10px; border: 1px solid var(--border);
-      transition: border-color .2s, box-shadow .2s;
+    border-radius: 10px; border: 1px solid var(--border);
+    transition: border-color .2s, box-shadow .2s;
     }
     .form-control:focus, .form-select:focus {
-      border-color: var(--brand);
-      box-shadow: 0 0 0 .2rem rgba(114, 191, 68, .25);
+    border-color: var(--brand);
+    box-shadow: 0 0 0 .2rem rgba(114, 191, 68, .25);
     }
     .form-control[readonly] { background-color: #e9ecef; }
     .btn-primary {
-      background: var(--brand); border-color: var(--brand);
-      border-radius: 10px; font-weight: 600;
+    background: var(--brand); border-color: var(--brand);
+    border-radius: 10px; font-weight: 600;
     }
     .btn-primary:hover {
-      background: var(--brand-600); border-color: var(--brand-600);
-      transform: translateY(-1px); box-shadow: 0 4px 12px rgba(114, 191, 68, 0.3);
+    background: var(--brand-600); border-color: var(--brand-600);
+    transform: translateY(-1px); box-shadow: 0 4px 12px rgba(114, 191, 68, 0.3);
     }
     .btn-outline-primary { border-radius: 10px; font-weight: 600; color: var(--brand); border-color: var(--brand); }
     .btn-outline-primary:hover { background: var(--brand); color: #fff; }
     .btn-outline-secondary { border-radius: 10px; font-weight: 600; }
     .btn-outline-danger { border-radius: 8px; font-weight: 600; }
     .file-list li {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.5rem;
-      border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    border-bottom: 1px solid var(--border);
     }
     .file-list li:last-child { border-bottom: none; }
     .required::after { content: " *"; color: #e11d48; }
@@ -73,187 +73,186 @@
   <!-- Topbar -->
   <nav class="topbar">
     <div class="container py-2 d-flex align-items-center justify-content-between">
-      <div class="fw-bold">Portal Financeiro - Adiantamento ao Fornecedor</div>
-      <div class="text-muted small">
-        Empresa: <span id="empresaSpan">16</span> • Usuário: <span id="usuarioSpan">agt@agt.com.br</span>
-      </div>
+    <div class="fw-bold">Portal Financeiro - Adiantamento ao Fornecedor</div>
+    <div class="text-muted small">
+    Empresa: <span id="empresaSpan">16</span> • Usuário: <span id="usuarioSpan">agt@agt.com.br</span>
+    </div>
     </div>
   </nav>
 
   <div class="container my-4">
     <div class="d-flex align-items-center justify-content-between mb-3">
-      <h4 class="mb-0">Novo Adiantamento ao Fornecedor</h4>
-      <a href="#" class="btn btn-outline-secondary btn-sm">← Voltar</a>
+    <h4 class="mb-0">Novo Adiantamento ao Fornecedor</h4>
+    <a href="#" class="btn btn-outline-secondary btn-sm">← Voltar</a>
     </div>
 
     <div class="col-lg-11 col-xl-10 p-0">
-      <!-- Dados da Solicitação -->
-      <div class="card mb-4">
-        <div class="card-header"><h5 class="mb-0">Dados da Solicitação</h5></div>
-        <div class="card-body">
-          <div class="row g-3">
-            <div class="col-md-4">
-              <label for="empresa" class="form-label">Empresa</label>
-              <select id="empresa" class="form-select" required>
-                <option value="">Selecione a empresa</option>
-                <option value="05">05 - Agroterenas Citrus Ltda.</option>
-                <option value="11">11 - Agroterenas Industrial Citrus Ltda.</option>
-                <option value="16">16 - Agroterenas S/A - Cana</option>
-                <option value="20">20 - Agt Estrela do Oeste</option>
-                <option value="21">21 - Agroterenas International E.C.</option>
-                <option value="24">24 - Agroterenas International LLC</option>
-                <option value="30">30 - Agroterenas S/A - Administração e Participações</option>
-                <option value="40">40 - Agroventura</option>
-                <option value="41">41 - Agroterenas Terras Ltda.</option>
-                <option value="42">42 - Associação Semear</option>
-                <option value="43">43 - AGT Adubos e Fertilizantes</option>
-              </select>
-              <div class="invalid-feedback">Selecione uma empresa.</div>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label required">Data</label>
-              <input id="data" type="date" class="form-control" required />
-            </div>
-            <div class="col-md-4">
-              <label class="form-label required">Setor Pagamento</label>
-              <input id="setor_pagamento" class="form-control" placeholder="Ex.: Financeiro - Contas a Pagar" required />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label required">Nome do Fornecedor</label>
-              <input id="fornecedor_nome" class="form-control" required />
-            </div>
-            <div class="col-md-6">
-              <label class="form-label required">CNPJ</label>
-              <input id="fornecedor_cnpj" class="form-control" placeholder="00.000.000/0000-00" required />
-            </div>
-            <div class="col-12">
-              <label class="form-label required">Descrição (motivo da compra/adiantamento)</label>
-              <textarea id="descricao" class="form-control" rows="3" required></textarea>
-            </div>
-          </div>
-          <hr class="my-4" />
-          <label class="form-label">Anexos da Solicitação</label>
-          <div class="row g-2 align-items-center">
-            <div class="col-lg-6">
-              <input id="inputFileSolicitacao" type="file" class="form-control" multiple />
-            </div>
-            <div class="col-auto">
-              <button class="btn btn-outline-primary" id="btnUploadSolicitacao">+ Adicionar anexo</button>
-            </div>
-          </div>
-          <ul id="listaArquivosSolicitacao" class="mt-3 list-unstyled file-list border rounded" style="display: none"></ul>
-        </div>
-      </div>
+    <!-- Dados da Solicitação -->
+    <div class="card mb-4">
+    <div class="card-header"><h5 class="mb-0">Dados da Solicitação</h5></div>
+    <div class="card-body">
+    <div class="row g-3">
+    <div class="col-md-4">
+    <label for="empresa" class="form-label">Empresa</label>
+    <select id="empresa" class="form-select" required>
+    <option value="">Selecione a empresa</option>
+    <option value="05">05 - Agroterenas Citrus Ltda.</option>
+    <option value="11">11 - Agroterenas Industrial Citrus Ltda.</option>
+    <option value="16">16 - Agroterenas S/A - Cana</option>
+    <option value="20">20 - Agt Estrela do Oeste</option>
+    <option value="21">21 - Agroterenas International E.C.</option>
+    <option value="24">24 - Agroterenas International LLC</option>
+    <option value="30">30 - Agroterenas S/A - Administração e Participações</option>
+    <option value="40">40 - Agroventura</option>
+    <option value="41">41 - Agroterenas Terras Ltda.</option>
+    <option value="42">42 - Associação Semear</option>
+    <option value="43">43 - AGT Adubos e Fertilizantes</option>
+    </select>
+    <div class="invalid-feedback">Selecione uma empresa.</div>
+    </div>
+    <div class="col-md-4">
+    <label class="form-label required">Data</label>
+    <input id="data" type="date" class="form-control" required />
+    </div>
+    <div class="col-md-4">
+    <label class="form-label required">Solicitante</label>
+    <input id="solicitante" class="form-control" placeholder="Nome do solicitante" required />
+    </div>
+    <div class="col-md-6">
+    <label class="form-label required">Nome do Fornecedor</label>
+    <input id="fornecedor_nome" class="form-control" required />
+    </div>
+    <div class="col-md-6">
+    <label class="form-label required">CNPJ</label>
+    <input id="fornecedor_cnpj" class="form-control" placeholder="00.000.000/0000-00" required />
+    </div>
+    <div class="col-12">
+    <label class="form-label required">Descrição (motivo da compra/adiantamento)</label>
+    <textarea id="descricao" class="form-control" rows="3" required></textarea>
+    </div>
+    </div>
+    <hr class="my-4" />
+    <label class="form-label">Anexos da Solicitação</label>
+    <div class="row g-2 align-items-center">
+    <div class="col-lg-6">
+    <input id="inputFileSolicitacao" type="file" class="form-control" multiple />
+    </div>
+    <div class="col-auto">
+    <button class="btn btn-outline-primary" id="btnUploadSolicitacao">+ Adicionar anexo</button>
+    </div>
+    </div>
+    <ul id="listaArquivosSolicitacao" class="mt-3 list-unstyled file-list border rounded" style="display: none"></ul>
+    </div>
+    </div>
 
-      <!-- Valores -->
-      <div class="card mb-4">
-        <div class="card-header"><h5 class="mb-0">Valores</h5></div>
-        <div class="card-body">
-          <div class="row g-3">
-            <div class="col-md-4">
-              <label class="form-label required">Valor do Adiantamento (Bruto)</label>
-              <input id="valor_bruto" type="number" step="0.01" min="0" class="form-control" required />
-            </div>
-            <div class="col-md-4">
-              <label class="form-label required">Haverá retenção de imposto na NF?</label>
-              <div class="d-flex gap-3 pt-2">
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="retencao" id="ret_sim" value="sim" />
-                  <label class="form-check-label" for="ret_sim">Sim</label>
-                </div>
-                <div class="form-check">
-                  <input class="form-check-input" type="radio" name="retencao" id="ret_nao" value="nao" checked />
-                  <label class="form-check-label" for="ret_nao">Não</label>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4" id="grupoRetencao" style="display: none">
-              <label class="form-label">Valor da Retenção</label>
-              <input id="valor_retencao" type="number" step="0.01" min="0" class="form-control" placeholder="0,00" />
-            </div>
-            <div class="col-md-4">
-              <label class="form-label required">Valor líquido a creditar</label>
-              <input id="valor_liquido" type="number" step="0.01" min="0" class="form-control" required readonly />
-            </div>
-            <div class="col-md-4">
-              <label class="form-label required">Data do acerto</label>
-              <input id="data_acerto" type="date" class="form-control" required />
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- Valores -->
+    <div class="card mb-4">
+    <div class="card-header"><h5 class="mb-0">Valores</h5></div>
+    <div class="card-body">
+    <div class="row g-3">
+    <div class="col-md-4">
+    <label class="form-label required">Valor do Adiantamento (Bruto)</label>
+    <input id="valor_bruto" type="number" step="0.01" min="0" class="form-control" required />
+    </div>
+    <div class="col-md-4">
+    <label class="form-label required">Haverá retenção de imposto na NF?</label>
+    <div class="d-flex gap-3 pt-2">
+    <div class="form-check">
+    <input class="form-check-input" type="radio" name="retencao" id="ret_sim" value="sim" />
+    <label class="form-check-label" for="ret_sim">Sim</label>
+    </div>
+    <div class="form-check">
+    <input class="form-check-input" type="radio" name="retencao" id="ret_nao" value="nao" checked />
+    <label class="form-check-label" for="ret_nao">Não</label>
+    </div>
+    </div>
+    </div>
+    <div class="col-md-4" id="grupoRetencao" style="display: none">
+    <label class="form-label">Valor da Retenção</label>
+    <input id="valor_retencao" type="number" step="0.01" min="0" class="form-control" placeholder="0,00" />
+    </div>
+    <div class="col-md-4">
+    <label class="form-label required">Valor líquido a creditar</label>
+    <input id="valor_liquido" type="number" step="0.01" min="0" class="form-control" required readonly />
+    </div>
+    <div class="col-md-4">
+    <label class="form-label required">Data do acerto</label>
+    <input id="data_acerto" type="date" class="form-control" required />
+    </div>
+    </div>
+    </div>
+    </div>
 
-      <!-- Pagamento e Anexos -->
-      <div class="card mb-4">
-        <div class="card-header"><h5 class="mb-0">Pagamento e Anexos</h5></div>
-        <div class="card-body">
-          <div class="row g-3 mb-3">
-            <div class="col-md-4">
-              <label class="form-label required">Tipo de pagamento</label>
-              <select id="tipo_pagamento" class="form-select" required>
-                <option value="">Selecione</option>
-                <option value="boleto">Boleto</option>
-                <option value="Eletronico">Eletronico</option>
-              </select>
-            </div>
-            <div class="col-md-4">
-              <label class="form-label required">Data do pagamento</label>
-              <input id="data_pagamento" type="date" class="form-control" required />
-            </div>
-          </div>
-          <div class="row g-3">
-            <div class="col-12" id="grupoBoleto" style="display: none">
-              <div class="alert alert-info py-2 mb-0">
-                Para pagamento via boleto, anexe o PDF/XML abaixo.
-              </div>
-              <div class="row g-2 align-items-center mt-2">
-                <div class="col-lg-6">
-                  <input id="inputFileBoleto" type="file" class="form-control" multiple />
-                </div>
-                <div class="col-auto">
-                  <button class="btn btn-outline-primary" id="btnUploadBoleto">+ Adicionar anexo</button>
-                </div>
-              </div>
-              <ul id="listaArquivosBoleto" class="mt-3 list-unstyled file-list border rounded" style="display: none"></ul>
-            </div>
-            <div id="grupoDeposito" class="row g-3 d-none">
-              <div class="col-md-3">
-                <label class="form-label required">Banco</label>
-                <input id="banco" class="form-control" />
-              </div>
-              <div class="col-md-3">
-                <label class="form-label required">Agência</label>
-                <input id="agencia" class="form-control" />
-              </div>
-              <div class="col-md-3">
-                <label class="form-label required">Tipo de conta</label>
-                <select id="tipo_conta" class="form-select">
-                  <option value="">Selecione</option>
-                  <option value="corrente">Corrente</option>
-                  <option value="poupanca">Poupança</option>
-                </select>
-              </div>
-              <div class="col-md-3">
-                <label class="form-label required">Número da conta</label>
-                <input id="numero_conta" class="form-control" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- Pagamento e Anexos -->
+    <div class="card mb-4">
+    <div class="card-header"><h5 class="mb-0">Pagamento e Anexos</h5></div>
+    <div class="card-body">
+    <div class="row g-3 mb-3">
+    <div class="col-md-4">
+    <label class="form-label required">Metodo de pagamento</label>
+    <select id="tipo_pagamento" class="form-select" required>
+    <option value="">Selecione</option>
+    <option value="boleto">Boleto</option>
+    <option value="Eletronico">Eletronico</option>
+    </select>
+    </div>
+    <div class="col-md-4">
+    <label class="form-label required">Data do pagamento</label>
+    <input id="data_pagamento" type="date" class="form-control" required />
+    </div>
+    </div>
+    <div class="row g-3">
+    <div class="col-12" id="grupoBoleto" style="display: none">
+    <div class="alert alert-info py-2 mb-0">
+    Para pagamento via boleto, anexe o PDF/XML abaixo.
+    </div>
+    <div class="row g-2 align-items-center mt-2">
+    <div class="col-lg-6">
+    <input id="inputFileBoleto" type="file" class="form-control" multiple />
+    </div>
+    <div class="col-auto">
+    <button class="btn btn-outline-primary" id="btnUploadBoleto">+ Adicionar anexo</button>
+    </div>
+    </div>
+    <ul id="listaArquivosBoleto" class="mt-3 list-unstyled file-list border rounded" style="display: none"></ul>
+    </div>
+    <div id="grupoDeposito" class="row g-3 d-none">
+    <div class="col-md-3">
+    <label class="form-label required">Banco</label>
+    <input id="banco" class="form-control" />
+    </div>
+    <div class="col-md-3">
+    <label class="form-label required">Agência</label>
+    <input id="agencia" class="form-control" />
+    </div>
+    <div class="col-md-3">
+    <label class="form-label required">Tipo de conta</label>
+    <select id="tipo_conta" class="form-select">
+    <option value="">Selecione</option>
+    <option value="corrente">Corrente</option>
+    <option value="poupanca">Poupança</option>
+    </select>
+    </div>
+    <div class="col-md-3">
+    <label class="form-label required">Número da conta</label>
+    <input id="numero_conta" class="form-control" />
+    </div>
+    </div>
+    </div>
+    </div>
 
-      <!-- Ações Finais -->
-      <div class="d-flex justify-content-center gap-3 mb-4">
-        <button id="btnRascunho" type="button" class="btn btn-outline-secondary">Salvar como rascunho</button>
-        <button id="btnEnviar" type="button" class="btn btn-primary">Enviar para Análise »</button>
-      </div>
+    <!-- Ações Finais -->
+    <div class="d-flex justify-content-center gap-3 mb-4">
+    <button id="btnRascunho" type="button" class="btn btn-outline-secondary">Salvar como rascunho</button>
+    <button id="btnEnviar" type="button" class="btn btn-primary">Enviar para Análise »</button>
+    </div>
     </div>
   </div>
 
   <script>
     const hojeISO = () => {
-      const d = new Date(), off = d.getTimezoneOffset();
-      return new Date(d.getTime() - off * 60000).toISOString().slice(0, 10);
+    const d = new Date(), off = d.getTimezoneOffset();
+    return new Date(d.getTime() - off * 60000).toISOString().slice(0, 10);
     };
     const $ = (id) => document.getElementById(id);
 
@@ -262,172 +261,192 @@
     const anexosBoleto = [];
 
     function renderAnexos(list, ulId) {
-      const ul = $(ulId);
-      ul.innerHTML = "";
-      if (list.length === 0) {
-        ul.style.display = "none";
-        return;
-      }
-      ul.style.display = "block";
-      list.forEach((a, i) => {
-        const li = document.createElement("li");
-        li.innerHTML = `<span>${a.name} (${(a.size / 1024).toFixed(1)} KB)</span><button class="btn btn-sm btn-outline-danger" data-index="${i}">Remover</button>`;
-        ul.appendChild(li);
-      });
+    const ul = $(ulId);
+    ul.innerHTML = "";
+    if (list.length === 0) {
+    ul.style.display = "none";
+    return;
+    }
+    ul.style.display = "block";
+    list.forEach((a, i) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<span>${a.name} (${(a.size / 1024).toFixed(1)} KB)</span><button class="btn btn-sm btn-outline-danger" data-index="${i}">Remover</button>`;
+    ul.appendChild(li);
+    });
     }
 
     function addFilesToList(e, inputId, list, ulId) {
-      e.preventDefault();
-      const files = Array.from($(inputId).files || []);
-      files.forEach((f) => list.push({ name: f.name, size: f.size }));
-      $(inputId).value = "";
-      renderAnexos(list, ulId);
+    e.preventDefault();
+    const files = Array.from($(inputId).files || []);
+    files.forEach((f) => list.push({ name: f.name, size: f.size }));
+    $(inputId).value = "";
+    renderAnexos(list, ulId);
     }
 
     function removeFileFromList(e, list, ulId) {
-      if (e.target.tagName === "BUTTON") {
-        list.splice(e.target.dataset.index, 1);
-        renderAnexos(list, ulId);
-      }
+    if (e.target.tagName === "BUTTON") {
+    list.splice(e.target.dataset.index, 1);
+    renderAnexos(list, ulId);
+    }
     }
 
     function toggleRetencao() {
-      const sim = $("ret_sim").checked;
-      $("grupoRetencao").style.display = sim ? "" : "none";
-      if (!sim) $("valor_retencao").value = "";
-      calcLiquido();
+    const sim = $("ret_sim").checked;
+    $("grupoRetencao").style.display = sim ? "" : "none";
+    if (!sim) $("valor_retencao").value = "";
+    calcLiquido();
     }
 
     function calcLiquido() {
-      const bruto = parseFloat($("valor_bruto").value || 0);
-      const ret = $("ret_sim").checked ? parseFloat($("valor_retencao").value || 0) : 0;
-      const liquido = Math.max(bruto - ret, 0);
-      $("valor_liquido").value = liquido.toFixed(2);
+    const bruto = parseFloat($("valor_bruto").value || 0);
+    const ret = $("ret_sim").checked ? parseFloat($("valor_retencao").value || 0) : 0;
+    const liquido = Math.max(bruto - ret, 0);
+    $("valor_liquido").value = liquido.toFixed(2);
     }
 
     function togglePagamento() {
-      const tipo = $("tipo_pagamento").value;
-      $("grupoDeposito").classList.toggle("d-none", tipo !== "Eletronico");
-      $("grupoBoleto").style.display = tipo === "boleto" ? "" : "none";
+    const tipo = $("tipo_pagamento").value;
+    $("grupoDeposito").classList.toggle("d-none", tipo !== "Eletronico");
+    $("grupoBoleto").style.display = tipo === "boleto" ? "" : "none";
     }
 
     function validarObrigatorios() {
-      const obrig = [
-        "empresa", "data", "setor_pagamento", "fornecedor_nome", "fornecedor_cnpj", "descricao",
-        "valor_bruto", "valor_liquido", "data_acerto", "tipo_pagamento", "data_pagamento"
-      ];
-      if ($("tipo_pagamento").value === "Eletronico") {
-        obrig.push("banco", "agencia", "tipo_conta", "numero_conta");
-      }
-      let ok = true;
-      obrig.forEach((id) => {
-        const el = $(id);
-        if (!el || !el.value) {
-          el?.classList.add("is-invalid");
-          ok = false;
-        } else el.classList.remove("is-invalid");
-      });
-      return ok;
+    const obrig = [
+    "empresa", "data", "solicitante", "fornecedor_nome", "fornecedor_cnpj", "descricao",
+    "valor_bruto", "valor_liquido", "data_acerto", "tipo_pagamento", "data_pagamento"
+    ];
+    if ($("tipo_pagamento").value === "Eletronico") {
+    obrig.push("banco", "agencia", "tipo_conta", "numero_conta");
+    }
+    let ok = true;
+    obrig.forEach((id) => {
+    const el = $(id);
+    if (!el || !el.value) {
+    el?.classList.add("is-invalid");
+    ok = false;
+    } else el.classList.remove("is-invalid");
+    });
+    return ok;
     }
 
     function payload() {
-      const retencao_havera = $("ret_sim").checked;
-      return {
-        empresa: $("empresa")?.value,
-        data: $("data")?.value,
-        setor_pagamento: $("setor_pagamento")?.value,
-        fornecedor_nome: $("fornecedor_nome")?.value,
-        fornecedor_cnpj: $("fornecedor_cnpj")?.value,
-        descricao: $("descricao")?.value,
-        anexos_solicitacao: anexosSolicitacao.map(a => ({ nome: a.name, tamanho: a.size })),
-        valor_bruto: Number($("valor_bruto")?.value || 0),
-        retencao: {
-          havera: retencao_havera,
-          valor: retencao_havera ? Number($("valor_retencao")?.value || 0) : 0,
-        },
-        valor_liquido: Number($("valor_liquido")?.value || 0),
-        data_acerto: $("data_acerto")?.value,
-        pagamento: {
-          tipo: $("tipo_pagamento")?.value,
-          data_pagamento: $("data_pagamento")?.value,
-          bancarios:
-            $("tipo_pagamento")?.value === "Eletronico"
-              ? {
-                  banco: $("banco")?.value,
-                  agencia: $("agencia")?.value,
-                  tipo_conta: $("tipo_conta")?.value,
-                  numero_conta: $("numero_conta")?.value,
-                }
-              : null,
-        },
-        anexos_boleto: $("tipo_pagamento")?.value === "boleto"
-          ? anexosBoleto.map(a => ({ nome: a.name, tamanho: a.size }))
-          : [],
-        integracao_oracle: {
-          moeda: "BRL",
-          data_gl: $("data")?.value,
-          moeda_pagamento: "BRL",
-          data_taxa_pagto: $("data")?.value,
-          data_condicoes: $("data")?.value,
-          condicoes: "À vista",
-          metodo_pagamento: $("tipo_pagamento")?.value === "Eletronico" ? "Eletrônico" : "Boleto",
-          grupo_pagamentos: "Fornecedores",
-          pais_tributacao: "Brasil",
-          vincular_acao: "Ordem de Compra",
-        },
-      };
+    const retencao_havera = $("ret_sim").checked;
+    return {
+    empresa: $("empresa")?.value,
+    data: $("data")?.value,
+    solicitante: $("solicitante")?.value,
+    fornecedor_nome: $("fornecedor_nome")?.value,
+    fornecedor_cnpj: $("fornecedor_cnpj")?.value,
+    descricao: $("descricao")?.value,
+    anexos_solicitacao: anexosSolicitacao.map(a => ({ nome: a.name, tamanho: a.size })),
+    valor_bruto: Number($("valor_bruto")?.value || 0),
+    retencao: {
+    havera: retencao_havera,
+    valor: retencao_havera ? Number($("valor_retencao")?.value || 0) : 0,
+    },
+    valor_liquido: Number($("valor_liquido")?.value || 0),
+    data_acerto: $("data_acerto")?.value,
+    pagamento: {
+    tipo: $("tipo_pagamento")?.value,
+    data_pagamento: $("data_pagamento")?.value,
+    bancarios:
+    $("tipo_pagamento")?.value === "Eletronico"
+    ? {
+    banco: $("banco")?.value,
+    agencia: $("agencia")?.value,
+    tipo_conta: $("tipo_conta")?.value,
+    numero_conta: $("numero_conta")?.value,
+    }
+    : null,
+    },
+    anexos_boleto: $("tipo_pagamento")?.value === "boleto"
+    ? anexosBoleto.map(a => ({ nome: a.name, tamanho: a.size }))
+    : [],
+    integracao_oracle: {
+    moeda: "BRL",
+    data_gl: $("data")?.value,
+    moeda_pagamento: "BRL",
+    data_taxa_pagto: $("data")?.value,
+    data_condicoes: $("data")?.value,
+    condicoes: "À vista",
+    metodo_pagamento: $("tipo_pagamento")?.value === "Eletronico" ? "Eletrônico" : "Boleto",
+    grupo_pagamentos: "Fornecedores",
+    pais_tributacao: "Brasil",
+    vincular_acao: "Ordem de Compra",
+    },
+    };
+    }
+
+    // Atualiza descrição quando o solicitante for digitado
+    function updateDescriptionWithSolicitante() {
+    const solicitante = ($("solicitante").value || "").trim();
+    let desc = ($("descricao").value || "").trim();
+    const sep = " - Motivo:";
+    // Se já tiver prefixo "X - Motivo:", remove antes de re-aplicar
+    const idx = desc.indexOf(sep);
+    if (idx !== -1) {
+    desc = desc.substring(idx + sep.length).trim();
+    }
+    if (solicitante) {
+    $("descricao").value = `Solicitante: ${solicitante} - Motivo: ${desc}`;
+    } else {
+    $("descricao").value = desc;
+    }
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      $("data").value = hojeISO();
-      $("data_acerto").value = hojeISO();
-      $("data_pagamento").value = hojeISO();
+    $("data").value = hojeISO();
+    $("data_acerto").value = hojeISO();
+    $("data_pagamento").value = hojeISO();
 
-      $("btnUploadSolicitacao").addEventListener("click", e => addFilesToList(e, "inputFileSolicitacao", anexosSolicitacao, "listaArquivosSolicitacao"));
-      $("listaArquivosSolicitacao").addEventListener("click", e => removeFileFromList(e, anexosSolicitacao, "listaArquivosSolicitacao"));
+    $("btnUploadSolicitacao").addEventListener("click", e => addFilesToList(e, "inputFileSolicitacao", anexosSolicitacao, "listaArquivosSolicitacao"));
+    $("listaArquivosSolicitacao").addEventListener("click", e => removeFileFromList(e, anexosSolicitacao, "listaArquivosSolicitacao"));
 
-      $("btnUploadBoleto").addEventListener("click", e => addFilesToList(e, "inputFileBoleto", anexosBoleto, "listaArquivosBoleto"));
-      $("listaArquivosBoleto").addEventListener("click", e => removeFileFromList(e, anexosBoleto, "listaArquivosBoleto"));
+    $("btnUploadBoleto").addEventListener("click", e => addFilesToList(e, "inputFileBoleto", anexosBoleto, "listaArquivosBoleto"));
+    $("listaArquivosBoleto").addEventListener("click", e => removeFileFromList(e, anexosBoleto, "listaArquivosBoleto"));
 
-      $("ret_sim").addEventListener("change", toggleRetencao);
-      $("ret_nao").addEventListener("change", toggleRetencao);
-      $("valor_bruto").addEventListener("input", calcLiquido);
-      $("valor_retencao").addEventListener("input", calcLiquido);
-      $("tipo_pagamento").addEventListener("change", () => {
-        togglePagamento();
-        // Limpa anexos de boleto se mudar para não-boleto
-        if ($("tipo_pagamento").value !== "boleto") {
-          anexosBoleto.length = 0;
-          renderAnexos(anexosBoleto, "listaArquivosBoleto");
-        }
-      });
+    $("ret_sim").addEventListener("change", toggleRetencao);
+    $("ret_nao").addEventListener("change", toggleRetencao);
+    $("valor_bruto").addEventListener("input", calcLiquido);
+    $("valor_retencao").addEventListener("input", calcLiquido);
+    $("tipo_pagamento").addEventListener("change", () => {
+    togglePagamento();
+    // Limpa anexos de boleto se mudar para não-boleto
+    if ($("tipo_pagamento").value !== "boleto") {
+    anexosBoleto.length = 0;
+    renderAnexos(anexosBoleto, "listaArquivosBoleto");
+    }
+    });
 
-      $("btnRascunho").addEventListener("click", () => {
-        if (!validarObrigatorios())
-          return alert("Preencha os campos obrigatórios.");
-        console.log("Salvar rascunho:", payload());
-        alert("Rascunho preparado (veja o console).");
-      });
-      $("btnEnviar").addEventListener("click", () => {
-        if (!validarObrigatorios())
-          return alert("Preencha os campos obrigatórios.");
-        console.log("Enviar:", payload());
-        alert("Solicitação preparada para envio (veja o console).");
-      });
+    // novo: ao digitar solicitante, atualiza descrição
+    $("solicitante").addEventListener("input", updateDescriptionWithSolicitante);
 
-      togglePagamento();
-      calcLiquido();
+    $("btnRascunho").addEventListener("click", () => {
+    if (!validarObrigatorios())
+    return alert("Preencha os campos obrigatórios.");
+    console.log("Salvar rascunho:", payload());
+    alert("Rascunho preparado (veja o console).");
+    });
+    $("btnEnviar").addEventListener("click", () => {
+    if (!validarObrigatorios())
+    return alert("Preencha os campos obrigatórios.");
+    console.log("Enviar:", payload());
+    alert("Solicitação preparada para envio (veja o console).");
+    });
+
+    togglePagamento();
+    calcLiquido();
     });
 
     $("btnEnviar").addEventListener("click", () => {
-      if (!validarObrigatorios()) {
-        alert("Preencha todos os campos obrigatórios antes de continuar.");
-        return;
-      }
-      const data = payload();
-      console.log("Enviar:", data);
-      sessionStorage.setItem("adiantamentoPayload", JSON.stringify(data));
-      window.location.href = "adiantamento-fornecedor-relatorio.html";
+    if (!validarObrigatorios()) {
+    alert("Preencha todos os campos obrigatórios antes de continuar.");
+    return;
+    }
+    const data = payload();
+    console.log("Enviar:", data);
+    sessionStorage.setItem("adiantamentoPayload", JSON.stringify(data));
+    window.location.href = "adiantamento-fornecedor-relatorio.html";
     });
   </script>
 </body>

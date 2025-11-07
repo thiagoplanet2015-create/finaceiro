@@ -78,7 +78,7 @@
       <div class="card mb-4">
         <div class="card-header"><h5 class="mb-0 section-title">Pagamento e Anexos</h5></div>
         <div class="card-body">
-          <div class="report-item"><span>Tipo de Pagamento</span><strong id="r_tipo_pagamento">—</strong></div>
+          <div class="report-item"><span>Método de Pagamento</span><strong id="r_tipo_pagamento">—</strong></div>
           <div class="report-item"><span>Data do Pagamento</span><strong id="r_data_pagamento">—</strong></div>
 
           <div id="r_dados_bancarios" style="display:none;">
@@ -110,6 +110,8 @@
             <div class="col-md-3 mb-3 report-grid-item"><span>Grupo de Pagamentos</span><br><strong id="o_grupo_pagamentos">Fornecedores</strong></div>
             <div class="col-md-3 mb-3 report-grid-item"><span>País para Tributação</span><br><strong id="o_pais_tributacao">Brasil</strong></div>
             <div class="col-md-3 mb-3 report-grid-item"><span>Vincular Ação</span><br><strong id="o_vincular_acao">Ordem de Compra</strong></div>
+            <!-- ➤ Novo campo: Tipo de Documento -->
+            <div class="col-md-3 mb-3 report-grid-item"><span>Tipo</span><br><strong id="o_tipo">Padrão/strong></div>
           </div>
         </div>
       </div>
@@ -150,7 +152,7 @@
       $('r_quantia_nfe').textContent = fmtBRL(data.quantia_nfe);
       $('r_descricao').textContent = data.descricao || '—';
 
-      // Anexos da solicitação (aceita 'anexos' ou 'anexos_solicitacao')
+      // Anexos da solicitação
       const anexosSolic = data.anexos_solicitacao || data.anexos || [];
       if (anexosSolic.length > 0) {
         $('r_anexos_solicitacao').innerHTML = anexosSolic.map(a => `<div>${a.nome}</div>`).join('');
@@ -162,15 +164,17 @@
       $('r_tipo_pagamento').textContent = data.pagamento?.tipo || '—';
       $('r_data_pagamento').textContent = fmtDate(data.pagamento?.data_pagamento);
 
-      if (data.pagamento?.tipo === 'deposito' && data.pagamento.bancarios) {
+      if (data.pagamento?.tipo === 'Eletronico' && data.pagamento.bancarios) {
         $('r_dados_bancarios').style.display = 'block';
         $('r_banco').textContent = data.pagamento.bancarios.banco || '—';
         $('r_agencia').textContent = data.pagamento.bancarios.agencia || '—';
         $('r_tipo_conta').textContent = data.pagamento.bancarios.tipo_conta || '—';
         $('r_numero_conta').textContent = data.pagamento.bancarios.numero_conta || '—';
+      } else {
+        $('r_dados_bancarios').style.display = 'none';
       }
 
-      // Anexos do boleto (aceita top-level ou dentro de pagamento)
+      // Anexos do boleto
       const anexosBoleto = data.anexos_boleto || data.pagamento?.anexos_boleto || [];
       if (data.pagamento?.tipo === 'boleto') {
         $('r_boleto_anexos_row').style.display = '';
@@ -183,7 +187,7 @@
         $('r_boleto_anexos_row').style.display = 'none';
       }
 
-      // Oracle (gera mesmo que não venha no payload)
+      // Oracle
       const refDate = data.data || todayISO();
       const oracle = data.integracao_oracle || {
         moeda: 'BRL',
@@ -209,14 +213,20 @@
       $('o_pais_tributacao').textContent = oracle.pais_tributacao || 'Brasil';
       $('o_vincular_acao').textContent = oracle.vincular_acao || 'Ordem de Compra';
 
-      // JSON exibido (se não houver integracao_oracle no payload, adicionamos para exibir completo)
+      // ➤ Novo: Tipo de Documento (vem do payload root)
+      $('o_tipo').textContent = 'Padrão';
+
+      // JSON exibido
       if (!data.integracao_oracle) data.integracao_oracle = oracle;
       const jsonFormatted = JSON.stringify(data, null, 2);
       $('json-payload-view').textContent = jsonFormatted;
 
+      // Botões JSON
       $('btnCopyJson').addEventListener('click', () => {
         navigator.clipboard.writeText(jsonFormatted).then(() => {
-          const btn = $('btnCopyJson'); btn.textContent = 'Copiado!'; setTimeout(()=>btn.textContent='Copiar JSON', 2000);
+          const btn = $('btnCopyJson'); 
+          btn.textContent = 'Copiado!'; 
+          setTimeout(() => btn.textContent = 'Copiar JSON', 2000);
         });
       });
       $('btnDownloadJson').addEventListener('click', () => {
@@ -224,8 +234,12 @@
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         const safeName = (data.fornecedor_nome || 'payload').replace(/[^\p{L}\p{N}_-]+/gu,'_');
-        a.href = url; a.download = `taxas-diversas-${safeName}.json`;
-        document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+        a.href = url; 
+        a.download = `taxas-diversas-${safeName}.json`;
+        document.body.appendChild(a); 
+        a.click(); 
+        document.body.removeChild(a); 
+        URL.revokeObjectURL(url);
       });
     }
 

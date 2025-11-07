@@ -112,6 +112,14 @@
         content: " *";
         color: #e11d48;
       }
+      /* preview styling (discreet) */
+      #descricao_preview {
+        color: var(--muted);
+        font-size: 0.95rem;
+        padding-left: 6px;
+        min-height: 20px;
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -170,11 +178,11 @@
                 <input id="data" type="date" class="form-control" required />
               </div>
               <div class="col-md-4">
-                <label class="form-label required">Setor Pagamento</label>
+                <label class="form-label required">Solicitante</label>
                 <input
                   id="setor_pagamento"
                   class="form-control"
-                  placeholder="Ex.: Financeiro - Contas a Pagar"
+                  placeholder="Ex.: João Silva"
                   required
                 />
               </div>
@@ -197,6 +205,12 @@
               </div>
               <div class="col-12">
                 <label class="form-label required">Descrição</label>
+
+                <!-- preview (read-only) mostrado acima do textarea -->
+                <div id="descricao_preview" class="small text-muted mb-2">
+                  &nbsp;
+                </div>
+
                 <textarea
                   id="descricao"
                   class="form-control"
@@ -242,8 +256,8 @@
           <div class="card-body">
             <div class="row g-3 mb-3">
               <div class="col-md-4">
-                <label class="form-label required">Tipo de pagamento</label>
-                <select id="tipo_pagamento" class="form-select" required>
+                <label class="form-label required">Metodo de pagamento</label>
+                <select id="metodo_pagamento" class="form-select" required>
                   <option value="">Selecione</option>
                   <option value="boleto">Boleto</option>
                   <option value="Eletronico">Eletronico</option>
@@ -342,7 +356,7 @@
       };
       const $ = (id) => document.getElementById(id);
 
-      // Anexos (Solicitação e Boleto) — mesmo padrão do adiantamento
+      // Anexos (Solicitação e Boleto)
       const anexosSolicitacao = [];
       const anexosBoleto = [];
 
@@ -359,7 +373,7 @@
           li.innerHTML = `<span>${a.name} (${(a.size / 1024).toFixed(
             1
           )} KB)</span>
-                        <button class="btn btn-sm btn-outline-danger" data-index="${i}">Remover</button>`;
+            <button class="btn btn-sm btn-outline-danger" data-index="${i}">Remover</button>`;
           ul.appendChild(li);
         });
       }
@@ -378,8 +392,9 @@
       }
 
       function togglePagamento() {
-        const tipo = $("tipo_pagamento").value;
-        $("grupoDeposito").classList.toggle("d-none", tipo !== "deposito");
+        // "Eletronico" => mostra dados bancários; "boleto" mostra anexo de boleto
+        const tipo = $("metodo_pagamento").value;
+        $("grupoDeposito").classList.toggle("d-none", tipo !== "Eletronico");
         $("grupoBoleto").style.display = tipo === "boleto" ? "" : "none";
       }
 
@@ -391,10 +406,10 @@
           "fornecedor_nome",
           "quantia_nfe",
           "descricao",
-          "tipo_pagamento",
+          "metodo_pagamento",
           "data_pagamento",
         ];
-        if ($("tipo_pagamento").value === "deposito") {
+        if ($("metodo_pagamento").value === "Eletronico") {
           obrig.push("banco", "agencia", "tipo_conta", "numero_conta");
         }
         let ok = true;
@@ -408,23 +423,47 @@
         return ok;
       }
 
+      // --- SINCRONIZAÇÃO: preview somente (NÃO altera textarea) ---
+      function updateDescricaoPreview() {
+        const solicitante = ($("setor_pagamento")?.value || "").trim();
+        const motivo = ($("descricao")?.value || "").trim();
+        const preview = `Solicitante: ${solicitante} - Motivo: ${motivo}`;
+        $("descricao_preview").textContent = preview;
+      }
+
+      const solicitanteInput = document.getElementById("setor_pagamento");
+      const saidaTextarea = document.getElementById("descricao");
+
+      function atualizarSaida() {
+        const solicitante = solicitanteInput.value.trim();
+        saidaTextarea.value = `Solicitante: ${solicitante} - Motivo: `;
+      }
+      solicitanteInput.addEventListener('input', atualizarSaida);
+
+      // --- fim sincronização ---
+
       function payload() {
+        const solicitante = ($("setor_pagamento")?.value || "").trim();
+        const motivo = ($("descricao")?.value || "").trim();
+
         return {
+          tipo: "Padrão", // ⭐️ CAMPO FIXO NO JSON, NÃO EXIBIDO NA INTERFACE
           empresa: $("empresa")?.value,
           data: $("data")?.value,
-          setor_pagamento: $("setor_pagamento")?.value,
+          setor_pagamento: solicitante,
           fornecedor_nome: $("fornecedor_nome")?.value,
           quantia_nfe: Number($("quantia_nfe")?.value || 0),
-          descricao: $("descricao")?.value,
+          descricao: motivo, // mantemos somente o motivo no campo descricao
+          descricao_completa: `Solicitante: ${solicitante} - Motivo: ${motivo}`,
           anexos_solicitacao: anexosSolicitacao.map((a) => ({
             nome: a.name,
             tamanho: a.size,
           })),
           pagamento: {
-            tipo: $("tipo_pagamento")?.value,
+            tipo: $("metodo_pagamento")?.value,
             data_pagamento: $("data_pagamento")?.value,
             bancarios:
-              $("tipo_pagamento")?.value === "deposito"
+              $("metodo_pagamento")?.value === "Eletronico"
                 ? {
                     banco: $("banco")?.value,
                     agencia: $("agencia")?.value,
@@ -434,7 +473,7 @@
                 : null,
           },
           anexos_boleto:
-            $("tipo_pagamento")?.value === "boleto"
+            $("metodo_pagamento")?.value === "boleto"
               ? anexosBoleto.map((a) => ({ nome: a.name, tamanho: a.size }))
               : [],
         };
@@ -463,7 +502,21 @@
           removeFile(e, anexosBoleto, "listaArquivosBoleto")
         );
 
-        $("tipo_pagamento").addEventListener("change", togglePagamento);
+        $("metodo_pagamento").addEventListener("change", () => {
+          togglePagamento();
+          // limpa anexos de boleto caso mude para não-boleto
+          if ($("metodo_pagamento").value !== "boleto") {
+            anexosBoleto.length = 0;
+            renderAnexos(anexosBoleto, "listaArquivosBoleto");
+          }
+        });
+
+        // listeners para atualizar apenas o preview em tempo real
+        $("setor_pagamento").addEventListener("input", updateDescricaoPreview);
+        $("descricao").addEventListener("input", updateDescricaoPreview);
+
+        // inicializa preview (mantendo conteúdo atual do textarea)
+        updateDescricaoPreview();
 
         $("btnRascunho").addEventListener("click", () => {
           if (!validarObrigatorios())
@@ -471,7 +524,8 @@
           console.log("Salvar rascunho:", payload());
           alert("Rascunho preparado (veja o console).");
         });
-        document.getElementById("btnEnviar").addEventListener("click", () => {
+
+        $("btnEnviar").addEventListener("click", () => {
           if (!validarObrigatorios()) {
             alert("Preencha todos os campos obrigatórios antes de continuar.");
             return;
@@ -496,7 +550,10 @@
             data_taxa_pagto: hoje,
             data_condicoes: hoje,
             condicoes: "À vista",
-            metodo_pagamento: "Eletrônico",
+            metodo_pagamento:
+              $("metodo_pagamento")?.value === "Eletronico"
+                ? "Eletrônico"
+                : "Boleto",
             grupo_pagamentos: "Fornecedores",
             pais_tributacao: "Brasil",
             vincular_acao: "Ordem de Compra",
